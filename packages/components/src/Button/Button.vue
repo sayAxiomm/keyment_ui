@@ -103,6 +103,7 @@ const buttonClass = computed(() => [
 }
 
 .keyment-button--primary:hover {
+  color:#ffffff;
   border-color: #66b1ff;
   background: #66b1ff;
 }
@@ -114,6 +115,7 @@ const buttonClass = computed(() => [
 }
 
 .keyment-button--success:hover {
+  color:#ffffff;
   border-color: #85ce61;
   background: #85ce61;
 }
@@ -126,6 +128,7 @@ const buttonClass = computed(() => [
 }
 
 .keyment-button--warning:hover {
+  color:#ffffff;
   border-color: #ebb563;
   background: #ebb563;
 }
@@ -138,6 +141,7 @@ const buttonClass = computed(() => [
 }
 
 .keyment-button--danger:hover {
+  color:#ffffff;
   border-color: #f78989;
   background: #f78989;
 }
