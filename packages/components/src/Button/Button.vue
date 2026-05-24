@@ -17,13 +17,13 @@
 import { computed } from 'vue';
 
 defineOptions({
-  name: "ky-Button"
+  name: "KyButton"
 });
 
 
 // 定义 props，本质是为了让组件变成“可配置的组件”，而不是一个固定样式的普通
 // 定义 props 数据类型
-type ButtonType = "default" | "primary" | "success" | "warning" | "danger";
+type ButtonType = "default" | "primary" | "success" | "warning" | "danger" | "info";
 type ButtonSize = "small" | "default" | "large";
 
 // 原生 button 的 type 属性，避免和组件视觉类型 type 混淆
@@ -35,6 +35,7 @@ const props = withDefaults(defineProps<{
   disabled?: boolean;
   loading?: boolean;
   round?: boolean; 
+  plain?: boolean;
   nativeType?: ButtonNativeType; // 原生 button type，例如表单提交时用 submit
 }>(), {
   type: "default",
@@ -42,6 +43,7 @@ const props = withDefaults(defineProps<{
   disabled: false,
   loading: false,
   round: false,
+  plain: false,
   nativeType: "button"
 });
 
@@ -52,7 +54,8 @@ const buttonClass = computed(() => [
   {
     "is-disabled": props.disabled,// 禁用状态类
     "is-loading": props.loading, // 加载状态类
-    "is-round": props.round // 圆角状态类
+    "is-round": props.round,// 圆角状态类
+    "is-plain": props.plain 
   }
 ]);
 </script>
@@ -89,7 +92,7 @@ const buttonClass = computed(() => [
   }
 
   /* 默认按钮 hover 状态 */
-.keyment-button:hover {
+.keyment-button:not(.is-disabled):not(.is-loading):hover {
   color: #409eff;
   border-color: #c6e2ff;
   background: #ecf5ff;
@@ -102,7 +105,8 @@ const buttonClass = computed(() => [
   background: #409eff;
 }
 
-.keyment-button--primary:hover {
+.keyment-button--primary:not(.is-disabled):not(.is-loading):hover {
+  color:#ffffff;
   border-color: #66b1ff;
   background: #66b1ff;
 }
@@ -113,7 +117,8 @@ const buttonClass = computed(() => [
   background: #67c23a;
 }
 
-.keyment-button--success:hover {
+.keyment-button--success:not(.is-disabled):not(.is-loading):hover {
+  color:#ffffff;
   border-color: #85ce61;
   background: #85ce61;
 }
@@ -125,7 +130,8 @@ const buttonClass = computed(() => [
   background: #e6a23c;
 }
 
-.keyment-button--warning:hover {
+.keyment-button--warning:not(.is-disabled):not(.is-loading):hover {
+  color:#ffffff;
   border-color: #ebb563;
   background: #ebb563;
 }
@@ -137,9 +143,23 @@ const buttonClass = computed(() => [
   background: #f56c6c;
 }
 
-.keyment-button--danger:hover {
+.keyment-button--danger:not(.is-disabled):not(.is-loading):hover {
+  color:#ffffff;
   border-color: #f78989;
   background: #f78989;
+}
+
+/* info 按钮 */
+.keyment-button--info {
+  color: #ffffff;
+  border-color: #909399;
+  background: #909399;
+}
+
+.keyment-button--info:not(.is-disabled):not(.is-loading):hover {
+  color: #ffffff;
+  border-color: #a6a9ad;
+  background: #a6a9ad;
 }
 
 /* small 尺寸 */
@@ -168,9 +188,78 @@ const buttonClass = computed(() => [
   opacity: 0.6;
 }
 
-/* 禁用时不响应 hover 变色 */
-.keyment-button.is-disabled:hover,
-.keyment-button.is-loading:hover {
-  color: inherit;
+/* 默认朴素按钮 */
+.keyment-button.is-plain {
+  border-color: #dcdfe6;
+  background: #ffffff;
+  color: #303133;
+}
+.keyment-button.is-plain:not(.is-disabled):not(.is-loading):hover{
+  color: #409eff;
+   border-color: #a0cfff
+}
+/* primary 朴素按钮 */
+.keyment-button--primary.is-plain {
+  color: #409eff;
+  border-color: #a0cfff;
+  background: #ecf5ff;
+}
+
+.keyment-button--primary.is-plain:not(.is-disabled):not(.is-loading):hover {
+  color: #409eff;
+  border-color: #409eff;
+  background: #ffffff;
+}
+
+/* success 朴素按钮 */
+.keyment-button--success.is-plain {
+  color: #67c23a;
+  border-color: #b3e19d;
+  background: #f0f9eb;
+}
+
+.keyment-button--success.is-plain:not(.is-disabled):not(.is-loading):hover {
+  color: #67c23a;
+  border-color: #67c23a;
+  background: #ffffff;
+}
+
+/* warning 朴素按钮 */
+.keyment-button--warning.is-plain {
+  color: #e6a23c;
+  border-color: #f3d19e;
+  background: #fdf6ec;
+}
+
+.keyment-button--warning.is-plain:not(.is-disabled):not(.is-loading):hover {
+  color: #e6a23c;
+  border-color: #e6a23c;
+  background: #ffffff;
+}
+
+/* danger 朴素按钮 */
+.keyment-button--danger.is-plain {
+  color: #f56c6c;
+  border-color: #fab6b6;
+  background: #fef0f0;
+}
+
+.keyment-button--danger.is-plain:not(.is-disabled):not(.is-loading):hover {
+  color: #f56c6c;
+  border-color: #f56c6c;
+  background: #ffffff;
+}
+
+/* info 朴素按钮 */
+.keyment-button--info.is-plain {
+  color: #909399;
+  border-color: #c8c9cc;
+  background: #f4f4f5;
+}
+
+.keyment-button--info.is-plain:not(.is-disabled):not(.is-loading):hover {
+  color: #909399;
+  border-color: #909399;
+  background: #ffffff;
 }
 </style>
