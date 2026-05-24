@@ -1,14 +1,15 @@
 import type { App } from "vue";
-import { Button } from "./Button";
+import { KyButton } from "./Button";
 
-const components = [Button];
+const components = [KyButton];
 
-export { Button };
+export { KyButton };
+export const Button = KyButton;
 
 export default {
   install(app: App) {
     components.forEach((component) => {
-      app.component(component.name ?? "Button", component);
+      app.component(component.name ?? "KyButton", component);
     });
   }
 };
