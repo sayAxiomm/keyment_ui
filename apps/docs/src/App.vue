@@ -39,17 +39,25 @@
       <ky-button>默认尺寸</ky-button>
       <ky-button size="large">大按钮</ky-button>
     </div>
-
     <div class="button-row">
-      <ky-button loading>加载中</ky-button>
-      <ky-button native-type="submit">提交按钮</ky-button>
+      <ky-button-group direction="vertical">
+        <ky-button>上</ky-button>
+        <ky-button>中</ky-button>
+        <ky-button>下</ky-button>
+      </ky-button-group>
+      <ky-button-group>
+  <ky-button>左</ky-button>
+  <ky-button>中</ky-button>
+  <ky-button>右</ky-button>
+</ky-button-group>
     </div>
+ 
   </main>
 </template>
 
 <script setup lang="ts">
 // 从组件库包里导入 Button，用来在 docs 页面预览组件效果
-import { KyButton } from "@keyment/components";
+import { KyButton,KyButtonGroup } from "@keyment/components";
 </script>
 
 <style scoped>

@@ -15,29 +15,15 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import type { ButtonProps } from "./button";
 
 defineOptions({
   name: "KyButton"
 });
 
-
 // 定义 props，本质是为了让组件变成“可配置的组件”，而不是一个固定样式的普通
-// 定义 props 数据类型
-type ButtonType = "default" | "primary" | "success" | "warning" | "danger" | "info";
-type ButtonSize = "small" | "default" | "large";
-
-// 原生 button 的 type 属性，避免和组件视觉类型 type 混淆
-type ButtonNativeType = "button" | "submit" | "reset";
 // withDefaults 给可选 props 设置默认值,<>代表泛型
-const props = withDefaults(defineProps<{
-  type?: ButtonType;
-  size?: ButtonSize;
-  disabled?: boolean;
-  loading?: boolean;
-  round?: boolean; 
-  plain?: boolean;
-  nativeType?: ButtonNativeType; // 原生 button type，例如表单提交时用 submit
-}>(), {
+const props = withDefaults(defineProps<ButtonProps>(), {
   type: "default",
   size: "default",
   disabled: false,
