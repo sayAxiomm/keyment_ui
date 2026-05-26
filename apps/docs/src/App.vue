@@ -51,12 +51,9 @@
   <ky-button>右</ky-button>
 </ky-button-group>
     </div>
- <ky-icon :size="24" color="#409eff">
-  <svg viewBox="0 0 1024 1024">
-    <path
-      d="M512 128a384 384 0 1 0 0 768 384 384 0 0 0 0-768Zm0 64a320 320 0 1 1 0 640 320 320 0 0 1 0-640Z"
-    />
-  </svg>
+ <ky-icon :size="24" color="black">
+  <Plus></Plus>
+  <Minus></Minus>
 </ky-icon>
   </main>
 </template>
@@ -65,6 +62,7 @@
 // 从组件库包里导入 Button，用来在 docs 页面预览组件效果
 import { KyButton,KyButtonGroup } from "@keyment/components";
 import {KyIcon} from "@keyment/components"
+// import { Plus,Minus } from "@keyment/icons";
 </script>
 
 <style scoped>
