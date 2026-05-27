@@ -9,13 +9,25 @@
     :type="props.nativeType" 
     :disabled="props.disabled || props.loading"
   >
-    <slot />
+    <KyIcon v-if="props.icon" class="keyment-button__icon">
+      <!-- 这是 Vue 的动态组件语法。
+       普通组件是固定的：
+       但这里 Button 不知道用户传的是 Plus、Minus、Search 还是别的图标。
+       要写成动态的：
+       所以不能写死： -->
+      <component :is="props.icon" />
+    </KyIcon>
+    <!-- 要给文字加一个包裹层，方便后面控制图标和文字之间的间距。 -->
+    <span v-if="$slots.default" class="keyment-button__text">
+      <slot />
+    </span>
   </button>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { ButtonProps } from "./button";
+import { KyIcon } from "../icon";
 
 defineOptions({
   name: "KyButton"
@@ -76,6 +88,24 @@ const buttonClass = computed(() => [
   /* 去掉浏览器默认按钮样式差异 */
   outline: none;
   }
+
+.keyment-button__icon {
+  font-size: 1em;
+  flex-shrink: 0;
+}
+
+/* 
+  只有当文字紧跟在图标后面时，才加间距。
+  也就是：有图标 + 有文字。
+*/
+.keyment-button__icon + .keyment-button__text {
+  margin-left: 6px;
+}
+
+.keyment-button__text {
+  display: inline-flex;
+  align-items: center;
+}
 
   /* 默认按钮 hover 状态 */
 .keyment-button:not(.is-disabled):not(.is-loading):hover {
