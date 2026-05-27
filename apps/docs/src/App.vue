@@ -75,6 +75,7 @@
   <ky-footer class="demo-footer">Footer</ky-footer>
 </ky-container>
 
+<ky-link type="primary">常规链接</ky-link>
   </main>
 </template>
 
@@ -88,7 +89,8 @@ import {
   KyHeader,
   KyAside,
   KyMain,
-  KyFooter
+  KyFooter,
+  KyLink
 } from "@keyment/components";
 import { Plus,Minus } from "@keyment/icons";
 </script>

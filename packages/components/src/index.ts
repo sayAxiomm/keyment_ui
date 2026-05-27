@@ -8,6 +8,8 @@ import {
   KyMain,
   KyFooter
 } from "./Container";
+import { KyLink } from "./Link";
+
 
 const components = [  
   KyButton,
@@ -17,7 +19,8 @@ const components = [
   KyHeader,
   KyAside,
   KyMain,
-  KyFooter
+  KyFooter,
+  KyLink
 ];
 
 export {
@@ -28,7 +31,8 @@ export {
   KyHeader,
   KyAside,
   KyMain,
-  KyFooter
+  KyFooter,
+  KyLink
 };
 export const Button = KyButton;
 export const ButtonGroup = KyButtonGroup;
@@ -39,6 +43,7 @@ export const Header = KyHeader;
 export const Aside = KyAside;
 export const Main = KyMain;
 export const Footer = KyFooter;
+export const Link = KyLink;
 
 // export default表示这个文件默认导出一个对象。
 //Vue 规定：如果一个对象有 install 方法，那么它就可以被：
