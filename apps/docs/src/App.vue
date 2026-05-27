@@ -46,23 +46,51 @@
         <ky-button>下</ky-button>
       </ky-button-group>
       <ky-button-group>
-  <ky-button>左</ky-button>
-  <ky-button>中</ky-button>
-  <ky-button>右</ky-button>
-</ky-button-group>
+        <ky-button>左</ky-button>
+        <ky-button>中</ky-button>
+        <ky-button>右</ky-button>
+      </ky-button-group>
     </div>
  <ky-icon :size="24" color="black">
   <Plus></Plus>
   <Minus></Minus>
 </ky-icon>
+
+<!-- 
+  最外层 ky-container 里面有 ky-header 和 ky-footer，
+  所以 container.vue 会自动推断 direction 为 vertical。
+-->
+<ky-container class="demo-container">
+  <ky-header class="demo-header">Header</ky-header>
+
+  <!-- 
+    里面这一层 ky-container 没有 header/footer，
+    只有 aside 和 main，所以会自动推断 direction 为 horizontal。
+  -->
+  <ky-container>
+    <ky-aside class="demo-aside" width="200px">Aside</ky-aside>
+    <ky-main class="demo-main">Main</ky-main>
+  </ky-container>
+
+  <ky-footer class="demo-footer">Footer</ky-footer>
+</ky-container>
+
   </main>
 </template>
 
 <script setup lang="ts">
 // 从组件库包里导入 Button，用来在 docs 页面预览组件效果
-import { KyButton,KyButtonGroup } from "@keyment/components";
-import {KyIcon} from "@keyment/components"
-// import { Plus,Minus } from "@keyment/icons";
+import {
+  KyButton,
+  KyButtonGroup,
+  KyIcon,
+  KyContainer,
+  KyHeader,
+  KyAside,
+  KyMain,
+  KyFooter
+} from "@keyment/components";
+import { Plus,Minus } from "@keyment/icons";
 </script>
 
 <style scoped>
@@ -80,5 +108,31 @@ h1 {
   flex-wrap: wrap;
   gap: 12px;
   margin-bottom: 20px;
+}
+.demo-container {
+  height: 300px;
+  border: 1px solid #dcdfe6;
+}
+
+.demo-header,
+.demo-footer {
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  background: #d9ecff;
+}
+
+.demo-aside {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  background: #ecf5ff;
+}
+
+.demo-main {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  background: #ffffff;
 }
 </style>
