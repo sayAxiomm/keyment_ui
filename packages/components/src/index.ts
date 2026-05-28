@@ -1,4 +1,5 @@
 import type { App } from "vue";
+// 组件
 import { KyButton, KyButtonGroup } from "./Button";
 import { KyIcon } from "./icon";
 import {
@@ -9,6 +10,7 @@ import {
   KyFooter
 } from "./Container";
 import { KyLink } from "./Link";
+import { KyRow, KyCol } from "./Layout";
 
 
 const components = [  
@@ -20,7 +22,9 @@ const components = [
   KyAside,
   KyMain,
   KyFooter,
-  KyLink
+  KyLink,
+  KyRow,
+  KyCol
 ];
 
 export {
@@ -32,18 +36,11 @@ export {
   KyAside,
   KyMain,
   KyFooter,
-  KyLink
+  KyLink,
+  KyRow,
+  KyCol
 };
-export const Button = KyButton;
-export const ButtonGroup = KyButtonGroup;
-export const Icon = KyIcon;
 
-export const Container = KyContainer;
-export const Header = KyHeader;
-export const Aside = KyAside;
-export const Main = KyMain;
-export const Footer = KyFooter;
-export const Link = KyLink;
 
 // export default表示这个文件默认导出一个对象。
 //Vue 规定：如果一个对象有 install 方法，那么它就可以被：

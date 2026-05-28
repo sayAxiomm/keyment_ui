@@ -76,6 +76,19 @@
 </ky-container>
 
 <ky-link type="primary">常规链接</ky-link>
+<ky-link type="success">成功链接</ky-link>
+
+<ky-row :gutter="5" justify="end">
+  <ky-col :span="1">
+    <div class="grid-demo">8</div>
+  </ky-col>
+  <ky-col :span="8">
+    <div class="grid-demo">8</div>
+  </ky-col>
+  <ky-col :span="8">
+    <div class="grid-demo">8</div>
+  </ky-col>
+</ky-row>
   </main>
 </template>
 
@@ -90,7 +103,9 @@ import {
   KyAside,
   KyMain,
   KyFooter,
-  KyLink
+  KyLink,
+  KyRow, 
+  KyCol,
 } from "@keyment/components";
 import { Plus,Minus } from "@keyment/icons";
 </script>
@@ -136,5 +151,13 @@ h1 {
   align-items: center;
   padding: 20px;
   background: #ffffff;
+}
+.grid-demo {
+  min-height: 40px;
+  padding: 12px;
+  color: #fff;
+  background: #409eff;
+  box-sizing: border-box;
+   border-radius: 4px;
 }
 </style>
