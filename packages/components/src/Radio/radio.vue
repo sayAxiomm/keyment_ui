@@ -11,28 +11,31 @@
     <input
       class="keyment-radio__original"
       type="radio"
-      :name="props.name"
-      :value="props.label"
+      :name="actualName"
+      :value="props.value"
       :checked="isChecked"
-      :disabled="props.disabled"
+      :disabled="actualDisabled"
       @change="handleChange"
     />
 
-    <!-- 自定义圆圈外观 -->
+    <!-- 自定义圆圈外观
+     因为原生 radio 样式很难统一修改，所以组件库一般会
+     把原生 input 隐藏，只保留它的功能，再用 span 画好看的 UI。 
+     -->
     <span class="keyment-radio__input">
       <span class="keyment-radio__inner"></span>
     </span>
 
-    <!-- 默认插槽是显示文字。如果没传文字，就显示 label。 -->
+    <!-- 默认插槽是显示文字。如果没传文字，就显示 value。 -->
     <span class="keyment-radio__label">
-      <slot>{{ props.label }}</slot>
+      <slot>{{ props.value }}</slot>
     </span>
   </label>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import type { RadioEmits, RadioProps } from "./radio";
+import { computed ,inject} from "vue";
+import type { RadioEmits, RadioProps,RadioGroupContext } from "./radio";
 
 defineOptions({
   name: "KyRadio"
@@ -43,39 +46,87 @@ const props = withDefaults(defineProps<RadioProps>(), {
   border: false,
   size: "default"
 });
+
+// 这里接受radio-group给的数据
+const radioGroup = inject<RadioGroupContext>("radioGroup")||undefined
+
+// 判断当前 KyRadio 是否处在 KyRadioGroup 里面
+const isGroup = computed(() => !!radioGroup);
+
+// 单独使用：用 props.xxx
+// 放在 group 里：优先用 radioGroup.xxx
+const actualModelValue = computed(() => {
+  return isGroup.value ? radioGroup?.modelValue : props.modelValue;
+});
+const actualDisabled = computed(() => {
+  return radioGroup?.disabled || props.disabled;
+});
+const actualBorder = computed(() => {
+  return radioGroup?.border || props.border;
+});
+const actualSize = computed(() => {
+  return radioGroup?.size || props.size;
+});
+const actualName = computed(() => {
+  return radioGroup?.name || props.name;
+});
+
+
+
 // defineEmits 是 Vue <script setup> 里的宏，用来声明组件会触发的事件。
 // 1. App.vue 有 gender = "male"
-// 2. App.vue 使用 <ky-radio v-model="gender" label="female">
-// 3. radio.vue 接收到 props.modelValue = "male"，props.label = "female"
+// 2. App.vue 使用 <ky-radio v-model="gender" value="female">
+// 3. radio.vue 接收到 props.modelValue = "male"，props.value = "female"
 // 4. 用户点击 radio
 // 5. radio.vue 执行 emit("update:modelValue", "female")
 // 6. App.vue 收到事件
 // 7. Vue 把 gender 改成 "female"
 // 8. radio.vue 再次收到新的 props.modelValue = "female"
-// 9. radio.vue 判断 modelValue === label，所以显示选中
+// 9. radio.vue 判断 modelValue === value，所以显示选中
 const emit = defineEmits<RadioEmits>();
 
 // 当前 Radio 是否选中。
-// 当外部 v-model 的值等于当前 Radio 的 label，就说明当前项被选中。
-const isChecked = computed(() => props.modelValue === props.label);
+// 当外部 v-model 的值等于当前 Radio 的 value，就说明当前项被选中。
+const isChecked = computed(() => actualModelValue.value === props.value);
 
 const radioClass = computed(() => [
-  `keyment-radio--${props.size}`,
+  `keyment-radio--${actualSize.value}`,
   {
     "is-checked": isChecked.value,
-    "is-disabled": props.disabled,
-    "is-bordered": props.border
+    "is-disabled": actualDisabled.value,
+    "is-bordered": actualBorder.value
   }
 ]);
 
+// 假设父组件这样写：<ky-radio @change="() => console.log(1)" />
+// 这个 @change 不是直接绑到组件内部的 input 上。
+// 它监听的是 KyRadio 这个组件自己抛出的 change 事件。
+
+// 用户点击 KyRadio
+// 实际被点击的是 KyRadio 里面的 input
+// input 触发原生 change
+// input 上的 @change="handleChange" 执行
+// handleChange 里面调用：
+//    emit("change")
+// Vue 发现父组件监听了 KyRadio 的 change
+// 执行父组件传进来的函数：
 const handleChange = () => {
-  if (props.disabled) {
+  console.log("radio props.value:", props.value);
+  console.log("isGroup:", isGroup.value);
+  console.log("radioGroup:", radioGroup);
+  if (actualDisabled.value) {
     return;
   }
 
-  // 选中当前 radio 时，把当前 label 通知给父组件。
-  emit("update:modelValue", props.label);
-  emit("change", props.label);
+  if (isGroup.value) {
+    radioGroup?.changeEvent(props.value);
+    return;
+  }
+
+  // 单独使用时，选中当前 radio 后直接通知父组件。
+  emit("update:modelValue", props.value);
+  // 这里写select那父组件就要写<ky-radio @select="onChange" />
+  emit("change", props.value);
 };
 </script>
 

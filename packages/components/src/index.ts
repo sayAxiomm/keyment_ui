@@ -11,6 +11,7 @@ import {
 } from "./Container";
 import { KyLink } from "./Link";
 import { KyRow, KyCol } from "./Layout";
+import {KyRadio, KyRadioGroup} from './Radio'
 
 
 const components = [  
@@ -24,7 +25,9 @@ const components = [
   KyFooter,
   KyLink,
   KyRow,
-  KyCol
+  KyCol,
+  KyRadio,
+  KyRadioGroup
 ];
 
 export {
@@ -38,7 +41,9 @@ export {
   KyFooter,
   KyLink,
   KyRow,
-  KyCol
+  KyCol,
+  KyRadio,
+  KyRadioGroup
 };
 
 
