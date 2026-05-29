@@ -101,7 +101,7 @@
   text-color="red"
 >
   <ky-radio-button value="a">A</ky-radio-button>
-  <ky-radio-button value="b">B</ky-radio-button>
+  <ky-radio-button value="b" disabled>B</ky-radio-button>
   <ky-radio-button value="c">C</ky-radio-button>
 </ky-radio-group>
   
