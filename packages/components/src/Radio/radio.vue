@@ -109,11 +109,17 @@ const radioClass = computed(() => [
 // handleChange 里面调用：
 //    emit("change")
 // Vue 发现父组件监听了 KyRadio 的 change
+// 也就是:如果 KyRadio 这个组件内部发出了一个叫 change 的事件，
+//  那就执行 handleRadioChange。
 // 执行父组件传进来的函数：
+
+
+// 用户点击
+// -> 原生 input 自己真的发生 change
+// -> input 的 @change 执行 radio.vue 的 handleChange
+// -> handleChange 里 emit("change", props.value)
+// -> App.vue 的 @change="handleRadioChange" 执行
 const handleChange = () => {
-  console.log("radio props.value:", props.value);
-  console.log("isGroup:", isGroup.value);
-  console.log("radioGroup:", radioGroup);
   if (actualDisabled.value) {
     return;
   }

@@ -26,7 +26,10 @@ defineOptions({
 const props = withDefaults(defineProps<RadioGroupProps>(), {
   disabled: false,
   border: false,
-  size: "default"
+  size: "default",
+  validateEvent: true,
+  textColor: "#ffffff",
+  fill: "#409eff"
 });
 
 const emit = defineEmits<RadioGroupEmits>();
@@ -51,6 +54,15 @@ provide("radioGroup", {
   },
   get name() {
     return props.name;
+  },
+  get validateEvent() {
+  return props.validateEvent;
+  },
+  get textColor() {
+    return props.textColor;
+  },
+  get fill() {
+    return props.fill;
   },
   changeEvent
 });

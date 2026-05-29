@@ -22,7 +22,14 @@ export interface RadioProps {
   border?:boolean; // 是否有边框
   size?:RadioSize // 尺寸,只有有边框才生效
 }
-
+// radio-button的props
+export interface RadioButtonProps {
+  value: RadioValue;
+  modelValue?: RadioValue;
+  disabled?: boolean;
+  name?: string;
+  size?: RadioSize;
+}
 // RadioGroup 的 props。
 export interface RadioGroupProps {
   // v-model 传进来的当前选中值。
@@ -39,6 +46,14 @@ export interface RadioGroupProps {
 
   // 传给内部 radio 的 name。
   name?: string;
+   // 现在我们还没有 Form 组件，所以先保留这个 API，后面做 Form 时再接入。
+  validateEvent?: boolean;
+
+  // 按钮形式 Radio 激活时的文本颜色。
+  textColor?: string;
+
+  // 按钮形式 Radio 激活时的背景色和边框色。
+  fill?: string;
 }
 
 // radio.vue 从 group 那里拿到的数据长什么样
@@ -53,6 +68,9 @@ export interface RadioGroupContext {
   size?: RadioSize;
   // 原生 input 的 name
   name?: string;
+  validateEvent?: boolean;
+  textColor?: string;
+  fill?: string;
   // 子 radio 点击后调用它，让 group 更新选中值
   changeEvent: (value: RadioValue) => void;
 }

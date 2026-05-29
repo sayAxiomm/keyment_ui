@@ -91,11 +91,19 @@
 </ky-row>
  <!-- <ky-radio v-model="gender" value="mel" border>男</ky-radio> -->
   <p>当前值：{{ gender }}</p>
-<ky-radio-group v-model="gender" name="gender" >
+<ky-radio-group v-model="gender">
   <ky-radio value="mel" >男</ky-radio>
   <ky-radio value="fmel" >女</ky-radio>
 </ky-radio-group>
-  
+ <ky-radio-group
+  v-model="radioValue"
+  fill="#67c23a"
+  text-color="red"
+>
+  <ky-radio-button value="a">A</ky-radio-button>
+  <ky-radio-button value="b">B</ky-radio-button>
+  <ky-radio-button value="c">C</ky-radio-button>
+</ky-radio-group>
   
   </main>
 </template>
@@ -115,11 +123,12 @@ import {
   KyRow, 
   KyCol,
   KyRadio,
-  KyRadioGroup
+  KyRadioGroup,
+  KyRadioButton
 } from "@keyment/components";
 import { Plus,Minus } from "@keyment/icons";
 import { ref } from "vue";
-
+const radioValue=ref('c')
 const gender = ref("mel");
 </script>
 
