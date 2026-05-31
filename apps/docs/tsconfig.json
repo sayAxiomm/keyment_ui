@@ -5,7 +5,8 @@
     "moduleResolution": "Bundler",
     "jsx": "preserve",
     "paths": {
-      "@keyment/components": ["../../packages/components/src/index.ts"]
+      "@keyment/components": ["../../packages/components/src/index.ts"],
+      "@keyment/icons": ["../../packages/icons/src/index.ts"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.vue", "vite.config.ts"]

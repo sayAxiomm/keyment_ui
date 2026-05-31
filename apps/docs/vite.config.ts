@@ -10,6 +10,9 @@ export default defineConfig({
       // 开发 docs 时直接读取组件源码，不走 dist 构建产物
       "@keyment/components": fileURLToPath(
         new URL("../../packages/components/src/index.ts", import.meta.url)
+      ),
+      "@keyment/icons": fileURLToPath(
+        new URL("../../packages/icons/src/index.ts", import.meta.url)
       )
     }
   }

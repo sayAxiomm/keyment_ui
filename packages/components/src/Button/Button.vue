@@ -9,35 +9,33 @@
     :type="props.nativeType" 
     :disabled="props.disabled || props.loading"
   >
-    <slot />
+    <KyIcon v-if="props.icon" class="keyment-button__icon">
+      <!-- 这是 Vue 的动态组件语法。
+       普通组件是固定的：
+       但这里 Button 不知道用户传的是 Plus、Minus、Search 还是别的图标。
+       要写成动态的：
+       所以不能写死： -->
+      <component :is="props.icon" />
+    </KyIcon>
+    <!-- 要给文字加一个包裹层，方便后面控制图标和文字之间的间距。 -->
+    <span v-if="$slots.default" class="keyment-button__text">
+      <slot />
+    </span>
   </button>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import type { ButtonProps } from "./button";
+import { KyIcon } from "../icon";
 
 defineOptions({
   name: "KyButton"
 });
 
-
 // 定义 props，本质是为了让组件变成“可配置的组件”，而不是一个固定样式的普通
-// 定义 props 数据类型
-type ButtonType = "default" | "primary" | "success" | "warning" | "danger" | "info";
-type ButtonSize = "small" | "default" | "large";
-
-// 原生 button 的 type 属性，避免和组件视觉类型 type 混淆
-type ButtonNativeType = "button" | "submit" | "reset";
 // withDefaults 给可选 props 设置默认值,<>代表泛型
-const props = withDefaults(defineProps<{
-  type?: ButtonType;
-  size?: ButtonSize;
-  disabled?: boolean;
-  loading?: boolean;
-  round?: boolean; 
-  plain?: boolean;
-  nativeType?: ButtonNativeType; // 原生 button type，例如表单提交时用 submit
-}>(), {
+const props = withDefaults(defineProps<ButtonProps>(), {
   type: "default",
   size: "default",
   disabled: false,
@@ -90,6 +88,24 @@ const buttonClass = computed(() => [
   /* 去掉浏览器默认按钮样式差异 */
   outline: none;
   }
+
+.keyment-button__icon {
+  font-size: 1em;
+  flex-shrink: 0;
+}
+
+/* 
+  只有当文字紧跟在图标后面时，才加间距。
+  也就是：有图标 + 有文字。
+*/
+.keyment-button__icon + .keyment-button__text {
+  margin-left: 6px;
+}
+
+.keyment-button__text {
+  display: inline-flex;
+  align-items: center;
+}
 
   /* 默认按钮 hover 状态 */
 .keyment-button:not(.is-disabled):not(.is-loading):hover {

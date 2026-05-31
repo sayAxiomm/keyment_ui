@@ -10,8 +10,9 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "generate": "node scripts/generate-icons.mjs",
+    "build": "vue-tsc -p tsconfig.json",
+    "typecheck": "vue-tsc -p tsconfig.json --noEmit",
     "clean": "rimraf dist"
   },
   "peerDependencies": {
