@@ -104,7 +104,34 @@
   <ky-radio-button value="b" disabled>B</ky-radio-button>
   <ky-radio-button value="c">C</ky-radio-button>
 </ky-radio-group>
-  
+  <p>status：{{ status }}</p>
+<ky-checkbox
+  v-model="status"
+  true-value="yes"
+  false-value="no"
+>
+  启用
+</ky-checkbox>
+<p>hobbies：{{ hobbies }}</p>
+<ky-checkbox :indeterminate="true">
+  半选状态
+</ky-checkbox>
+<ky-checkbox-group v-model="hobbies" :min="1" :max="2">
+  <ky-checkbox value="music">音乐</ky-checkbox>
+  <ky-checkbox value="sport">运动</ky-checkbox>
+  <ky-checkbox value="read">阅读</ky-checkbox>
+</ky-checkbox-group>
+<p>button hobbies：{{ hobbies2 }}</p>
+
+<ky-checkbox-group
+  v-model="hobbies2"
+  fill="#67c23a"
+  text-color="#ffffff"
+>
+  <ky-checkbox-button value="music">音乐</ky-checkbox-button>
+  <ky-checkbox-button value="sport">运动</ky-checkbox-button>
+  <ky-checkbox-button value="read">阅读</ky-checkbox-button>
+</ky-checkbox-group>
   </main>
 </template>
 
@@ -124,12 +151,18 @@ import {
   KyCol,
   KyRadio,
   KyRadioGroup,
-  KyRadioButton
+  KyRadioButton,
+  KyCheckbox,
+  KyCheckboxGroup,
+  KyCheckboxButton
 } from "@keyment/components";
 import { Plus,Minus } from "@keyment/icons";
 import { ref } from "vue";
 const radioValue=ref('c')
 const gender = ref("mel");
+const status = ref("no");
+const hobbies = ref(["music"]);
+const hobbies2=ref(["music"])
 </script>
 
 <style scoped>
