@@ -132,7 +132,18 @@
   <ky-checkbox-button value="sport">运动</ky-checkbox-button>
   <ky-checkbox-button value="read">阅读</ky-checkbox-button>
 </ky-checkbox-group>
-<ky-switch v-model="switchValue" />
+<ky-switch v-model="switchValue" size="large"
+  active-text="开"
+  inactive-text="关"
+  inline-prompt
+  :inactive-action-icon="Plus"
+  :active-action-icon="Minus"
+/>
+<ky-switch
+  v-model="switchValue"
+  :active-icon="Minus"
+  :inactive-icon="Plus"
+/>
   </main>
 </template>
 
