@@ -132,6 +132,7 @@
   <ky-checkbox-button value="sport">运动</ky-checkbox-button>
   <ky-checkbox-button value="read">阅读</ky-checkbox-button>
 </ky-checkbox-group>
+<ky-switch v-model="switchValue" />
   </main>
 </template>
 
@@ -154,7 +155,8 @@ import {
   KyRadioButton,
   KyCheckbox,
   KyCheckboxGroup,
-  KyCheckboxButton
+  KyCheckboxButton,
+  KySwitch
 } from "@keyment/components";
 import { Plus,Minus } from "@keyment/icons";
 import { ref } from "vue";
@@ -163,6 +165,7 @@ const gender = ref("mel");
 const status = ref("no");
 const hobbies = ref(["music"]);
 const hobbies2=ref(["music"])
+const switchValue = ref(false);
 </script>
 
 <style scoped>
