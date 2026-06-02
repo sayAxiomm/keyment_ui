@@ -156,6 +156,13 @@
   placeholder="最多输入 20 个字符"
   :prefix-icon="Plus" :suffix-icon="Minus"
 />
+<p>date：{{ dateValue }}</p>
+
+<ky-date-picker
+  v-model="dateValue"
+  placeholder="请选择日期"
+  clearable
+/>
   </main>
 </template>
 
@@ -180,7 +187,8 @@ import {
   KyCheckboxGroup,
   KyCheckboxButton,
   KySwitch,
-  KyInput
+  KyInput,
+  KyDatePicker
 } from "@keyment/components";
 import { Plus,Minus } from "@keyment/icons";
 import { ref } from "vue";
@@ -193,6 +201,7 @@ const switchValue = ref(false);
 const inputValue = ref("");
 const passwordValue = ref("");
 const textareaValue = ref("");
+const dateValue = ref("2026-08-29");
 </script>
 
 <style scoped>
