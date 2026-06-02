@@ -20,6 +20,9 @@
       :id="props.id"
       :maxlength="props.maxlength"
       :minlength="props.minlength"
+      :rows="props.rows"
+      :autofocus="props.autofocus"
+      :tabindex="props.tabindex"
       @input="handleInput"
       @change="handleChange"
       @focus="handleFocus"
@@ -39,45 +42,60 @@
       :id="props.id"
       :maxlength="props.maxlength"
       :minlength="props.minlength"
+      :style="textareaStyle"
+      :autocomplete="props.autocomplete"
+      :autofocus="props.autofocus"
+      :tabindex="props.tabindex"
       @input="handleInput"
       @change="handleChange"
       @focus="handleFocus"
       @blur="handleBlur"
     />
-    <!-- 后置图标：放在 input/textarea 后面 -->
-    <component
-      v-if="props.suffixIcon"
-      :is="props.suffixIcon"
-      class="keyment-input__suffix-icon"
-    />
-    <!-- 字数统计模块 -->
-    <span v-if="showWordLimit" class="keyment-input__count">
-      {{ textLength }} / {{ props.maxlength }}
-    </span>
-    <!-- 清除按钮 -->
-    <button
-      v-if="showClear"
-      class="keyment-input__clear"
-      type="button"
-      @click="handleClear"
+    <span
+      v-if="hasSuffixArea"
+      class="keyment-input__suffix"
     >
-       x
-    </button>
-    <!-- 密码显隐按钮 -->
-    <button
-      v-if="showPasswordToggle"
-      class="keyment-input__password"
-      type="button"
-      @click="handlePasswordToggle"
-    >
-      {{ passwordVisible ? "hide" : "show" }}
-    </button>
+      <!-- 后置图标：放在 input/textarea 后面 -->
+      <component
+        v-if="props.suffixIcon"
+        :is="props.suffixIcon"
+        class="keyment-input__suffix-icon"
+      />
 
+      <!-- 字数统计模块 -->
+      <span v-if="showWordLimit" class="keyment-input__count">
+        {{ textLength }} / {{ props.maxlength }}
+      </span>
+
+      <!-- 清除按钮 -->
+      <button
+        v-if="showClear"
+        class="keyment-input__clear"
+        type="button"
+        @click="handleClear"
+      >
+        x
+      </button>
+
+      <!-- 密码显隐按钮 -->
+      <button
+        v-if="showPasswordToggle"
+        class="keyment-input__password"
+        type="button"
+        @click="handlePasswordToggle"
+      >
+        <component
+        :is="passwordVisible ? View : Hide"
+        class="keyment-input__password-icon"
+        />
+      </button>
+    </span>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed,ref } from "vue";
+import { View, Hide } from "@keyment/icons";
 import type { InputEmits, InputProps } from "./input";
 
 defineOptions({
@@ -88,18 +106,12 @@ const props = withDefaults(defineProps<InputProps>(), {
   type: "text",
   disabled: false,
   readonly: false,
-  size: "default"
+  size: "default",
+  validateEvent: true,
+  resize: "vertical"
 });
 
-// 是否显示清空按钮
-const showClear = computed(() => {
-  return (
-    props.clearable &&
-    !props.disabled &&
-    !props.readonly &&
-    !!props.modelValue
-  );
-});
+
 // 动态添加样式 
 const inputClass = computed(() => ([
   `keyment-input--${props.size}`,
@@ -109,11 +121,11 @@ const inputClass = computed(() => ([
   "has-password": showPasswordToggle.value,
   "has-prefix": !!props.prefixIcon,
   "has-suffix": !!props.suffixIcon,
-  "has-word-limit": showWordLimit.value
+  "has-word-limit": showWordLimit.value,
+  "has-suffix-area": hasSuffixArea.value
   }
 ]));
 const emit = defineEmits<InputEmits>();
-
 
 // 子传父的事件
 const handleInput = (event: Event) => {
@@ -142,6 +154,16 @@ const handleClear = () => {
   emit("input", "");
   emit("clear");
 };
+
+// 是否显示清空按钮
+const showClear = computed(() => {
+  return (
+    props.clearable &&
+    !props.disabled &&
+    !props.readonly &&
+    !!props.modelValue
+  );
+});
 
         // 初始 passwordVisible = false
         // -> actualType = "password"
@@ -196,6 +218,28 @@ const showWordLimit = computed(() => {
 const textLength = computed(() => {
   return props.modelValue?.length ?? 0;
 });
+
+// 是否需要右侧功能区。
+// 只要有后置图标、字数统计、清空按钮、密码显隐按钮，就显示 suffix 容器。
+const hasSuffixArea = computed(() => {
+  return (
+    !!props.suffixIcon ||
+    showWordLimit.value ||
+    showClear.value ||
+    showPasswordToggle.value
+  );
+});
+
+//  textarea 动态样式：
+const textareaStyle = computed(() => {
+  if (props.type !== "textarea") {
+    return {};
+  }
+
+  return {
+    resize: props.resize
+  };
+});
 </script>
 
 
@@ -209,7 +253,7 @@ const textLength = computed(() => {
 .keyment-input__inner {
   width: 100%;
   height: 32px;
-  padding: 0 28px 0 11px;
+  padding: 0 11px;
   border: 1px solid #dcdfe6;
   border-radius: 4px;
   box-sizing: border-box;
@@ -237,16 +281,24 @@ const textLength = computed(() => {
 
 .keyment-input__textarea {
   min-height: 72px;
-  padding: 6px 28px 6px 11px;
+  padding: 6px 11px;
   line-height: 1.5;
   /* resize控制元素是否可以被用户拖拽缩放 */
   /* vertical 只能上下拖拽改变高度*/
-  resize: vertical;
 }
-.keyment-input__clear {
+
+.keyment-input__suffix {
   position: absolute;
   top: 50%;
   right: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #909399;
+  transform: translateY(-50%);
+}
+
+.keyment-input__clear {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -260,16 +312,12 @@ const textLength = computed(() => {
   font-size: 12px;
   line-height: 1;
   cursor: pointer;
-  transform: translateY(-50%);
 }
 
 .keyment-input__clear:hover {
   background: #909399;
 }
 .keyment-input__password {
-  position: absolute;
-  top: 50%;
-  right: 8px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -280,17 +328,10 @@ const textLength = computed(() => {
   color: #909399;
   font-size: 12px;
   cursor: pointer;
-  transform: translateY(-50%);
 }
 
 .keyment-input__password:hover {
   color: #606266;
-}
-.keyment-input.has-password .keyment-input__clear {
-  right: 40px;
-}
-.keyment-input.has-clear.has-password .keyment-input__inner {
-  padding-right: 60px;
 }
 .keyment-input--small .keyment-input__inner {
   height: 28px;
@@ -312,10 +353,10 @@ const textLength = computed(() => {
   min-height: 88px;
   line-height: 1.5;
 }
-.keyment-input__prefix-icon,
-.keyment-input__suffix-icon {
+.keyment-input__prefix-icon {
   position: absolute;
   top: 50%;
+  left: 8px;
   width: 1em;
   height: 1em;
   color: #a8abb2;
@@ -323,92 +364,29 @@ const textLength = computed(() => {
   pointer-events: none;
 }
 
-.keyment-input__prefix-icon {
-  left: 8px;
-}
-
 .keyment-input__suffix-icon {
-  right: 8px;
+  width: 1em;
+  height: 1em;
+  color: #a8abb2;
+  pointer-events: none;
 }
 .keyment-input.has-prefix .keyment-input__inner {
   padding-left: 28px;
 }
 
-.keyment-input.has-suffix .keyment-input__inner {
-  padding-right: 28px;
-}
-
-.keyment-input.has-password .keyment-input__clear {
-  right: 40px;
-}
-
-.keyment-input.has-clear .keyment-input__suffix-icon,
-.keyment-input.has-password .keyment-input__suffix-icon {
-  right: 40px;
-}
-
-.keyment-input.has-clear.has-password .keyment-input__suffix-icon {
-  right: 72px;
-}
-
-.keyment-input.has-suffix .keyment-input__inner,
-.keyment-input.has-clear .keyment-input__inner,
-.keyment-input.has-password .keyment-input__inner {
-  padding-right: 28px;
-}
-
-.keyment-input.has-suffix.has-clear .keyment-input__inner,
-.keyment-input.has-suffix.has-password .keyment-input__inner,
-.keyment-input.has-clear.has-password .keyment-input__inner {
-  padding-right: 56px;
-}
-
-.keyment-input.has-suffix.has-clear.has-password .keyment-input__inner {
-  padding-right: 84px;
-}
 .keyment-input__count {
-  position: absolute;
-  top: 50%;
-  right: 8px;
   color: #909399;
   font-size: 12px;
   line-height: 1;
-  transform: translateY(-50%);
   pointer-events: none;
+  white-space: nowrap;
 }
 
-.keyment-input.has-word-limit .keyment-input__inner {
-  padding-right: 56px;
+.keyment-input.has-suffix-area .keyment-input__inner {
+  padding-right: 96px;
 }
-
-.keyment-input.has-word-limit .keyment-input__clear,
-.keyment-input.has-word-limit .keyment-input__password,
-.keyment-input.has-word-limit .keyment-input__suffix-icon {
-  right: 56px;
-}
-
-.keyment-input.has-word-limit.has-clear .keyment-input__suffix-icon,
-.keyment-input.has-word-limit.has-password .keyment-input__suffix-icon {
-  right: 84px;
-}
-
-.keyment-input.has-word-limit.has-clear.has-password .keyment-input__suffix-icon {
-  right: 112px;
-}
-
-.keyment-input.has-word-limit.has-clear .keyment-input__inner,
-.keyment-input.has-word-limit.has-password .keyment-input__inner,
-.keyment-input.has-word-limit.has-suffix .keyment-input__inner {
-  padding-right: 84px;
-}
-
-.keyment-input.has-word-limit.has-clear.has-suffix .keyment-input__inner,
-.keyment-input.has-word-limit.has-password.has-suffix .keyment-input__inner,
-.keyment-input.has-word-limit.has-clear.has-password .keyment-input__inner {
-  padding-right: 112px;
-}
-
-.keyment-input.has-word-limit.has-clear.has-password.has-suffix .keyment-input__inner {
-  padding-right: 140px;
+.keyment-input__password-icon {
+  width: 1em;
+  height: 1em;
 }
 </style>

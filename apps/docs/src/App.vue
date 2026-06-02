@@ -145,12 +145,12 @@
   :inactive-icon="Plus"
 />
 <p>当前输入：{{ inputValue }}</p>
-<ky-input v-model="inputValue" placeholder="请输入内容" style="width: 240px" clearable size="large" :prefix-icon="Plus" :suffix-icon="Minus"/>
+<ky-input v-model="inputValue" placeholder="请输入内容" style="width: 240px" clearable size="large" :prefix-icon="Plus" :suffix-icon="Minus" :maxlength="10" show-word-limit/>
 <ky-input v-model="passwordValue" type="password" placeholder="请输入密码" style="width: 240px" clearable show-password size="small"/>
 <ky-input v-model="textareaValue" type="textarea" placeholder="请输入多行内容" style="width: 240px" />
 <ky-input
   v-model="inputValue"
-  :maxlength="20"
+  :maxlength="10000"
   show-word-limit
   clearable 
   placeholder="最多输入 20 个字符"
