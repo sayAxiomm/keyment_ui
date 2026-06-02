@@ -14,7 +14,7 @@ import { KyRow, KyCol } from "./Layout";
 import {KyRadio, KyRadioGroup,KyRadioButton} from './Radio'
 import { KyCheckbox , KyCheckboxGroup,KyCheckboxButton} from "./Checkbox";
 import { KySwitch } from "./Switch";
-
+import { KyInput } from "./Input";
 
 const components = [  
   KyButton,
@@ -34,7 +34,8 @@ const components = [
   KyCheckbox,
   KyCheckboxGroup,
   KyCheckboxButton,
-  KySwitch
+  KySwitch,
+  KyInput
 ];
 
 export {
@@ -55,7 +56,8 @@ export {
   KyCheckbox,
   KyCheckboxGroup,
   KyCheckboxButton,
-  KySwitch
+  KySwitch,
+  KyInput
 };
 
 
