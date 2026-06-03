@@ -31,8 +31,25 @@
       class="keyment-date-picker__panel"
     >   
         <div class="keyment-date-picker__header">
+          <button
+          class="keyment-date-picker__header-btn"
+          type="button"
+          @click="handlePrevMonth"
+        >
+          ‹
+        </button>
+
           <span>{{ panelLabel }}</span>
+
+          <button
+          class="keyment-date-picker__header-btn"
+          type="button"
+          @click="handleNextMonth"
+        >
+          ›
+        </button>
         </div>
+        
 
          <div class="keyment-date-picker__week">
           <span>日</span>
@@ -53,7 +70,10 @@
           v-for="day in dateCells"
           :key="day"
           class="keyment-date-picker__cell"
-          :class="{ 'is-selected': isSelectedDate(day) }"
+          :class="{ 
+            'is-selected': isSelectedDate(day),
+            'is-today': isToday(day)
+           }"
           type="button"
           @click="handleSelectDate(day)"
         >
@@ -81,6 +101,20 @@ const props = withDefaults(defineProps<DatePickerProps>(), {
 
 const emit = defineEmits<DatePickerEmits>();
 
+// 格式化函数
+// 补0
+const padZero = (value: number) => {
+  return String(value).padStart(2, "0");
+};
+
+const formatDate = (date: Date) => {
+  const year = date.getFullYear();
+  const month = padZero(date.getMonth() + 1);
+  const day = padZero(date.getDate());
+
+  return `${year}-${month}-${day}`;
+};
+
 // 日期面板是否显示。
 const panelVisible = ref(false);
 
@@ -92,7 +126,7 @@ const displayValue = computed(() => {
   }
 
   if (props.modelValue instanceof Date) {
-    return props.modelValue.toLocaleDateString();
+    return formatDate(props.modelValue);
   }
 
   return props.modelValue;
@@ -105,7 +139,7 @@ const showClear = computed(() => {
 
 // 打开日期面板。
 const handleOpen = () => {
-  if (props.disabled || props.readonly) {
+  if (props.disabled) {
     return;
   }
 
@@ -130,7 +164,7 @@ const handleClear = () => {
 };
 
 
-// 日期面板
+// 日期面板,面板当前在看的月份
 const panelDate = ref(new Date());
 
 // 当前月份第一天
@@ -205,6 +239,32 @@ const panelLabel = computed(() => {
   return `${year} 年 ${month} 月`;
 });
 
+// 切换月份的函数
+const handlePrevMonth = () => {
+  panelDate.value = new Date(
+    panelDate.value.getFullYear(),
+    panelDate.value.getMonth() - 1,
+    1
+  );
+};
+
+const handleNextMonth = () => {
+  panelDate.value = new Date(
+    panelDate.value.getFullYear(),
+    panelDate.value.getMonth() + 1,
+    1
+  );
+};
+// 获得今天的日期,然后和日期选择器的进行对比找到今天 进行高亮
+const isToday = (day: number) => {
+  const today = new Date();
+
+  return (
+    today.getFullYear() === panelDate.value.getFullYear() &&
+    today.getMonth() === panelDate.value.getMonth() &&
+    today.getDate() === day
+  );
+};
 </script>
 <style scoped>
 .keyment-date-picker {
@@ -296,11 +356,6 @@ const panelLabel = computed(() => {
   color: #409eff;
 }
 
-.keyment-date-picker__cell.is-selected {
-  background: #409eff;
-  color: #ffffff;
-}
-
 .keyment-date-picker__week,
 .keyment-date-picker__dates {
   display: grid;
@@ -328,5 +383,38 @@ const panelLabel = computed(() => {
   color: #303133;
   font-size: 14px;
   font-weight: 500;
+}
+.keyment-date-picker__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 32px;
+  margin-bottom: 8px;
+  color: #303133;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.keyment-date-picker__header-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  color: #606266;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.keyment-date-picker__header-btn:hover {
+  color: #409eff;
+}
+.keyment-date-picker__cell.is-today {
+  color: #409eff;
+  font-weight: 700;
+}
+
+.keyment-date-picker__cell.is-selected {
+  background: #409eff;
+  color: #ffffff;
 }
 </style>

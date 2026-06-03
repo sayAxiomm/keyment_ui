@@ -162,6 +162,7 @@
   v-model="dateValue"
   placeholder="请选择日期"
   clearable
+  readonly
 />
   </main>
 </template>
@@ -201,7 +202,7 @@ const switchValue = ref(false);
 const inputValue = ref("");
 const passwordValue = ref("");
 const textareaValue = ref("");
-const dateValue = ref("2026-08-29");
+const dateValue = ref("2026/08/29");
 </script>
 
 <style scoped>
