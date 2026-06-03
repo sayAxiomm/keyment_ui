@@ -1,5 +1,9 @@
 <template>
-  <div class="keyment-date-picker">
+  <div class="keyment-date-picker" ref="datePickerRef"
+  @mouseenter="isHovering = true"
+  @mouseleave="isHovering = false"
+  :class="datePickerClass"
+  >
     <!-- 输入框区域：点击后打开日期面板 -->
     <div class="keyment-date-picker__wrapper">
       <input
@@ -8,12 +12,16 @@
         :value="displayValue"
         :placeholder="props.placeholder"
         :disabled="props.disabled"
-        :readonly="true"
+        :readonly="!props.editable || props.readonly"
         @focus="handleFocus"
         @blur="handleBlur"
         @click="handleOpen"
       />
-
+      <span
+        class="keyment-date-picker__icon"
+      >
+        <Calendar />
+      </span>
       <!-- 清空按钮：有值、可清空、非禁用时显示 -->
       <button
         v-if="showClear"
@@ -23,6 +31,8 @@
       >
         x
       </button>
+
+      
     </div>
 
     <!-- 日期面板：第一版先只做外壳 -->
@@ -61,45 +71,61 @@
           <span>六</span>
         </div>
        <div class="keyment-date-picker__dates">
-        <span
-          v-for="empty in startWeekDay"
-          :key="`empty-${empty}`"
-          class="keyment-date-picker__empty"
-        />
+        
         <button
-          v-for="day in dateCells"
-          :key="day"
+          v-for="cell in dateCells"
+          :key="cell.date.getTime()"
           class="keyment-date-picker__cell"
-          :class="{ 
-            'is-selected': isSelectedDate(day),
-            'is-today': isToday(day)
-           }"
+          :class="{
+            'is-prev': cell.type === 'prev',
+            'is-next': cell.type === 'next',
+            'is-selected': isSelectedDate(cell.date),
+            'is-today': isToday(cell.date),
+            'is-disabled': isDisabledDate(cell.date)
+          }"
           type="button"
-          @click="handleSelectDate(day)"
+          :disabled="isDisabledDate(cell.date)"
+          @click="handleSelectDate(cell.date)"
         >
-          {{ day }}
+          {{ cell.text }}
         </button>
+        
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, onBeforeUnmount, onMounted } from "vue";
 import type { DatePickerEmits, DatePickerProps } from "./date-picker";
+import { Calendar } from "@keyment/icons";
 
 defineOptions({
   name: "KyDatePicker"
 });
+// 鼠标是否停留在日期选择器上，用来控制清空按钮显示。
+const isHovering = ref(false);
+
+// 日期选择器根元素，用来判断点击位置是不是在组件内部,这里是拿到根元素
+const datePickerRef = ref<HTMLElement>();
 
 const props = withDefaults(defineProps<DatePickerProps>(), {
   disabled: false,
   readonly: false,
   clearable: false,
-  format: "YYYY-MM-DD"
+  format: "YYYY-MM-DD",
+  size: "default",
+  editable: true
 });
 
 const emit = defineEmits<DatePickerEmits>();
+
+  // 日期选择器 class。
+const datePickerClass = computed(() => {
+  return {
+    [`keyment-date-picker--${props.size}`]: props.size
+  };
+});
 
 // 格式化函数
 // 补0
@@ -114,6 +140,14 @@ const formatDate = (date: Date) => {
 
   return `${year}-${month}-${day}`;
 };
+
+type DateCellType = "prev" | "current" | "next";
+
+interface DateCell {
+  text: number; // 日期格子上显示的数字
+  date: Date; // 这个格子对应的真实日期
+  type: DateCellType; // 这个日期属于上个月、当前月、还是下个月
+}
 
 // 日期面板是否显示。
 const panelVisible = ref(false);
@@ -134,7 +168,7 @@ const displayValue = computed(() => {
 
 // 是否显示清空按钮。
 const showClear = computed(() => {
-  return props.clearable && !props.disabled && !!props.modelValue;
+  return props.clearable && !props.disabled && !!props.modelValue&& isHovering.value;;
 });
 
 // 打开日期面板。
@@ -142,7 +176,17 @@ const handleOpen = () => {
   if (props.disabled) {
     return;
   }
+  // 如果本来有值,就判断是否是date对象
+  if (props.modelValue) {
+    const value =
+      props.modelValue instanceof Date
+        ? props.modelValue
+        : new Date(props.modelValue);
 
+    panelDate.value = new Date(value.getFullYear(), value.getMonth(), 1);
+  } else {
+    panelDate.value = new Date();
+  }
   panelVisible.value = true;
 };
 
@@ -161,6 +205,7 @@ const handleClear = () => {
   emit("update:modelValue", undefined);
   emit("change", undefined);
   emit("clear");
+  panelVisible.value = false;
 };
 
 
@@ -188,50 +233,92 @@ const daysInMonth = computed(() => {
   ).getDate();
 });
 
-// 日期数组
-const dateCells = computed(() => {
-  const days = [];
+// 日期数组：包含上个月补位日期、当前月日期、下个月补位日期。
+const dateCells = computed<DateCell[]>(() => {
+  const cells: DateCell[] = [];
 
-  for (let day = 1; day <= daysInMonth.value; day++) {
-    days.push(day);
+  const year = panelDate.value.getFullYear();
+  const month = panelDate.value.getMonth();
+
+  // 上个月最后一天是几号，用来生成面板前面的灰色补位日期。
+  const prevMonthLastDate = new Date(year, month, 0).getDate();
+
+  // 生成上个月补位日期。
+  for (let index = startWeekDay.value - 1; index >= 0; index--) {
+    const day = prevMonthLastDate - index;
+
+    cells.push({
+      text: day,
+      date: new Date(year, month - 1, day),
+      type: "prev"
+    });
   }
 
-  return days;
+  // 生成当前月日期。
+  for (let day = 1; day <= daysInMonth.value; day++) {
+    cells.push({
+      text: day,
+      date: new Date(year, month, day),
+      type: "current"
+    });
+  }
+
+  // 生成下个月补位日期，保证面板总格子数是 42 个，也就是 6 行 7 列。
+  const nextCount = 42 - cells.length;
+
+  for (let day = 1; day <= nextCount; day++) {
+    cells.push({
+      text: day,
+      date: new Date(year, month + 1, day),
+      type: "next"
+    });
+  }
+
+  return cells;
 });
 
 // 选择日期的函数
-const handleSelectDate = (day: number) => {
-  const selectedDate = new Date(
-    panelDate.value.getFullYear(),
-    panelDate.value.getMonth(),
-    day
-  );
+const handleSelectDate = (date: Date) => {
+  if (isDisabledDate(date)) {
+    return;
+  }
 
-  emit("update:modelValue", selectedDate);
-  emit("change", selectedDate);
+  const value = formatDate(date);
+
+  emit("update:modelValue", value);
+  emit("change", value);
 
   panelVisible.value = false;
 };
 
+// 判断某一天是否被禁用。
+const isDisabledDate = (date: Date) => {
+  if (!props.disabledDate) {
+    return false;
+  }
+
+  return props.disabledDate(date);
+};
+
 // 判断日历面板上某个格子是不是当前选中的日期，用于高亮那个格子
-const isSelectedDate = (day: number) => {
+const isSelectedDate = (date: Date) => {
   if (!props.modelValue) {
     return false;
   }
 
-  // getFullYear()、.getMonth()、.getDate() 这些方法，只有 Date 对象才有
   const value =
     props.modelValue instanceof Date
       ? props.modelValue
       : new Date(props.modelValue);
 
   return (
-    value.getFullYear() === panelDate.value.getFullYear() &&
-    value.getMonth() === panelDate.value.getMonth() &&
-    value.getDate() === day
+    value.getFullYear() === date.getFullYear() &&
+    value.getMonth() === date.getMonth() &&
+    value.getDate() === date.getDate()
   );
 };
 
+// 日期面板最上面年月
 const panelLabel = computed(() => {
   const year = panelDate.value.getFullYear();
   const month = panelDate.value.getMonth() + 1;
@@ -255,17 +342,42 @@ const handleNextMonth = () => {
     1
   );
 };
-// 获得今天的日期,然后和日期选择器的进行对比找到今天 进行高亮
-const isToday = (day: number) => {
+// 获得今天的日期,然后和日期选择器的日期进行对比找到今天，进行高亮
+const isToday = (date: Date) => {
   const today = new Date();
 
   return (
-    today.getFullYear() === panelDate.value.getFullYear() &&
-    today.getMonth() === panelDate.value.getMonth() &&
-    today.getDate() === day
+    today.getFullYear() === date.getFullYear() &&
+    today.getMonth() === date.getMonth() &&
+    today.getDate() === date.getDate()
   );
 };
+
+// 点击页面其他地方时，关闭日期面板。
+const handleClickOutside = (event: MouseEvent) => {
+  const target = event.target as Node;  // 点击的具体元素
+
+  if (!datePickerRef.value) {
+    return;
+  }
+  // contains 是原生 DOM 方法，判断一个元素是不是另一个的子孙
+  // 面板里找不到点击的元素
+  // 返回 true  → 点在面板里面 → 什么都不做
+  // 返回 false → 点在面板外面 → 关闭面板
+  if (!datePickerRef.value.contains(target)) {  
+    panelVisible.value = false;
+  }
+};
+
+onMounted(() => {
+  document.addEventListener("click", handleClickOutside);
+});
+
+onBeforeUnmount(() => {
+  document.removeEventListener("click", handleClickOutside);
+});
 </script>
+
 <style scoped>
 .keyment-date-picker {
   position: relative;
@@ -280,7 +392,7 @@ const isToday = (day: number) => {
 .keyment-date-picker__inner {
   width: 100%;
   height: 32px;
-  padding: 0 32px 0 11px;
+  padding: 0 32px 0 32px;
   border: 1px solid #dcdfe6;
   border-radius: 4px;
   box-sizing: border-box;
@@ -291,6 +403,18 @@ const isToday = (day: number) => {
   outline: none;
   cursor: pointer;
   transition: border-color 0.2s;
+}
+
+.keyment-date-picker--large .keyment-date-picker__inner {
+  height: 40px;
+  font-size: 14px;
+  line-height: 40px;
+}
+
+.keyment-date-picker--small .keyment-date-picker__inner {
+  height: 24px;
+  font-size: 12px;
+  line-height: 24px;
 }
 
 .keyment-date-picker__inner:focus {
@@ -307,6 +431,7 @@ const isToday = (day: number) => {
   position: absolute;
   top: 50%;
   right: 8px;
+  z-index: 1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -354,6 +479,15 @@ const isToday = (day: number) => {
 
 .keyment-date-picker__cell:hover {
   color: #409eff;
+}
+
+.keyment-date-picker__cell.is-disabled  {
+  color: #c0c4cc;
+  cursor: not-allowed;
+}
+
+.keyment-date-picker__cell.is-disabled:hover {
+  color: #c0c4cc;
 }
 
 .keyment-date-picker__week,
@@ -408,6 +542,38 @@ const isToday = (day: number) => {
 .keyment-date-picker__header-btn:hover {
   color: #409eff;
 }
+.keyment-date-picker__cell.is-today {
+  color: #409eff;
+  font-weight: 700;
+}
+
+.keyment-date-picker__cell.is-selected {
+  background: #409eff;
+  color: #ffffff;
+}
+.keyment-date-picker__icon {
+  position: absolute;
+  top: 50%;
+  left: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  color: #a8abb2;
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+.keyment-date-picker__icon :deep(svg) {
+  width: 1em;
+  height: 1em;
+}
+.keyment-date-picker__cell.is-prev,
+.keyment-date-picker__cell.is-next {
+  color: #c0c4cc;
+}
+
 .keyment-date-picker__cell.is-today {
   color: #409eff;
   font-weight: 700;

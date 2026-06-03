@@ -1,4 +1,6 @@
 export type DatePickerValue = Date | string;
+export type DatePickerSize = "large" | "default" | "small";
+export type DatePickerDisabledDate = (date: Date) => boolean;
 
 // date-picker 的 props 类型
 export interface DatePickerProps {
@@ -9,6 +11,10 @@ export interface DatePickerProps {
   readonly?: boolean; // 是否只读
   clearable?: boolean; // 是否可以清空
   format?: string; // 日期显示格式，后面做格式化时使用
+// 二期
+  size?: DatePickerSize; // 日期选择器尺寸
+  editable?: boolean; // 是否允许手动输入
+  disabledDate?: DatePickerDisabledDate; // 设置不可选择的日期
 }
 // date-picker 触发的事件类型
 export interface DatePickerEmits {

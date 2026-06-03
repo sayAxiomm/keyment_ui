@@ -163,6 +163,13 @@
   placeholder="请选择日期"
   clearable
   readonly
+  size="small"
+/>
+<ky-date-picker
+  v-model="dateValue1"
+  placeholder="请选择日期"
+  clearable
+  :disabled-date="disabledBeforeToday"
 />
   </main>
 </template>
@@ -203,6 +210,11 @@ const inputValue = ref("");
 const passwordValue = ref("");
 const textareaValue = ref("");
 const dateValue = ref("2026/08/29");
+const dateValue1 = ref("");
+
+const disabledBeforeToday = (time: Date) => {
+ return time.getTime() > Date.now()
+};
 </script>
 
 <style scoped>
