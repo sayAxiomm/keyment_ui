@@ -29,8 +29,37 @@
     <div
       v-if="panelVisible"
       class="keyment-date-picker__panel"
-    >
-      日期面板
+    >   
+        <div class="keyment-date-picker__header">
+          <span>{{ panelLabel }}</span>
+        </div>
+
+         <div class="keyment-date-picker__week">
+          <span>日</span>
+          <span>一</span>
+          <span>二</span>
+          <span>三</span>
+          <span>四</span>
+          <span>五</span>
+          <span>六</span>
+        </div>
+       <div class="keyment-date-picker__dates">
+        <span
+          v-for="empty in startWeekDay"
+          :key="`empty-${empty}`"
+          class="keyment-date-picker__empty"
+        />
+        <button
+          v-for="day in dateCells"
+          :key="day"
+          class="keyment-date-picker__cell"
+          :class="{ 'is-selected': isSelectedDate(day) }"
+          type="button"
+          @click="handleSelectDate(day)"
+        >
+          {{ day }}
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -99,6 +128,83 @@ const handleClear = () => {
   emit("change", undefined);
   emit("clear");
 };
+
+
+// 日期面板
+const panelDate = ref(new Date());
+
+// 当前月份第一天
+// 这个值拿来算日历面板第一天是星期几，从而决定从哪个格子开始画
+const firstDay = computed(() => {
+  // getFullYear() 获得年 getMonth（）获得月 	0~11
+  return new Date(panelDate.value.getFullYear(), panelDate.value.getMonth(), 1);
+});
+
+const startWeekDay = computed(() => {
+  return firstDay.value.getDay();
+});
+
+// 当前月份总共有多少天
+const daysInMonth = computed(() => {
+  // 下个月的第 0 天，js自动转换成上个月最后一天。getDate()得到几号 就得到当前月份有几天
+  return new Date(
+    panelDate.value.getFullYear(),
+    panelDate.value.getMonth() + 1,
+    0
+  ).getDate();
+});
+
+// 日期数组
+const dateCells = computed(() => {
+  const days = [];
+
+  for (let day = 1; day <= daysInMonth.value; day++) {
+    days.push(day);
+  }
+
+  return days;
+});
+
+// 选择日期的函数
+const handleSelectDate = (day: number) => {
+  const selectedDate = new Date(
+    panelDate.value.getFullYear(),
+    panelDate.value.getMonth(),
+    day
+  );
+
+  emit("update:modelValue", selectedDate);
+  emit("change", selectedDate);
+
+  panelVisible.value = false;
+};
+
+// 判断日历面板上某个格子是不是当前选中的日期，用于高亮那个格子
+const isSelectedDate = (day: number) => {
+  if (!props.modelValue) {
+    return false;
+  }
+
+  // getFullYear()、.getMonth()、.getDate() 这些方法，只有 Date 对象才有
+  const value =
+    props.modelValue instanceof Date
+      ? props.modelValue
+      : new Date(props.modelValue);
+
+  return (
+    value.getFullYear() === panelDate.value.getFullYear() &&
+    value.getMonth() === panelDate.value.getMonth() &&
+    value.getDate() === day
+  );
+};
+
+const panelLabel = computed(() => {
+  const year = panelDate.value.getFullYear();
+  const month = panelDate.value.getMonth() + 1;
+
+  return `${year} 年 ${month} 月`;
+});
+
 </script>
 <style scoped>
 .keyment-date-picker {
@@ -167,7 +273,6 @@ const handleClear = () => {
   top: calc(100% + 8px);
   left: 0;
   z-index: 1000;
-  height: 280px;
   width: 280px;
   padding: 12px;
   border: 1px solid #dcdfe6;
@@ -176,5 +281,52 @@ const handleClear = () => {
   background: #ffffff;
   color: #606266;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+}
+.keyment-date-picker__cell {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: #606266;
+  cursor: pointer;
+}
+
+.keyment-date-picker__cell:hover {
+  color: #409eff;
+}
+
+.keyment-date-picker__cell.is-selected {
+  background: #409eff;
+  color: #ffffff;
+}
+
+.keyment-date-picker__week,
+.keyment-date-picker__dates {
+  display: grid;
+  grid-template-columns: repeat(7, 32px);
+  gap: 6px;
+}
+
+.keyment-date-picker__week {
+  margin-bottom: 8px;
+  color: #909399;
+  font-size: 12px;
+  text-align: center;
+}
+
+.keyment-date-picker__empty {
+  width: 32px;
+  height: 32px;
+}
+.keyment-date-picker__header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  margin-bottom: 8px;
+  color: #303133;
+  font-size: 14px;
+  font-weight: 500;
 }
 </style>
