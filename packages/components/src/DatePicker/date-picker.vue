@@ -293,6 +293,7 @@ const handleSelectDate = (date: Date) => {
 
 // 判断某一天是否被禁用。
 const isDisabledDate = (date: Date) => {
+  // 这里的props.disableDate 是用户定义的条件函数
   if (!props.disabledDate) {
     return false;
   }
