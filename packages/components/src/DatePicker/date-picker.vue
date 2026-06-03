@@ -483,11 +483,14 @@ onBeforeUnmount(() => {
 }
 
 .keyment-date-picker__cell.is-disabled  {
+  background: #f5f7fa;
+  border-radius: 4px;
   color: #c0c4cc;
   cursor: not-allowed;
 }
 
 .keyment-date-picker__cell.is-disabled:hover {
+  background: #f5f7fa;
   color: #c0c4cc;
 }
 
