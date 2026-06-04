@@ -172,11 +172,31 @@
   :disabled-date="disabledBeforeToday"
 />
 <ky-date-picker
-  v-model="dateValue"
-  placeholder="请选择日期"
-  type="month"
+  v-model="dateRangeValue"
+  type="daterange"
+  range-separator="To"
+  start-placeholder="开始日期"
+  end-placeholder="结束日期"
   clearable
   readonly
+  size="large"
+/>
+<ky-date-picker
+  v-model="monthRangeValue"
+  type="monthrange"
+  range-separator="To"
+  start-placeholder="开始月份"
+  end-placeholder="结束月份"
+  clearable
+  size="small"
+/>
+<ky-date-picker
+  v-model="yearRangeValue"
+  type="yearrange"
+  range-separator="To"
+  start-placeholder="开始年份"
+  end-placeholder="结束年份"
+  clearable
   size="small"
 />
   </main>
@@ -219,6 +239,9 @@ const passwordValue = ref("");
 const textareaValue = ref("");
 const dateValue = ref("");
 const dateValue1 = ref("");
+const dateRangeValue = ref("");
+const monthRangeValue = ref("");
+const yearRangeValue = ref("");
 
 const disabledBeforeToday = (time: Date) => {
  return time.getTime() > Date.now()

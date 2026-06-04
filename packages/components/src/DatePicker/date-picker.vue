@@ -71,13 +71,266 @@
     <div
       v-if="panelVisible"
       class="keyment-date-picker__panel"
+      :class="{ 'is-range-panel': isRange }"
        @click.stop
-    >   
+    >
+      <div
+        v-if="props.type === 'daterange' && panelMode === 'date'"
+        class="keyment-date-picker__range-panels"
+      >
+        <div class="keyment-date-picker__range-panel">
+          <div class="keyment-date-picker__header">
+            <button
+              class="keyment-date-picker__header-btn"
+              type="button"
+              @click="handlePrevYear()"
+            >
+              &lt;&lt;
+            </button>
+            <button
+              class="keyment-date-picker__header-btn"
+              type="button"
+              @click="handlePrevMonth()"
+            >
+              &lt;
+            </button>
+
+            <span class="keyment-date-picker__range-panel-label">
+              {{ getPanelLabel(leftRangeDate) }}
+            </span>
+          </div>
+
+          <div class="keyment-date-picker__week">
+            <span>日</span>
+            <span>一</span>
+            <span>二</span>
+            <span>三</span>
+            <span>四</span>
+            <span>五</span>
+            <span>六</span>
+          </div>
+
+          <div class="keyment-date-picker__dates">
+            <button
+              v-for="cell in leftRangeDateCells"
+              :key="cell.date.getTime()"
+              class="keyment-date-picker__cell"
+              :class="{
+                'is-prev': cell.type === 'prev',
+                'is-next': cell.type === 'next',
+                'is-selected': isSelectedDate(cell.date),
+                'is-in-range': isInRangeDate(cell.date),
+                'is-today': isToday(cell.date),
+                'is-disabled': isDisabledDate(cell.date)
+              }"
+              type="button"
+              :disabled="isDisabledDate(cell.date)"
+              @click="handleSelectDate(cell.date)"
+            >
+              {{ cell.text }}
+            </button>
+          </div>
+        </div>
+
+        <div class="keyment-date-picker__range-panel">
+          <div class="keyment-date-picker__header">
+            <span class="keyment-date-picker__range-panel-label">
+              {{ getPanelLabel(rightRangeDate) }}
+            </span>
+
+            <button
+              class="keyment-date-picker__header-btn"
+              type="button"
+              @click="handleNextMonth('right')"
+            >
+              &gt;
+            </button>
+            <button
+              class="keyment-date-picker__header-btn"
+              type="button"
+              @click="handleNextYear('right')"
+            >
+              &gt;&gt;
+            </button>
+          </div>
+
+          <div class="keyment-date-picker__week">
+            <span>日</span>
+            <span>一</span>
+            <span>二</span>
+            <span>三</span>
+            <span>四</span>
+            <span>五</span>
+            <span>六</span>
+          </div>
+
+          <div class="keyment-date-picker__dates">
+            <button
+              v-for="cell in rightRangeDateCells"
+              :key="cell.date.getTime()"
+              class="keyment-date-picker__cell"
+              :class="{
+                'is-prev': cell.type === 'prev',
+                'is-next': cell.type === 'next',
+                'is-selected': isSelectedDate(cell.date),
+                'is-in-range': isInRangeDate(cell.date),
+                'is-today': isToday(cell.date),
+                'is-disabled': isDisabledDate(cell.date)
+              }"
+              type="button"
+              :disabled="isDisabledDate(cell.date)"
+              @click="handleSelectDate(cell.date)"
+            >
+              {{ cell.text }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div
+        v-else-if="props.type === 'monthrange' && panelMode === 'month'"
+        class="keyment-date-picker__range-panels"
+      >
+        <div class="keyment-date-picker__range-panel">
+          <div class="keyment-date-picker__header">
+            <button
+              class="keyment-date-picker__header-btn"
+              type="button"
+              @click="handlePrevYear()"
+            >
+              &lt;&lt;
+            </button>
+
+            <span class="keyment-date-picker__range-panel-label">
+              {{ leftRangeDate.getFullYear() }} 年
+            </span>
+          </div>
+
+          <div class="keyment-date-picker__months">
+            <button
+              v-for="(month, index) in months"
+              :key="`left-${month}`"
+              class="keyment-date-picker__month-cell"
+              :class="{
+                'is-selected': isSelectedMonthRange(leftRangeDate.getFullYear(), index),
+                'is-in-range': isInMonthRange(leftRangeDate.getFullYear(), index)
+              }"
+              type="button"
+              @click="handleSelectRangeMonth(index, 'left')"
+            >
+              {{ month }}
+            </button>
+          </div>
+        </div>
+
+        <div class="keyment-date-picker__range-panel">
+          <div class="keyment-date-picker__header">
+            <span class="keyment-date-picker__range-panel-label">
+              {{ rightRangeDate.getFullYear() }} 年
+            </span>
+
+            <button
+              class="keyment-date-picker__header-btn"
+              type="button"
+              @click="handleNextYear('right')"
+            >
+              &gt;&gt;
+            </button>
+          </div>
+
+          <div class="keyment-date-picker__months">
+            <button
+              v-for="(month, index) in months"
+              :key="`right-${month}`"
+              class="keyment-date-picker__month-cell"
+              :class="{
+                'is-selected': isSelectedMonthRange(rightRangeDate.getFullYear(), index),
+                'is-in-range': isInMonthRange(rightRangeDate.getFullYear(), index)
+              }"
+              type="button"
+              @click="handleSelectRangeMonth(index, 'right')"
+            >
+              {{ month }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div
+        v-else-if="props.type === 'yearrange' && panelMode === 'year'"
+        class="keyment-date-picker__range-panels"
+      >
+        <div class="keyment-date-picker__range-panel">
+          <div class="keyment-date-picker__header">
+            <button
+              class="keyment-date-picker__header-btn"
+              type="button"
+              @click="handlePrevYearRange()"
+            >
+              &lt;&lt;
+            </button>
+
+            <span class="keyment-date-picker__range-panel-label">
+              {{ leftRangeYearCells[0] }} - {{ leftRangeYearCells[leftRangeYearCells.length - 1] }}
+            </span>
+          </div>
+
+          <div class="keyment-date-picker__years">
+            <button
+              v-for="year in leftRangeYearCells"
+              :key="`left-${year}`"
+              class="keyment-date-picker__year-cell"
+              :class="{
+                'is-selected': isSelectedYearRange(year),
+                'is-in-range': isInYearRange(year)
+              }"
+              type="button"
+              @click="handleSelectRangeYear(year)"
+            >
+              {{ year }}
+            </button>
+          </div>
+        </div>
+
+        <div class="keyment-date-picker__range-panel">
+          <div class="keyment-date-picker__header">
+            <span class="keyment-date-picker__range-panel-label">
+              {{ rightRangeYearCells[0] }} - {{ rightRangeYearCells[rightRangeYearCells.length - 1] }}
+            </span>
+
+            <button
+              class="keyment-date-picker__header-btn"
+              type="button"
+              @click="handleNextYearRange('right')"
+            >
+              &gt;&gt;
+            </button>
+          </div>
+
+          <div class="keyment-date-picker__years">
+            <button
+              v-for="year in rightRangeYearCells"
+              :key="`right-${year}`"
+              class="keyment-date-picker__year-cell"
+              :class="{
+                'is-selected': isSelectedYearRange(year),
+                'is-in-range': isInYearRange(year)
+              }"
+              type="button"
+              @click="handleSelectRangeYear(year)"
+            >
+              {{ year }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <template v-else>
         <div class="keyment-date-picker__header">
           <button
             class="keyment-date-picker__header-btn"
             type="button"
-            @click="handlePrevYear"
+            @click="handlePrevYear()"
           >
             <<
           </button>
@@ -85,7 +338,7 @@
           v-if="props.type == 'date'"
             class="keyment-date-picker__header-btn"
             type="button"
-            @click="handlePrevMonth"
+            @click="handlePrevMonth()"
           >
               <
           </button>
@@ -113,14 +366,14 @@
         v-if="props.type == 'date'"
           class="keyment-date-picker__header-btn"
           type="button"
-          @click="handleNextMonth"
+          @click="handleNextMonth()"
         >
           >
         </button>
         <button
           class="keyment-date-picker__header-btn"
           type="button"
-          @click="handleNextYear"
+          @click="handleNextYear()"
         >
           >>
         </button>
@@ -190,13 +443,14 @@
             {{ year }}
           </button>
         </div>
+      </template>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, ref, onBeforeUnmount, onMounted } from "vue";
-import type { DatePickerEmits, DatePickerProps,DatePanelMode,DatePickerSingleValue } from "./date-picker";
+import type { DatePickerEmits, DatePickerProps,DatePanelMode,DatePickerSingleValue, DatePickerRangeValue } from "./date-picker";
 import { Calendar } from "@keyment/icons";
 
 defineOptions({
@@ -215,7 +469,11 @@ const props = withDefaults(defineProps<DatePickerProps>(), {
   format: "YYYY-MM-DD",
   size: "default",
   editable: true,
-  type: "date"
+  type: "date",
+  startPlaceholder: "开始日期",
+  endPlaceholder: "结束日期",
+  rangeSeparator: "-",
+  unlinkPanels: false
 });
 
 const emit = defineEmits<DatePickerEmits>();
@@ -223,7 +481,8 @@ const emit = defineEmits<DatePickerEmits>();
   // 日期选择器 class。
 const datePickerClass = computed(() => {
   return {
-    [`keyment-date-picker--${props.size}`]: props.size
+    [`keyment-date-picker--${props.size}`]: props.size,
+    "is-range": isRange.value
   };
 });
 
@@ -249,6 +508,10 @@ const formatModelValue = (value: DatePickerSingleValue) => {
   return value;
 };
 
+const toDate = (value: DatePickerSingleValue) => {
+  return value instanceof Date ? value : new Date(value);
+};
+
 type DateCellType = "prev" | "current" | "next";
 
 interface DateCell {
@@ -260,6 +523,7 @@ interface DateCell {
 // 日期面板是否显示。
 const panelVisible = ref(false);
 const panelMode = ref<DatePanelMode>("date"); // 面板里面显示什么内容
+const rangePendingStart = ref<DatePickerSingleValue>(); // 范围选择时临时记录第一次点击的开始日期
 const months = [
   "1月",
   "2月",
@@ -305,6 +569,29 @@ const yearCells = computed(() => {
   }
 
   return years;
+});
+
+const createYearCells = (baseYear: number) => {
+  const startYear = baseYear - 5;
+  const years = [];
+
+  for (let year = startYear; year < startYear + 10; year++) {
+    years.push(year);
+  }
+
+  return years;
+};
+
+const leftRangeYearCells = computed(() => {
+  return createYearCells(panelDate.value.getFullYear());
+});
+
+const rightRangeYearCells = computed(() => {
+  const baseYear = props.unlinkPanels
+    ? rightRangePanelDate.value.getFullYear()
+    : panelDate.value.getFullYear() + 10;
+
+  return createYearCells(baseYear);
 });
 // 筛选年份
 const handleSelectYear = (year: number) => {
@@ -411,22 +698,68 @@ const showClear = computed(() => {
   return props.clearable && !props.disabled && !!props.modelValue&& isHovering.value;;
 });
 
+// 获取打开面板时用来定位月份的值。
+const getPanelBaseValue = (): DatePickerSingleValue | undefined => {
+  const modelValue = props.modelValue;
+
+  if (!modelValue) {
+    return undefined;
+  }
+
+  if (Array.isArray(modelValue)) {
+    const [start, end] = modelValue;
+
+    return start || end;
+  }
+
+  return modelValue;
+};
+
 // 打开日期面板。
 const handleOpen = () => {
   if (props.disabled) {
     return;
   }
-  // 如果本来有值,就判断是否是date对象
-  if (props.modelValue) {
+
+  const baseValue = getPanelBaseValue();
+
+  // 如果本来有值，就用已有值定位面板月份；范围选择时优先用开始日期。
+  if (baseValue) {
     const value =
-      props.modelValue instanceof Date
-        ? props.modelValue
-        : new Date(props.modelValue);
+      baseValue instanceof Date
+        ? baseValue
+        : new Date(baseValue);
 
     panelDate.value = new Date(value.getFullYear(), value.getMonth(), 1);
   } else {
     panelDate.value = new Date();
   }
+
+  if (isRange.value) {
+    const modelValue = props.modelValue;
+    const rangeEnd = Array.isArray(modelValue) ? modelValue[1] : undefined;
+
+    if (rangeEnd) {
+      const endDate = toDate(rangeEnd);
+
+      if (props.type === "yearrange") {
+        rightRangePanelDate.value = new Date(endDate.getFullYear(), 0, 1);
+      } else {
+        rightRangePanelDate.value = new Date(
+          endDate.getFullYear(),
+          endDate.getMonth(),
+          1
+        );
+      }
+    } else {
+      rightRangePanelDate.value = new Date(
+        props.type === "monthrange" ? panelDate.value.getFullYear() + 1 : panelDate.value.getFullYear(),
+        props.type === "daterange" ? panelDate.value.getMonth() + 1 : panelDate.value.getMonth(),
+        1
+      );
+    }
+  }
+
   panelVisible.value = true;
   panelMode.value = getDefaultPanelMode();
 };
@@ -446,12 +779,16 @@ const handleClear = () => {
   emit("update:modelValue", undefined);
   emit("change", undefined);
   emit("clear");
+  rangePendingStart.value = undefined;
   panelVisible.value = false;
 };
 
 
 // 日期面板,面板当前在看的月份
 const panelDate = ref(new Date());
+const rightRangePanelDate = ref(
+  new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1)
+); // unlink-panels 时，右侧范围面板单独维护自己的月份
 
 // 当前月份第一天
 // 这个值拿来算日历面板第一天是星期几，从而决定从哪个格子开始画
@@ -474,18 +811,20 @@ const daysInMonth = computed(() => {
   ).getDate();
 });
 
-// 日期数组：包含上个月补位日期、当前月日期、下个月补位日期。
-const dateCells = computed<DateCell[]>(() => {
+const createDateCells = (baseDate: Date) => {
   const cells: DateCell[] = [];
 
-  const year = panelDate.value.getFullYear();
-  const month = panelDate.value.getMonth();
+  const year = baseDate.getFullYear();
+  const month = baseDate.getMonth();
+  const firstDayOfMonth = new Date(year, month, 1);
+  const startDay = firstDayOfMonth.getDay();
+  const currentMonthDays = new Date(year, month + 1, 0).getDate();
 
   // 上个月最后一天是几号，用来生成面板前面的灰色补位日期。
   const prevMonthLastDate = new Date(year, month, 0).getDate();
 
   // 生成上个月补位日期。
-  for (let index = startWeekDay.value - 1; index >= 0; index--) {
+  for (let index = startDay - 1; index >= 0; index--) {
     const day = prevMonthLastDate - index;
 
     cells.push({
@@ -496,7 +835,7 @@ const dateCells = computed<DateCell[]>(() => {
   }
 
   // 生成当前月日期。
-  for (let day = 1; day <= daysInMonth.value; day++) {
+  for (let day = 1; day <= currentMonthDays; day++) {
     cells.push({
       text: day,
       date: new Date(year, month, day),
@@ -516,7 +855,74 @@ const dateCells = computed<DateCell[]>(() => {
   }
 
   return cells;
+};
+
+// 日期数组：包含上个月补位日期、当前月日期、下个月补位日期。
+const dateCells = computed<DateCell[]>(() => {
+  return createDateCells(panelDate.value);
 });
+
+const leftRangeDate = computed(() => {
+  return panelDate.value;
+});
+
+const rightRangeDate = computed(() => {
+  if (props.unlinkPanels) {
+    return rightRangePanelDate.value;
+  }
+
+  if (props.type === "monthrange") {
+    return new Date(
+      panelDate.value.getFullYear() + 1,
+      panelDate.value.getMonth(),
+      1
+    );
+  }
+
+  return new Date(
+    panelDate.value.getFullYear(),
+    panelDate.value.getMonth() + 1,
+    1
+  );
+});
+
+const leftRangeDateCells = computed(() => {
+  return createDateCells(leftRangeDate.value);
+});
+
+const rightRangeDateCells = computed(() => {
+  return createDateCells(rightRangeDate.value);
+});
+
+const handleRangeValue = (
+  value: DatePickerSingleValue,
+  getComparableValue: (value: DatePickerSingleValue) => number
+) => {
+  const modelValue = props.modelValue;
+  const modelStart = Array.isArray(modelValue) ? modelValue[0] : undefined;
+  const modelEnd = Array.isArray(modelValue) ? modelValue[1] : undefined;
+  const start = rangePendingStart.value || modelStart;
+
+  // 第一次点击：只记录开始值，先不关闭面板。
+  if (!start || modelEnd) {
+    const pendingValue: DatePickerRangeValue = [value, ""];
+
+    rangePendingStart.value = value;
+    emit("update:modelValue", pendingValue);
+    return;
+  }
+
+  const rangeValue: DatePickerRangeValue =
+    getComparableValue(start) <= getComparableValue(value)
+      ? [start, value]
+      : [value, start];
+
+  emit("update:modelValue", rangeValue);
+  emit("change", rangeValue);
+
+  rangePendingStart.value = undefined;
+  panelVisible.value = false;
+};
 
 // 选择日期的函数
 const handleSelectDate = (date: Date) => {
@@ -526,10 +932,48 @@ const handleSelectDate = (date: Date) => {
 
   const value = formatDate(date);
 
+  if (props.type === "daterange") {
+    handleRangeValue(value, (item) => toDate(item).getTime());
+    return;
+  }
+
   emit("update:modelValue", value);
   emit("change", value);
 
   panelVisible.value = false;
+};
+
+const getMonthValue = (year: number, monthIndex: number) => {
+  return `${year}-${padZero(monthIndex + 1)}`;
+};
+
+const getMonthComparableValue = (value: DatePickerSingleValue) => {
+  if (value instanceof Date) {
+    return value.getFullYear() * 12 + value.getMonth();
+  }
+
+  const [year = 0, month = 1] = value.split("-").map(Number);
+
+  return year * 12 + month - 1;
+};
+
+const handleSelectRangeMonth = (monthIndex: number, panel: "left" | "right") => {
+  const baseDate = panel === "right" ? rightRangeDate.value : leftRangeDate.value;
+  const value = getMonthValue(baseDate.getFullYear(), monthIndex);
+
+  handleRangeValue(value, getMonthComparableValue);
+};
+
+const getYearComparableValue = (value: DatePickerSingleValue) => {
+  if (value instanceof Date) {
+    return value.getFullYear();
+  }
+
+  return Number(value);
+};
+
+const handleSelectRangeYear = (year: number) => {
+  handleRangeValue(String(year), getYearComparableValue);
 };
 
 // 判断某一天是否被禁用。
@@ -544,20 +988,114 @@ const isDisabledDate = (date: Date) => {
 
 // 判断日历面板上某个格子是不是当前选中的日期，用于高亮那个格子
 const isSelectedDate = (date: Date) => {
-  if (!props.modelValue) {
+  const modelValue = props.modelValue;
+
+  if (!modelValue) {
     return false;
   }
 
-  const value =
-    props.modelValue instanceof Date
-      ? props.modelValue
-      : new Date(props.modelValue);
+  const values = Array.isArray(modelValue) ? modelValue : [modelValue];
 
-  return (
-    value.getFullYear() === date.getFullYear() &&
-    value.getMonth() === date.getMonth() &&
-    value.getDate() === date.getDate()
-  );
+  return values.some((item) => {
+    if (!item) {
+      return false;
+    }
+
+    const value = item instanceof Date ? item : new Date(item);
+
+    return (
+      value.getFullYear() === date.getFullYear() &&
+      value.getMonth() === date.getMonth() &&
+      value.getDate() === date.getDate()
+    );
+  });
+};
+
+const isInRangeDate = (date: Date) => {
+  const modelValue = props.modelValue;
+
+  if (!Array.isArray(modelValue)) {
+    return false;
+  }
+
+  const [start, end] = modelValue;
+
+  if (!start || !end) {
+    return false;
+  }
+
+  const startTime = toDate(start).setHours(0, 0, 0, 0);
+  const endTime = toDate(end).setHours(0, 0, 0, 0);
+  const currentTime = new Date(date).setHours(0, 0, 0, 0);
+  const min = Math.min(startTime, endTime);
+  const max = Math.max(startTime, endTime);
+
+  return currentTime > min && currentTime < max;
+};
+
+const isSelectedMonthRange = (year: number, monthIndex: number) => {
+  const modelValue = props.modelValue;
+
+  if (!Array.isArray(modelValue)) {
+    return false;
+  }
+
+  const value = getMonthValue(year, monthIndex);
+
+  return modelValue.some((item) => item === value);
+};
+
+const isInMonthRange = (year: number, monthIndex: number) => {
+  const modelValue = props.modelValue;
+
+  if (!Array.isArray(modelValue)) {
+    return false;
+  }
+
+  const [start, end] = modelValue;
+
+  if (!start || !end) {
+    return false;
+  }
+
+  const current = year * 12 + monthIndex;
+  const startValue = getMonthComparableValue(start);
+  const endValue = getMonthComparableValue(end);
+  const min = Math.min(startValue, endValue);
+  const max = Math.max(startValue, endValue);
+
+  return current > min && current < max;
+};
+
+const isSelectedYearRange = (year: number) => {
+  const modelValue = props.modelValue;
+
+  if (!Array.isArray(modelValue)) {
+    return false;
+  }
+
+  return modelValue.some((item) => item === String(year));
+};
+
+const isInYearRange = (year: number) => {
+  const modelValue = props.modelValue;
+
+  if (!Array.isArray(modelValue)) {
+    return false;
+  }
+
+  const [start, end] = modelValue;
+
+  if (!start || !end) {
+    return false;
+  }
+
+  const startValue = getYearComparableValue(start);
+  const endValue = getYearComparableValue(end);
+  const min = Math.min(startValue, endValue);
+  const max = Math.max(startValue, endValue);
+
+  return year > min && year < max;
 };
 
 // 日期面板最上面年月
@@ -569,36 +1107,86 @@ const panelMonth = computed(() => {
   return panelDate.value.getMonth() + 1;
 });
 
-// 切换月份的函数
-const handlePrevMonth = () => {
-  panelDate.value = new Date(
-    panelDate.value.getFullYear(),
-    panelDate.value.getMonth() - 1,
-    1
-  );
+const getPanelLabel = (date: Date) => {
+  return `${date.getFullYear()} 年 ${date.getMonth() + 1} 月`;
 };
 
-const handleNextMonth = () => {
-  panelDate.value = new Date(
-    panelDate.value.getFullYear(),
-    panelDate.value.getMonth() + 1,
-    1
-  );
+// 切换月份的函数
+const handlePrevMonth = (panel: "left" | "right" = "left") => {
+  if (panel === "right" && props.unlinkPanels) {
+    rightRangePanelDate.value = new Date(
+      rightRangePanelDate.value.getFullYear(),
+      rightRangePanelDate.value.getMonth() - 1,
+      1
+    );
+    return;
+  }
+
+  panelDate.value = new Date(panelDate.value.getFullYear(), panelDate.value.getMonth() - 1, 1);
+};
+
+const handleNextMonth = (panel: "left" | "right" = "left") => {
+  if (panel === "right" && props.unlinkPanels) {
+    rightRangePanelDate.value = new Date(
+      rightRangePanelDate.value.getFullYear(),
+      rightRangePanelDate.value.getMonth() + 1,
+      1
+    );
+    return;
+  }
+
+  panelDate.value = new Date(panelDate.value.getFullYear(), panelDate.value.getMonth() + 1, 1);
 };
 // 切换年份的函数
-const handlePrevYear = () => {
-  panelDate.value = new Date(
-    panelDate.value.getFullYear() - 1,
-    panelDate.value.getMonth(),
-    1
-  );
+const handlePrevYear = (panel: "left" | "right" = "left") => {
+  if (panel === "right" && props.unlinkPanels) {
+    rightRangePanelDate.value = new Date(
+      rightRangePanelDate.value.getFullYear() - 1,
+      rightRangePanelDate.value.getMonth(),
+      1
+    );
+    return;
+  }
+
+  panelDate.value = new Date(panelDate.value.getFullYear() - 1, panelDate.value.getMonth(), 1);
 };
-const handleNextYear = () => {
-  panelDate.value = new Date(
-    panelDate.value.getFullYear() + 1,
-    panelDate.value.getMonth(),
-    1
-  );
+const handleNextYear = (panel: "left" | "right" = "left") => {
+  if (panel === "right" && props.unlinkPanels) {
+    rightRangePanelDate.value = new Date(
+      rightRangePanelDate.value.getFullYear() + 1,
+      rightRangePanelDate.value.getMonth(),
+      1
+    );
+    return;
+  }
+
+  panelDate.value = new Date(panelDate.value.getFullYear() + 1, panelDate.value.getMonth(), 1);
+};
+
+const handlePrevYearRange = (panel: "left" | "right" = "left") => {
+  if (panel === "right" && props.unlinkPanels) {
+    rightRangePanelDate.value = new Date(
+      rightRangePanelDate.value.getFullYear() - 10,
+      rightRangePanelDate.value.getMonth(),
+      1
+    );
+    return;
+  }
+
+  panelDate.value = new Date(panelDate.value.getFullYear() - 10, panelDate.value.getMonth(), 1);
+};
+
+const handleNextYearRange = (panel: "left" | "right" = "left") => {
+  if (panel === "right" && props.unlinkPanels) {
+    rightRangePanelDate.value = new Date(
+      rightRangePanelDate.value.getFullYear() + 10,
+      rightRangePanelDate.value.getMonth(),
+      1
+    );
+    return;
+  }
+
+  panelDate.value = new Date(panelDate.value.getFullYear() + 10, panelDate.value.getMonth(), 1);
 };
 
 
@@ -643,6 +1231,10 @@ onBeforeUnmount(() => {
   position: relative;
   display: inline-block;
   width: 240px;
+}
+
+.keyment-date-picker.is-range {
+  width: 360px;
 }
 
 .keyment-date-picker__wrapper {
@@ -727,6 +1319,47 @@ onBeforeUnmount(() => {
   color: #606266;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
 }
+
+.keyment-date-picker__panel.is-range-panel {
+  left: 50%;
+  width: auto;
+  transform: translateX(-50%);
+}
+
+.keyment-date-picker__range-panels {
+  display: flex;
+  gap: 0;
+}
+
+.keyment-date-picker__range-panel {
+  width: 280px;
+}
+
+.keyment-date-picker__range-panel + .keyment-date-picker__range-panel {
+  margin-left: 16px;
+  padding-left: 16px;
+  border-left: 1px solid #e4e7ed;
+}
+
+.keyment-date-picker__range-panel .keyment-date-picker__header {
+  position: relative;
+  justify-content: flex-start;
+}
+
+.keyment-date-picker__range-panel:last-child .keyment-date-picker__header {
+  justify-content: flex-end;
+}
+
+.keyment-date-picker__range-panel-label {
+  position: absolute;
+  left: 50%;
+  color: #303133;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  transform: translateX(-50%);
+}
+
 .keyment-date-picker__cell {
   width: 32px;
   height: 32px;
@@ -808,6 +1441,12 @@ onBeforeUnmount(() => {
 .keyment-date-picker__cell.is-today {
   color: #409eff;
   font-weight: 700;
+}
+
+.keyment-date-picker__cell.is-in-range {
+  border-radius: 4px;
+  background: #ecf5ff;
+  color: #409eff;
 }
 
 .keyment-date-picker__cell.is-selected {
@@ -907,6 +1546,13 @@ onBeforeUnmount(() => {
   background: #409eff;
   color: #ffffff;
 }
+
+.keyment-date-picker__month-cell.is-in-range,
+.keyment-date-picker__year-cell.is-in-range {
+  background: #ecf5ff;
+  color: #409eff;
+}
+
 .keyment-date-picker__range {
   display: flex;
   align-items: center;
@@ -921,6 +1567,14 @@ onBeforeUnmount(() => {
   transition: border-color 0.2s;
 }
 
+.keyment-date-picker--large .keyment-date-picker__range {
+  height: 40px;
+}
+
+.keyment-date-picker--small .keyment-date-picker__range {
+  height: 24px;
+}
+
 .keyment-date-picker__range:focus-within {
   border-color: #409eff;
 }
@@ -933,8 +1587,13 @@ onBeforeUnmount(() => {
   background: transparent;
   color: #606266;
   font-size: 14px;
+  line-height: 1;
   text-align: center;
   cursor: pointer;
+}
+
+.keyment-date-picker--small .keyment-date-picker__range-input {
+  font-size: 12px;
 }
 
 .keyment-date-picker__range-input:disabled {
@@ -944,8 +1603,14 @@ onBeforeUnmount(() => {
 
 .keyment-date-picker__range-separator {
   flex: none;
-  padding: 0 8px;
+  padding: 0 10px;
   color: #909399;
   font-size: 14px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.keyment-date-picker--small .keyment-date-picker__range-separator {
+  font-size: 12px;
 }
 </style>

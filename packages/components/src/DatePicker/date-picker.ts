@@ -22,6 +22,7 @@ export interface DatePickerProps {
   startPlaceholder?: string;
   endPlaceholder?: string;
   rangeSeparator?:string; // 中间分隔符
+  unlinkPanels?: boolean; // 范围选择时，左右两个面板是否取消联动
 }
 // date-picker 触发的事件类型
 export interface DatePickerEmits {
