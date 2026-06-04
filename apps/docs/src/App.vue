@@ -171,6 +171,14 @@
   clearable
   :disabled-date="disabledBeforeToday"
 />
+<ky-date-picker
+  v-model="dateValue"
+  placeholder="请选择日期"
+  type="month"
+  clearable
+  readonly
+  size="small"
+/>
   </main>
 </template>
 
@@ -209,7 +217,7 @@ const switchValue = ref(false);
 const inputValue = ref("");
 const passwordValue = ref("");
 const textareaValue = ref("");
-const dateValue = ref("2026/08/29");
+const dateValue = ref("");
 const dateValue1 = ref("");
 
 const disabledBeforeToday = (time: Date) => {

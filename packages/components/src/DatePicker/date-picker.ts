@@ -1,7 +1,10 @@
-export type DatePickerValue = Date | string;
+export type DatePickerSingleValue = Date | string;
+export type DatePickerRangeValue = [DatePickerSingleValue, DatePickerSingleValue];
+export type DatePickerValue = DatePickerSingleValue | DatePickerRangeValue;
 export type DatePickerSize = "large" | "default" | "small";
 export type DatePickerDisabledDate = (date: Date) => boolean;
-
+export type DatePanelMode = "date" | "month"| 'year';
+export type DatePickerType = "date" | "month" | "year"| "daterange"| "monthrange"|"yearrange";
 // date-picker 的 props 类型
 export interface DatePickerProps {
 // 一期
@@ -15,6 +18,10 @@ export interface DatePickerProps {
   size?: DatePickerSize; // 日期选择器尺寸
   editable?: boolean; // 是否允许手动输入
   disabledDate?: DatePickerDisabledDate; // 设置不可选择的日期
+  type?: DatePickerType; // 日期选择器类型：date / month / year
+  startPlaceholder?: string;
+  endPlaceholder?: string;
+  rangeSeparator?:string; // 中间分隔符
 }
 // date-picker 触发的事件类型
 export interface DatePickerEmits {
