@@ -16,6 +16,7 @@ import { KyCheckbox , KyCheckboxGroup,KyCheckboxButton} from "./Checkbox";
 import { KySwitch } from "./Switch";
 import { KyInput } from "./Input";
 import { KyDatePicker } from "./DatePicker";
+import { KySelect, KyOption } from "./Select";
 
 const components = [  
   KyButton,
@@ -37,7 +38,9 @@ const components = [
   KyCheckboxButton,
   KySwitch,
   KyInput,
-  KyDatePicker
+  KyDatePicker,
+  KySelect,
+  KyOption
 ];
 
 export {
@@ -60,7 +63,9 @@ export {
   KyCheckboxButton,
   KySwitch,
   KyInput,
-  KyDatePicker
+  KyDatePicker,
+  KySelect,
+  KyOption
 };
 
 
