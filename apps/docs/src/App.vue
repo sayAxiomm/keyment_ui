@@ -199,6 +199,9 @@
   clearable
   size="small"
 />
+<ky-upload @change="handleUploadChange">
+  点击上传
+</ky-upload>
   </main>
 </template>
 
@@ -224,7 +227,8 @@ import {
   KyCheckboxButton,
   KySwitch,
   KyInput,
-  KyDatePicker
+  KyDatePicker,
+  KyUpload
 } from "@keyment/components";
 import { Plus,Minus } from "@keyment/icons";
 import { ref } from "vue";
@@ -242,6 +246,9 @@ const dateValue1 = ref("");
 const dateRangeValue = ref("");
 const monthRangeValue = ref("");
 const yearRangeValue = ref("");
+const handleUploadChange = (files: any[]) => {
+  console.log("upload files:", files);
+};
 
 const disabledBeforeToday = (time: Date) => {
  return time.getTime() > Date.now()
