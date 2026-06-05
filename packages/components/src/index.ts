@@ -16,11 +16,8 @@ import { KyCheckbox , KyCheckboxGroup,KyCheckboxButton} from "./Checkbox";
 import { KySwitch } from "./Switch";
 import { KyInput } from "./Input";
 import { KyDatePicker } from "./DatePicker";
-<<<<<<< HEAD
 import { KySelect, KyOption } from "./Select";
-=======
 import { KyUpload } from "./Upload";
->>>>>>> origin/hotfix
 
 const components = [  
   KyButton,
@@ -43,12 +40,9 @@ const components = [
   KySwitch,
   KyInput,
   KyDatePicker,
-<<<<<<< HEAD
   KySelect,
-  KyOption
-=======
+  KyOption,
   KyUpload
->>>>>>> origin/hotfix
 ];
 
 export {
@@ -72,12 +66,9 @@ export {
   KySwitch,
   KyInput,
   KyDatePicker,
-<<<<<<< HEAD
   KySelect,
-  KyOption
-=======
+  KyOption,
   KyUpload
->>>>>>> origin/hotfix
 };
 
 

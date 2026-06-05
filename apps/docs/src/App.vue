@@ -199,18 +199,16 @@
   clearable
   size="small"
 />
-<<<<<<< HEAD
 <p>select：{{ selectValue }}</p>
 <ky-select v-model="selectValue" placeholder="请选择城市">
   <ky-option label="北京" value="beijing" />
   <ky-option label="上海" value="shanghai" />
   <ky-option label="广州" value="guangzhou" />
 </ky-select>
-=======
-<ky-upload @change="handleUploadChange">
+<p></p>
+<ky-upload @change="handleUploadChange" :multiple="true">
   点击上传
 </ky-upload>
->>>>>>> origin/hotfix
   </main>
 </template>
 
@@ -237,12 +235,9 @@ import {
   KySwitch,
   KyInput,
   KyDatePicker,
-<<<<<<< HEAD
   KySelect,
-  KyOption
-=======
+  KyOption,
   KyUpload
->>>>>>> origin/hotfix
 } from "@keyment/components";
 import { Plus,Minus } from "@keyment/icons";
 import { ref } from "vue";
@@ -260,13 +255,10 @@ const dateValue1 = ref("");
 const dateRangeValue = ref("");
 const monthRangeValue = ref("");
 const yearRangeValue = ref("");
-<<<<<<< HEAD
 const selectValue = ref("");
-=======
 const handleUploadChange = (files: any[]) => {
   console.log("upload files:", files);
 };
->>>>>>> origin/hotfix
 
 const disabledBeforeToday = (time: Date) => {
  return time.getTime() > Date.now()

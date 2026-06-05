@@ -18,12 +18,38 @@
     >
       <slot>点击上传</slot>
     </div>
+    <!-- 有多选的时候 -->
+    <ul
+      v-if="props.showFileList &&uploadFiles.length"
+      class="keyment-upload__list"
+      >
+      <li
+        v-for="file in uploadFiles"
+        :key="file.name"
+        class="keyment-upload__item"
+        :class="`is-${file.status}`"
+        >
+          <span class="keyment-upload__name">
+            {{ file.name }}
+          </span>
+          <span class="keyment-upload__status">
+            {{ getStatusText(file.status) }}
+          </span>
+          <button
+            class="keyment-upload__remove"
+            type="button"
+            @click="handleRemove(file)"
+            >
+            x
+          </button>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
-import type { UploadEmits, UploadFile, UploadProps } from "./upload";
+import type { UploadEmits, UploadFile, UploadProps,UploadStatus } from "./upload";
 
 defineOptions({
   name: "KyUpload"
@@ -33,12 +59,17 @@ const props = withDefaults(defineProps<UploadProps>(), {
   disabled: false,
   multiple: false,
   name: "file",
-  method: "post"
+  method: "post",
+  autoUpload: true,
+  showFileList: true
 });
 
 const emit = defineEmits<UploadEmits>();
 
 const inputRef = ref<HTMLInputElement>();
+// 组件内部保存的文件列表，用来后面渲染文件列表。
+const uploadFiles = ref<UploadFile[]>([]);
+
 
 // 这个方法绑定在我们自己画的上传按钮上，我们会把input的默认隐藏 因为不好控制，
 // 用户点击自己画的掉这个函数 ，然后这里面获取上传的dom 然后用函数进行点击
@@ -59,22 +90,51 @@ const handleChange = (event: Event) => {
   if (!fileList) {
     return;
   }
-
-  const files: UploadFile[] = Array.from(fileList).map((file) => {
-    return {
-      raw: file,
-      name: file.name,
-      size: file.size,
-      type: file.type
-    };
-  });
-
-  emit("change", files);
-  // 调用上传的函数
-  files.forEach((file) => {
-  uploadFile(file);
+  // 先判断 超没超limit
+  const rawFiles = Array.from(fileList);
+  // 超过了就清空
+  if (props.limit && uploadFiles.value.length + rawFiles.length > props.limit) {
+    emit("exceed", rawFiles, uploadFiles.value);
+    target.value = "";
+    return;
+  }
+ const files: UploadFile[] = rawFiles.map((file) => {
+  return {
+    raw: file,
+    name: file.name,
+    size: file.size,
+    type: file.type,
+    status: "ready"
+  };
 });
+  // multiple指的是否支持多选
+  uploadFiles.value = props.multiple ? [...uploadFiles.value, ...files] : files;
+
+  emit("change", uploadFiles.value);
+  // 调用上传的函数, 先判断是否自动上传
+  if (props.autoUpload) {
+  files.forEach((file) => {
+    uploadFile(file);
+  });
+}
 };
+
+// 手动上传文件列表中还没有上传的文件。
+const submit = () => {
+  uploadFiles.value.forEach((file) => {
+    uploadFile(file);
+  });
+};
+// 清空文件列表。
+const clearFiles = () => {
+  uploadFiles.value = [];
+  emit("change", uploadFiles.value);
+};
+// submit方法暴露出,组件实例的方法 
+defineExpose({
+  submit,
+  clearFiles
+});
 
 // 把选择的文件上传到porps.action这个路径
 const uploadFile = async (file: UploadFile) => {
@@ -89,6 +149,7 @@ const uploadFile = async (file: UploadFile) => {
       return;
     }
   }
+  file.status = "uploading";
   const formData = new FormData();
 
   formData.append(props.name, file.raw);
@@ -118,17 +179,44 @@ const uploadFile = async (file: UploadFile) => {
   if (!response.ok) {
     throw result;
   }
-
+  file.status = "success";
   props.onSuccess?.(result, file);
+  emit("success", result, file);
 } catch (error) {
+  file.status = "error";
   props.onError?.(error, file);
+  emit("error", error, file);
 }
+};
+
+// 从文件列表中移除某个文件。
+const handleRemove = (file: UploadFile) => {
+  uploadFiles.value = uploadFiles.value.filter((item) => {
+    return item !== file;
+  });
+
+  props.onRemove?.(file, uploadFiles.value);
+  emit("remove", file, uploadFiles.value);
+  emit("change", uploadFiles.value);
+};
+
+// 根据文件状态显示对应文本。
+const getStatusText = (status: UploadStatus) => {
+  const statusMap: Record<UploadStatus, string> = {
+    ready: "待上传",
+    uploading: "上传中",
+    success: "成功",
+    error: "失败"
+  };
+
+  return statusMap[status];
 };
 </script>
 
 <style scoped>
 .keyment-upload {
-  display: inline-block;
+  display: block;
+  width: 100%;
 }
 
 .keyment-upload__input {
@@ -163,5 +251,68 @@ const uploadFile = async (file: UploadFile) => {
   border-color: #e4e7ed;
   background: #f5f7fa;
   cursor: not-allowed;
+}
+.keyment-upload__list {
+  width: 100%;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.keyment-upload__item {
+  height: 28px;
+  color: #606266;
+  font-size: 14px;
+  line-height: 28px;
+}
+.keyment-upload__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  height: 28px;
+  padding: 0 8px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: #606266;
+  font-size: 12px;
+  line-height: 28px;
+}
+.keyment-upload__item:hover{
+  background: #f5f7fa;
+  color: #409eff;
+  cursor: pointer;
+}
+
+.keyment-upload__name {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.keyment-upload__remove {
+  flex: none;
+  border: none;
+  background: transparent;
+  color: #909399;
+  cursor: pointer;
+}
+
+.keyment-upload__remove:hover {
+  color: #f56c6c;
+}
+.keyment-upload__status {
+  flex: none;
+  color: #909399;
+  font-size: 12px;
+}
+.keyment-upload__item.is-success {
+  color: #67c23a;
+}
+
+.keyment-upload__item.is-error {
+  color: #f56c6c;
 }
 </style>
