@@ -200,7 +200,13 @@
   size="small"
 />
 <p>select：{{ selectValue }}</p>
-<ky-select v-model="selectValue" placeholder="请选择城市">
+<ky-select v-model="selectValue" placeholder="请选择城市" clearable>
+  <ky-option label="北京" value="beijing" />
+  <ky-option label="上海" value="shanghai" />
+  <ky-option label="广州" value="guangzhou" />
+</ky-select>
+<p>multiple select：{{ multipleSelectValue }}</p>
+<ky-select v-model="multipleSelectValue" placeholder="请选择城市" multiple clearable>
   <ky-option label="北京" value="beijing" />
   <ky-option label="上海" value="shanghai" />
   <ky-option label="广州" value="guangzhou" />
@@ -259,6 +265,7 @@ const dateRangeValue = ref("");
 const monthRangeValue = ref("");
 const yearRangeValue = ref("");
 const selectValue = ref("");
+const multipleSelectValue = ref<string[]>([]);
 const handleUploadChange = (files: any[]) => {
   console.log("upload files:", files);
 };
