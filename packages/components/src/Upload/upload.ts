@@ -16,6 +16,7 @@ export interface UploadProps {
   autoUpload?: boolean; // 是否在选择文件后自动上传
   limit?: number; // 最大允许选择的文件数量
   showFileList?: boolean; // 是否显示文件列表
+  drag?: boolean; // 是否启用拖拽上传
   onSuccess?: (response: unknown, file: UploadFile) => void; // 上传成功后触发
   onError?: (error: unknown, file: UploadFile) => void; // 上传失败后触发
   onRemove?: (file: UploadFile, files: UploadFile[]) => void; // 移除文件后触发

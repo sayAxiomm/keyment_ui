@@ -209,6 +209,9 @@
 <ky-upload @change="handleUploadChange" :multiple="true">
   点击上传
 </ky-upload>
+<ky-upload drag multiple>
+  拖拽文件到这里，或点击上传
+</ky-upload>
   </main>
 </template>
 

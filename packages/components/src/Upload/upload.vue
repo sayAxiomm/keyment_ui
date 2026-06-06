@@ -13,8 +13,15 @@
 
     <div
       class="keyment-upload__trigger"
-      :class="{ 'is-disabled': props.disabled }"
+      :class="{ 
+        'is-disabled': props.disabled,
+        'is-drag': props.drag,
+        'is-dragover': isDragover
+       }"
       @click="handleClick"
+      @dragover.prevent="handleDragover"
+      @dragleave.prevent="handleDragleave"
+      @drop.prevent="handleDrop"
     >
       <slot>点击上传</slot>
     </div>
@@ -61,7 +68,8 @@ const props = withDefaults(defineProps<UploadProps>(), {
   name: "file",
   method: "post",
   autoUpload: true,
-  showFileList: true
+  showFileList: true,
+  drag: false
 });
 
 const emit = defineEmits<UploadEmits>();
@@ -69,6 +77,8 @@ const emit = defineEmits<UploadEmits>();
 const inputRef = ref<HTMLInputElement>();
 // 组件内部保存的文件列表，用来后面渲染文件列表。
 const uploadFiles = ref<UploadFile[]>([]);
+// 拖拽状态
+const isDragover = ref(false);
 
 
 // 这个方法绑定在我们自己画的上传按钮上，我们会把input的默认隐藏 因为不好控制，
@@ -82,7 +92,6 @@ const handleClick = () => {
 };
 
 // 用户在系统文件窗口里选完文件后，
-// 把浏览器给的文件列表整理成我们自己的 UploadFile[]，再通知外面
 const handleChange = (event: Event) => {
   const target = event.target as HTMLInputElement;
   const fileList = target.files;
@@ -90,33 +99,70 @@ const handleChange = (event: Event) => {
   if (!fileList) {
     return;
   }
-  // 先判断 超没超limit
-  const rawFiles = Array.from(fileList);
-  // 超过了就清空
+
+  handleFiles(Array.from(fileList));
+
+  target.value = "";
+};
+
+// 统一处理用户选择或拖拽进来的原生文件。
+// 把浏览器给的文件列表整理成我们自己的 UploadFile[]，再通知外面
+const handleFiles = (rawFiles: File[]) => {
   if (props.limit && uploadFiles.value.length + rawFiles.length > props.limit) {
     emit("exceed", rawFiles, uploadFiles.value);
-    target.value = "";
     return;
   }
- const files: UploadFile[] = rawFiles.map((file) => {
-  return {
-    raw: file,
-    name: file.name,
-    size: file.size,
-    type: file.type,
-    status: "ready"
-  };
-});
-  // multiple指的是否支持多选
+
+  const files: UploadFile[] = rawFiles.map((file) => {
+    return {
+      raw: file,
+      name: file.name,
+      size: file.size,
+      type: file.type,
+      status: "ready"
+    };
+  });
+
   uploadFiles.value = props.multiple ? [...uploadFiles.value, ...files] : files;
 
   emit("change", uploadFiles.value);
-  // 调用上传的函数, 先判断是否自动上传
+
   if (props.autoUpload) {
-  files.forEach((file) => {
-    uploadFile(file);
-  });
-}
+    files.forEach((file) => {
+      uploadFile(file);
+    });
+  }
+};
+
+// 文件拖进上传区域时，切换拖拽样式。
+const handleDragover = () => {
+  if (props.disabled || !props.drag) {
+    return;
+  }
+
+  isDragover.value = true;
+};
+
+// 文件离开上传区域时，取消拖拽样式。
+const handleDragleave = () => {
+  isDragover.value = false;
+};
+
+// 文件拖放到上传区域时，读取文件并走统一上传逻辑。
+const handleDrop = (event: DragEvent) => {
+  if (props.disabled || !props.drag) {
+    return;
+  }
+
+  isDragover.value = false;
+
+  const fileList = event.dataTransfer?.files;
+
+  if (!fileList) {
+    return;
+  }
+
+  handleFiles(Array.from(fileList));
 };
 
 // 手动上传文件列表中还没有上传的文件。
@@ -314,5 +360,17 @@ const getStatusText = (status: UploadStatus) => {
 
 .keyment-upload__item.is-error {
   color: #f56c6c;
+}
+.keyment-upload__trigger.is-drag {
+  width: 360px;
+  height: 160px;
+  border-style: dashed;
+  color: #909399;
+}
+
+.keyment-upload__trigger.is-dragover {
+  border-color: #409eff;
+  background: #ecf5ff;
+  color: #409eff;
 }
 </style>
