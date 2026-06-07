@@ -218,6 +218,19 @@
 <ky-upload drag multiple>
   拖拽文件到这里，或点击上传
 </ky-upload>
+<ky-form
+  :model="form"
+  label-width="80px"
+  label-position="top"
+>
+  <ky-form-item label="用户名" prop="username" required>
+    <ky-input v-model="form.username" placeholder="请输入用户名" />
+  </ky-form-item>
+
+  <ky-form-item label="密码" prop="password" >
+    <ky-input v-model="form.password" placeholder="请输入密码" />
+  </ky-form-item>
+</ky-form>
   </main>
 </template>
 
@@ -246,7 +259,9 @@ import {
   KyDatePicker,
   KySelect,
   KyOption,
-  KyUpload
+  KyUpload,
+  KyForm,
+  KyFormItem
 } from "@keyment/components";
 import { Plus,Minus } from "@keyment/icons";
 import { ref } from "vue";
@@ -273,6 +288,10 @@ const handleUploadChange = (files: any[]) => {
 const disabledBeforeToday = (time: Date) => {
  return time.getTime() > Date.now()
 };
+const form = ref({
+  username: "",
+  password: ""
+});
 </script>
 
 <style scoped>

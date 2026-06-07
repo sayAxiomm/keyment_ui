@@ -18,6 +18,7 @@ import { KyInput } from "./Input";
 import { KyDatePicker } from "./DatePicker";
 import { KySelect, KyOption } from "./Select";
 import { KyUpload } from "./Upload";
+import { KyForm, KyFormItem } from "./Form";
 
 const components = [  
   KyButton,
@@ -42,7 +43,9 @@ const components = [
   KyDatePicker,
   KySelect,
   KyOption,
-  KyUpload
+  KyUpload,
+  KyForm,
+  KyFormItem
 ];
 
 export {
@@ -68,7 +71,9 @@ export {
   KyDatePicker,
   KySelect,
   KyOption,
-  KyUpload
+  KyUpload,
+  KyForm,
+  KyFormItem
 };
 
 
