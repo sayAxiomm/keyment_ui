@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, onBeforeUnmount, onMounted, ref } from "vue";
+import { computed, inject, onBeforeUnmount, onMounted, provide, ref } from "vue";
 import type {
   FormContext,
   FormItemContext,
@@ -193,6 +193,8 @@ const formItemContext: FormItemContext = {
   validate,
   clearValidate
 };
+
+provide<FormItemContext>("formItem", formItemContext);
 
 // 有 prop 的 form-item 才需要被 form 收集。
 onMounted(() => {

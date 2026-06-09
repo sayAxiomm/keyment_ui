@@ -16,8 +16,9 @@
 </template>
 
 <script setup lang="ts">
-import { provide } from "vue";
+import { inject, nextTick, provide } from "vue";
 import type { RadioGroupEmits, RadioGroupProps, RadioValue,RadioGroupContext} from "./radio";
+import type { FormItemContext } from "../Form/form";
 
 defineOptions({
   name: "KyRadioGroup"
@@ -33,10 +34,17 @@ const props = withDefaults(defineProps<RadioGroupProps>(), {
 });
 
 const emit = defineEmits<RadioGroupEmits>();
+const formItem = inject<FormItemContext>("formItem", undefined);
 
 function changeEvent(value: RadioValue) {
   emit("update:modelValue", value);
   emit("change", value);
+
+  if (props.validateEvent) {
+    nextTick(() => {
+      formItem?.validate("change");
+    });
+  }
 }
 // 数据频繁变化,要实时更新,就要写成这种样子
 provide("radioGroup", {

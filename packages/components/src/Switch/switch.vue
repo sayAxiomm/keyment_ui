@@ -83,8 +83,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, inject, nextTick } from "vue";
 import type { SwitchProps, SwitchEmits } from "./switch";
+import type { FormItemContext } from "../Form/form";
 
 defineOptions({
   name: "KySwitch"
@@ -101,6 +102,7 @@ const props = withDefaults(defineProps<SwitchProps>(), {
 });
 
 const emit = defineEmits<SwitchEmits>();
+const formItem = inject<FormItemContext>("formItem", undefined);
 const switchClass = computed(() => ({
   "is-checked": isChecked.value,
   "is-disabled": props.disabled,
@@ -123,6 +125,12 @@ const handleChange = () => {
 
   emit("update:modelValue", nextValue);
   emit("change", nextValue);
+
+  if (props.validateEvent) {
+    nextTick(() => {
+      formItem?.validate("change");
+    });
+  }
 };
 
 // Switch 轨道用的动态行内样式,把 coreStyle 这个对象里的样式，动态加到轨道上

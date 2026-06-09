@@ -94,9 +94,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed,ref } from "vue";
+import { computed, inject, nextTick, ref } from "vue";
 import { View, Hide } from "@keyment/icons";
 import type { InputEmits, InputProps } from "./input";
+import type { FormItemContext } from "../Form/form";
 
 defineOptions({
   name: "KyInput"
@@ -126,6 +127,17 @@ const inputClass = computed(() => ([
   }
 ]));
 const emit = defineEmits<InputEmits>();
+const formItem = inject<FormItemContext>("formItem", undefined);
+
+const validateFormItem = (trigger: "blur" | "change") => {
+  if (!props.validateEvent) {
+    return;
+  }
+
+  nextTick(() => {
+    formItem?.validate(trigger);
+  });
+};
 
 // 子传父的事件
 const handleInput = (event: Event) => {
@@ -133,6 +145,7 @@ const handleInput = (event: Event) => {
 
   emit("update:modelValue", target.value);
   emit("input", target.value);
+  validateFormItem("change");
 };
 
 const handleChange = (event: Event) => {
@@ -147,12 +160,14 @@ const handleFocus = (event: FocusEvent) => {
 
 const handleBlur = (event: FocusEvent) => {
   emit("blur", event);
+  validateFormItem("blur");
 };
 // 清空的事件
 const handleClear = () => {
   emit("update:modelValue", "");
   emit("input", "");
   emit("clear");
+  validateFormItem("change");
 };
 
 // 是否显示清空按钮

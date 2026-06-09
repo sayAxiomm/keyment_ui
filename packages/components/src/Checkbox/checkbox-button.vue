@@ -24,12 +24,13 @@
   </label>
 </template>
 <script setup lang="ts">
-import { computed, inject } from "vue";
+import { computed, inject, nextTick } from "vue";
 import type {
   CheckboxEmits,
   CheckboxGroupContext,
   CheckboxProps
 } from "./checkbox";
+import type { FormItemContext } from "../Form/form";
 
 defineOptions({
   name: "KyCheckboxButton"
@@ -45,6 +46,7 @@ const props = withDefaults(defineProps<CheckboxProps>(), {
 const emit = defineEmits<CheckboxEmits>();
 
 const checkboxGroup = inject<CheckboxGroupContext>("checkboxGroup");
+const formItem = inject<FormItemContext>("formItem", undefined);
 
 const isGroup = computed(() => !!checkboxGroup);
 
@@ -120,6 +122,12 @@ const handleChange = () => {
 
   emit("update:modelValue", nextValue);
   emit("change", nextValue);
+
+  if (props.validateEvent) {
+    nextTick(() => {
+      formItem?.validate("change");
+    });
+  }
 };
 </script>
 

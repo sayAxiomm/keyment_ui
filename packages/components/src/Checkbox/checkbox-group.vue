@@ -12,13 +12,14 @@
   </div>
 </template>
 <script setup lang="ts">
-import { provide } from "vue";
+import { inject, nextTick, provide } from "vue";
 import type {
   CheckboxGroupContext,
   CheckboxGroupEmits,
   CheckboxGroupProps,
   CheckboxValue
 } from "./checkbox";
+import type { FormItemContext } from "../Form/form";
 
 defineOptions({
   name: "KyCheckboxGroup"
@@ -32,6 +33,7 @@ const props = withDefaults(defineProps<CheckboxGroupProps>(), {
 });
 
 const emit = defineEmits<CheckboxGroupEmits>();
+const formItem = inject<FormItemContext>("formItem", undefined);
   
 
 // checkbox变化通知group的函数
@@ -52,6 +54,11 @@ function changeEvent(value: CheckboxValue) {
     const nextValue = modelValue.filter((item) => item !== value);
     emit("update:modelValue", nextValue);
     emit("change", nextValue);
+    if (props.validateEvent) {
+      nextTick(() => {
+        formItem?.validate("change");
+      });
+    }
     return;
   }
 
@@ -64,6 +71,11 @@ function changeEvent(value: CheckboxValue) {
   const nextValue = [...modelValue, value];
   emit("update:modelValue", nextValue);
   emit("change", nextValue);
+  if (props.validateEvent) {
+    nextTick(() => {
+      formItem?.validate("change");
+    });
+  }
 }
 provide("checkboxGroup", {
   get modelValue() {
