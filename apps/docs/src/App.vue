@@ -231,6 +231,19 @@
     <ky-input v-model="form.password" placeholder="请输入密码" />
   </ky-form-item>
 </ky-form>
+<ky-carousel height="200px" autoplay>
+  <ky-carousel-item>
+    <div class="carousel-demo carousel-demo-1">1</div>
+  </ky-carousel-item>
+
+  <ky-carousel-item>
+    <div class="carousel-demo carousel-demo-2">2</div>
+  </ky-carousel-item>
+
+  <ky-carousel-item>
+    <div class="carousel-demo carousel-demo-3">3</div>
+  </ky-carousel-item>
+</ky-carousel>
   </main>
 </template>
 
@@ -261,7 +274,9 @@ import {
   KyOption,
   KyUpload,
   KyForm,
-  KyFormItem
+  KyFormItem,
+  KyCarousel,
+  KyCarouselItem
 } from "@keyment/components";
 import { Plus,Minus } from "@keyment/icons";
 import { ref } from "vue";
@@ -343,5 +358,25 @@ h1 {
   background: #409eff;
   box-sizing: border-box;
    border-radius: 4px;
+}
+.carousel-demo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #ffffff;
+  font-size: 32px;
+}
+
+.carousel-demo-1 {
+  background: #409eff;
+}
+
+.carousel-demo-2 {
+  background: #67c23a;
+}
+
+.carousel-demo-3 {
+  background: #e6a23c;
 }
 </style>
