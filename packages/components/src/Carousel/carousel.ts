@@ -17,5 +17,8 @@ export interface CarouselEmits {
 
 export interface CarouselContext {
   activeIndex: number; // 当前显示的索引
+  previousIndex: number; // 上一次显示的索引
+  itemCount: number; // 当前一共有多少个 carousel-item
   addItem: () => number; // carousel-item 注册自己，并拿到自己的索引
+  removeItem: () => void; // carousel-item 卸载时减少数量
 }

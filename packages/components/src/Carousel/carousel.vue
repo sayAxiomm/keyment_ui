@@ -2,37 +2,41 @@
   <!-- 外层容器 -->
   <div
     class="keyment-carousel"
-    :style="carouselStyle"
     @mouseenter="handleMouseEnter"
     @mouseleave="handleMouseLeave"
+  >
+    <div
+      class="keyment-carousel__viewport"
+      :style="carouselStyle"
     >
-    <!-- 外层容器 -->
-    <div class="keyment-carousel__container">
-      <slot />
+      <div class="keyment-carousel__container">
+        <slot />
+      </div>
+
+      <button
+        v-if="showArrows"
+        class="keyment-carousel__arrow keyment-carousel__arrow--left"
+        type="button"
+        @click="prev"
+      >
+        &lt;
+      </button>
+
+      <button
+        v-if="showArrows"
+        class="keyment-carousel__arrow keyment-carousel__arrow--right"
+        type="button"
+        @click="next"
+      >
+        &gt;
+      </button>
     </div>
-
-    <button
-      v-if="showArrows"
-      class="keyment-carousel__arrow keyment-carousel__arrow--left"
-      type="button"
-      @click="prev"
-    >
-      &lt;
-    </button>
-
-    <button
-      v-if="showArrows"
-      class="keyment-carousel__arrow keyment-carousel__arrow--right"
-      type="button"
-      @click="next"
-    >
-      &gt;
-    </button>
 
     <div
       v-if="props.indicatorPosition !== 'none'"
       class="keyment-carousel__indicators"
-      >
+      :class="`is-${props.indicatorPosition}`"
+    >
       <button
         v-for="index in itemCount"
         :key="index"
@@ -68,6 +72,7 @@ const emit = defineEmits<CarouselEmits>();
 let timer: ReturnType<typeof setInterval> | undefined;
 const isHovering = ref(false);  // 是否hover
 const activeIndex = ref(props.initialIndex); // 当前正在显示第几张
+const previousIndex = ref(props.initialIndex); // 上一次显示的是第几张
 
 // 当前 carousel 里面一共有多少个 carousel-item。
 // 每个 carousel-item 挂载时都会调用 addItem，让这里数量 +1。
@@ -89,6 +94,19 @@ const addItem = () => {
   itemCount.value += 1;
 
   return index;
+};
+// 子组件 carousel-item 卸载时调用。
+// 主要是为了避免热更新或者组件销毁后，itemCount 数量不准确。
+const removeItem = () => {
+  if (itemCount.value === 0) {
+    return;
+  }
+
+  itemCount.value -= 1;
+
+  if (activeIndex.value >= itemCount.value) {
+    activeIndex.value = Math.max(itemCount.value - 1, 0);
+  }
 };
 
 // 切换当前显示的轮播项。
@@ -115,6 +133,7 @@ const setActiveItem = (index: number) => {
     return;
   }
 
+  previousIndex.value = prevIndex;
   activeIndex.value = nextIndex;
 
   emit("change", nextIndex, prevIndex);
@@ -133,7 +152,14 @@ provide<CarouselContext>("carousel", {
   get activeIndex() {
     return activeIndex.value;
   },
-  addItem
+  get previousIndex() {
+    return previousIndex.value;
+  },
+  get itemCount() {
+    return itemCount.value;
+  },
+  addItem,
+  removeItem
 });
 
 // 自动播放
@@ -193,9 +219,12 @@ const showArrows = computed(() => {
 <style scoped>
 .keyment-carousel {
   position: relative;
-  overflow: hidden;
 }
 
+.keyment-carousel__viewport {
+  position: relative;
+  overflow: hidden;
+}
 .keyment-carousel__container {
   position: relative;
   width: 100%;
@@ -224,13 +253,10 @@ const showArrows = computed(() => {
   right: 16px;
 }
 .keyment-carousel__indicators {
-  position: absolute;
-  left: 50%;
-  bottom: 12px;
   z-index: 2;
   display: flex;
+  justify-content: center;
   gap: 8px;
-  transform: translateX(-50%);
 }
 .keyment-carousel__indicator {
   width: 30px;
@@ -243,5 +269,23 @@ const showArrows = computed(() => {
 
 .keyment-carousel__indicator.is-active {
   background: #ffffff;
+}
+.keyment-carousel__indicators.is-inside {
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+}
+
+.keyment-carousel__indicators.is-outside {
+  position: static;
+  margin-top: 8px;
+}
+.keyment-carousel__indicators.is-outside .keyment-carousel__indicator {
+  background: #f2f3f5;;
+}
+
+.keyment-carousel__indicators.is-outside .keyment-carousel__indicator.is-active {
+  background: #c0c4cc;;
 }
 </style>

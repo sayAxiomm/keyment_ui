@@ -231,7 +231,7 @@
     <ky-input v-model="form.password" placeholder="请输入密码" />
   </ky-form-item>
 </ky-form>
-<ky-carousel height="200px" autoplay>
+<ky-carousel height="200px" autoplay indicatorPosition="outside">
   <ky-carousel-item>
     <div class="carousel-demo carousel-demo-1">1</div>
   </ky-carousel-item>
