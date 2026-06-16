@@ -251,6 +251,11 @@
 />
 <ky-pagination background :total="50" />
 <ky-backtop :visibility-height="200" />
+<ky-breadcrumb separator="/">
+  <ky-breadcrumb-item to="/components">首页</ky-breadcrumb-item>
+  <ky-breadcrumb-item>组件</ky-breadcrumb-item>
+  <ky-breadcrumb-item>Breadcrumb</ky-breadcrumb-item>
+</ky-breadcrumb>
   </main>
 </template>
 
@@ -285,7 +290,9 @@ import {
   KyCarousel,
   KyCarouselItem,
   KyPagination,
-  KyBacktop
+  KyBacktop,
+  KyBreadcrumb,
+  KyBreadcrumbItem
 } from "@keyment/components";
 import { Plus,Minus } from "@keyment/icons";
 import { ref } from "vue";

@@ -22,7 +22,7 @@ import { KyForm, KyFormItem } from "./Form";
 import { KyCarousel, KyCarouselItem } from "./Carousel";
 import { KyPagination } from "./Pagination";
 import { KyBacktop } from "./Backtop";
-
+import { KyBreadcrumb, KyBreadcrumbItem } from "./Breadcrumb";
 
 const components = [  
   KyButton,
@@ -53,7 +53,9 @@ const components = [
   KyCarousel,
   KyCarouselItem,
   KyPagination,
-  KyBacktop
+  KyBacktop,
+  KyBreadcrumb,
+  KyBreadcrumbItem
 ];
 
 export {
@@ -85,7 +87,9 @@ export {
   KyCarousel,
   KyCarouselItem,
   KyPagination,
-  KyBacktop
+  KyBacktop, 
+  KyBreadcrumb,
+  KyBreadcrumbItem
 };
 
 
