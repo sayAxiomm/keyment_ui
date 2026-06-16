@@ -244,6 +244,13 @@
     <div class="carousel-demo carousel-demo-3">3</div>
   </ky-carousel-item>
 </ky-carousel>
+
+<ky-pagination
+  :total="50"
+  :page-size="5"
+/>
+<ky-pagination background :total="50" />
+<ky-backtop :visibility-height="200" />
   </main>
 </template>
 
@@ -276,7 +283,9 @@ import {
   KyForm,
   KyFormItem,
   KyCarousel,
-  KyCarouselItem
+  KyCarouselItem,
+  KyPagination,
+  KyBacktop
 } from "@keyment/components";
 import { Plus,Minus } from "@keyment/icons";
 import { ref } from "vue";

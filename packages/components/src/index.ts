@@ -20,6 +20,9 @@ import { KySelect, KyOption } from "./Select";
 import { KyUpload } from "./Upload";
 import { KyForm, KyFormItem } from "./Form";
 import { KyCarousel, KyCarouselItem } from "./Carousel";
+import { KyPagination } from "./Pagination";
+import { KyBacktop } from "./Backtop";
+
 
 const components = [  
   KyButton,
@@ -48,7 +51,9 @@ const components = [
   KyForm,
   KyFormItem,
   KyCarousel,
-  KyCarouselItem
+  KyCarouselItem,
+  KyPagination,
+  KyBacktop
 ];
 
 export {
@@ -78,7 +83,9 @@ export {
   KyForm,
   KyFormItem,
   KyCarousel,
-  KyCarouselItem
+  KyCarouselItem,
+  KyPagination,
+  KyBacktop
 };
 
 
