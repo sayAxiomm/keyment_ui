@@ -1,3 +1,29 @@
+<template>
+  <div class="keyment-tabs">
+    <!-- tab 头部区域：根据 panes 渲染每一个 tab 标题 -->
+    <div class="keyment-tabs__header">
+      <div
+        v-for="pane in panes"
+        :key="pane.name"
+        class="keyment-tabs__item"
+        :class="{
+          'is-active': activeName === pane.name,
+          'is-disabled': pane.disabled
+        }"
+        @click="handleTabClick(pane)"
+      >
+        {{ pane.label }}
+      </div>
+    </div>
+
+    <!-- tab 内容区域：真正的内容来自 tab-pane 的 slot -->
+    <div class="keyment-tabs__content">
+      <slot />
+    </div>
+  </div>
+</template>
+
+
 <script setup lang="ts">
 import { computed, provide, ref, watch } from "vue";
 import type {
@@ -78,3 +104,53 @@ provide<TabsContext>("tabs", {
   removePane
 });
 </script>
+<style scoped>
+.keyment-tabs {
+  width: 100%;
+}
+
+.keyment-tabs__header {
+  display: flex;
+  border-bottom: 1px solid #dcdfe6;
+}
+
+.keyment-tabs__item {
+  position: relative;
+  padding: 0 20px;
+  color: #606266;
+  font-size: 14px;
+  line-height: 40px;
+  cursor: pointer;
+}
+
+.keyment-tabs__item:hover {
+  color: #409eff;
+}
+
+.keyment-tabs__item.is-active {
+  color: #409eff;
+}
+
+.keyment-tabs__item.is-active::after {
+  content: "";
+  position: absolute;
+  right: 20px;
+  bottom: -1px;
+  left: 20px;
+  height: 2px;
+  background: #409eff;
+}
+
+.keyment-tabs__item.is-disabled {
+  color: #c0c4cc;
+  cursor: not-allowed;
+}
+
+.keyment-tabs__item.is-disabled:hover {
+  color: #c0c4cc;
+}
+
+.keyment-tabs__content {
+  padding: 16px 0;
+}
+</style>

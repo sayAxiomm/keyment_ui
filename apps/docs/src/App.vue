@@ -256,6 +256,20 @@
   <ky-breadcrumb-item>组件</ky-breadcrumb-item>
   <ky-breadcrumb-item>Breadcrumb</ky-breadcrumb-item>
 </ky-breadcrumb>
+
+<ky-tabs v-model="activeTab">
+  <ky-tab-pane label="用户管理" name="user">
+    用户管理内容
+  </ky-tab-pane>
+
+  <ky-tab-pane label="配置管理" name="config">
+    配置管理内容
+  </ky-tab-pane>
+
+  <ky-tab-pane label="角色管理" name="role" disabled>
+    角色管理内容
+  </ky-tab-pane>
+</ky-tabs>
   </main>
 </template>
 
@@ -292,7 +306,9 @@ import {
   KyPagination,
   KyBacktop,
   KyBreadcrumb,
-  KyBreadcrumbItem
+  KyBreadcrumbItem,
+  KyTabs,
+  KyTabPane
 } from "@keyment/components";
 import { Plus,Minus } from "@keyment/icons";
 import { ref } from "vue";
@@ -323,6 +339,7 @@ const form = ref({
   username: "",
   password: ""
 });
+const activeTab = ref("user");
 </script>
 
 <style scoped>
