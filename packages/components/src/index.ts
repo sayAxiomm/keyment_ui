@@ -24,6 +24,7 @@ import { KyPagination } from "./Pagination";
 import { KyBacktop } from "./Backtop";
 import { KyBreadcrumb, KyBreadcrumbItem } from "./Breadcrumb";
 import { KyTabs, KyTabPane } from "./Tabs";
+import { KyDialog } from "./Dialog";
 
 const components = [  
   KyButton,
@@ -58,7 +59,8 @@ const components = [
   KyBreadcrumb,
   KyBreadcrumbItem,
   KyTabs,
-  KyTabPane
+  KyTabPane,
+  KyDialog
 ];
 
 export {
@@ -94,7 +96,8 @@ export {
   KyBreadcrumb,
   KyBreadcrumbItem,
   KyTabs,
-  KyTabPane
+  KyTabPane,
+  KyDialog
 };
 
 

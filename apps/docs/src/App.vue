@@ -270,6 +270,23 @@
     角色管理内容
   </ky-tab-pane>
 </ky-tabs>
+
+<ky-button @click="dialogVisible = true">
+  打开 Dialog
+</ky-button>
+
+<ky-dialog
+  v-model="dialogVisible"
+  title="提示"
+  width="500px"
+>
+  这里是 Dialog 内容
+
+  <template #footer>
+    <ky-button @click="dialogVisible = false">取消</ky-button>
+    <ky-button type="primary" @click="dialogVisible = false">确定</ky-button>
+  </template>
+</ky-dialog>
   </main>
 </template>
 
@@ -308,7 +325,8 @@ import {
   KyBreadcrumb,
   KyBreadcrumbItem,
   KyTabs,
-  KyTabPane
+  KyTabPane,
+  KyDialog
 } from "@keyment/components";
 import { Plus,Minus } from "@keyment/icons";
 import { ref } from "vue";
@@ -327,6 +345,7 @@ const dateRangeValue = ref("");
 const monthRangeValue = ref("");
 const yearRangeValue = ref("");
 const selectValue = ref("");
+const dialogVisible = ref(false);
 const multipleSelectValue = ref<string[]>([]);
 const handleUploadChange = (files: any[]) => {
   console.log("upload files:", files);
