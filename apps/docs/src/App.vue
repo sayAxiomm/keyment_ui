@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <main>
     <h1>Button 按钮</h1>
 
@@ -271,6 +271,10 @@
   </ky-tab-pane>
 </ky-tabs>
 
+<ky-button type="success" @click="showMessage">
+  打开 Message
+</ky-button>
+
 <ky-button @click="dialogVisible = true">
   打开 Dialog
 </ky-button>
@@ -326,7 +330,8 @@ import {
   KyBreadcrumbItem,
   KyTabs,
   KyTabPane,
-  KyDialog
+  KyDialog,
+  KyMessage
 } from "@keyment/components";
 import { Plus,Minus } from "@keyment/icons";
 import { ref } from "vue";
@@ -346,6 +351,13 @@ const monthRangeValue = ref("");
 const yearRangeValue = ref("");
 const selectValue = ref("");
 const dialogVisible = ref(false);
+const showMessage = () => {
+  KyMessage({
+    message: "保存成功",
+    type: "success",
+    showClose: true
+  });
+};
 const multipleSelectValue = ref<string[]>([]);
 const handleUploadChange = (files: any[]) => {
   console.log("upload files:", files);

@@ -1,4 +1,4 @@
-import type { App } from "vue";
+﻿import type { App } from "vue";
 // 组件
 import { KyButton, KyButtonGroup } from "./Button";
 import { KyIcon } from "./icon";
@@ -25,6 +25,7 @@ import { KyBacktop } from "./Backtop";
 import { KyBreadcrumb, KyBreadcrumbItem } from "./Breadcrumb";
 import { KyTabs, KyTabPane } from "./Tabs";
 import { KyDialog } from "./Dialog";
+import { KyMessage } from "./Message";
 
 const components = [  
   KyButton,
@@ -97,7 +98,8 @@ export {
   KyBreadcrumbItem,
   KyTabs,
   KyTabPane,
-  KyDialog
+  KyDialog,
+  KyMessage
 };
 
 

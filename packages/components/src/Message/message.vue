@@ -2,6 +2,7 @@
   <div
     class="keyment-message"
     :class="`keyment-message--${props.type}`"
+    :style="messageStyle"
   >
     <span class="keyment-message__content">
       {{ props.message }}
@@ -19,6 +20,7 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import type { MessageProps } from "./message";
 
 defineOptions({
@@ -29,18 +31,25 @@ const props = withDefaults(defineProps<MessageProps>(), {
   message: "",
   type: "info",
   duration: 3000,
-  showClose: false
+  showClose: false,
+  offset: 20
 });
-
+// 样式计算
+const messageStyle = computed(() => {
+  return {
+    top: `${props.offset}px`
+  };
+});
 // 先留一个关闭函数。
 // 后面 method.ts 创建 Message 时，会把真正的关闭逻辑接进来。
-const handleClose = () => {};
+const handleClose = () => {
+  props.onClose?.();
+};
 </script>
 
 <style scoped>
 .keyment-message {
   position: fixed;
-  top: 20px;
   left: 50%;
   z-index: 3000;
   display: flex;
