@@ -6,6 +6,10 @@ const MESSAGE_START_OFFSET = 20;
 const MESSAGE_GAP = 52;
 const instances: MessageInstance[] = [];
 
+interface MessageComponentInstance {
+  updateOffset: (offset: number) => void;
+}
+
 // 把字符串参数统一转换成对象参数。
 const normalizeOptions = (options: MessageParams): MessageOptions => {
   if (typeof options === "string") {
@@ -26,6 +30,7 @@ const createMessage = (options: MessageOptions): MessageInstance => {
 
   let timer: number | undefined;
   let instance: MessageInstance;
+  let messageComponent: MessageComponentInstance | null = null;
   const offset = MESSAGE_START_OFFSET + instances.length * MESSAGE_GAP;
 
   // 先创建 app。
@@ -55,17 +60,25 @@ const createMessage = (options: MessageOptions): MessageInstance => {
 
     if (index !== -1) {
       instances.splice(index, 1);
+
+      // 一条消息关闭后，重新计算剩余消息的位置。
+      instances.forEach((item, itemIndex) => {
+        item.updateOffset(MESSAGE_START_OFFSET + itemIndex * MESSAGE_GAP);
+      });
     }
   };
 
   instance = {
-    close
+    close,
+    updateOffset: (nextOffset: number) => {
+      messageComponent?.updateOffset(nextOffset);
+    }
   };
 
   instances.push(instance);
 
   // 挂载组件。
-  app.mount(container);
+  messageComponent = app.mount(container) as unknown as MessageComponentInstance;
 
   // 如果 duration 大于 0，就自动关闭。
   if (options.duration !== 0) {

@@ -28,4 +28,5 @@ export interface MessageFn {
 
 export interface MessageInstance {
   close: () => void; // 手动关闭消息
+  updateOffset: (offset: number) => void; // 更新消息距离顶部的位置
 }

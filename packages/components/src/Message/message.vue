@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import type { MessageProps } from "./message";
 
 defineOptions({
@@ -34,11 +34,25 @@ const props = withDefaults(defineProps<MessageProps>(), {
   showClose: false,
   offset: 20
 });
+
+// 保存当前消息距离顶部的位置。
+// 使用 ref 后，位置改变时页面样式会自动更新。
+const currentOffset = ref(props.offset);
+
 // 样式计算
 const messageStyle = computed(() => {
   return {
-    top: `${props.offset}px`
+    top: `${currentOffset.value}px`
   };
+});
+
+// 提供给 method.ts 调用，用来更新当前消息的位置。
+const updateOffset = (offset: number) => {
+  currentOffset.value = offset;
+};
+
+defineExpose({
+  updateOffset
 });
 // 先留一个关闭函数。
 // 后面 method.ts 创建 Message 时，会把真正的关闭逻辑接进来。

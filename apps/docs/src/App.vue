@@ -291,6 +291,9 @@
     <ky-button type="primary" @click="dialogVisible = false">确定</ky-button>
   </template>
 </ky-dialog>
+<ky-button type="success" @click="showSuccessMessage">
+  成功消息
+</ky-button>
   </main>
 </template>
 
@@ -371,6 +374,9 @@ const form = ref({
   password: ""
 });
 const activeTab = ref("user");
+const showSuccessMessage = () => {
+  KyMessage.success("保存成功");
+};
 </script>
 
 <style scoped>
