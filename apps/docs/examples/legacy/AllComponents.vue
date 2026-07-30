@@ -270,6 +270,30 @@
     角色管理内容
   </ky-tab-pane>
 </ky-tabs>
+
+<ky-button type="success" @click="showMessage">
+  打开 Message
+</ky-button>
+
+<ky-button @click="dialogVisible = true">
+  打开 Dialog
+</ky-button>
+
+<ky-dialog
+  v-model="dialogVisible"
+  title="提示"
+  width="500px"
+>
+  这里是 Dialog 内容
+
+  <template #footer>
+    <ky-button @click="dialogVisible = false">取消</ky-button>
+    <ky-button type="primary" @click="dialogVisible = false">确定</ky-button>
+  </template>
+</ky-dialog>
+<ky-button type="success" @click="showSuccessMessage">
+  成功消息
+</ky-button>
   </main>
 </template>
 
@@ -308,7 +332,9 @@ import {
   KyBreadcrumb,
   KyBreadcrumbItem,
   KyTabs,
-  KyTabPane
+  KyTabPane,
+  KyDialog,
+  KyMessage
 } from "@keyment/components";
 import { Plus,Minus } from "@keyment/icons";
 import { ref } from "vue";
@@ -327,6 +353,14 @@ const dateRangeValue = ref("");
 const monthRangeValue = ref("");
 const yearRangeValue = ref("");
 const selectValue = ref("");
+const dialogVisible = ref(false);
+const showMessage = () => {
+  KyMessage({
+    message: "保存成功",
+    type: "success",
+    showClose: true
+  });
+};
 const multipleSelectValue = ref<string[]>([]);
 const handleUploadChange = (files: any[]) => {
   console.log("upload files:", files);
@@ -340,6 +374,9 @@ const form = ref({
   password: ""
 });
 const activeTab = ref("user");
+const showSuccessMessage = () => {
+  KyMessage.success("保存成功");
+};
 </script>
 
 <style scoped>
