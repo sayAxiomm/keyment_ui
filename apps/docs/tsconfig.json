@@ -9,5 +9,10 @@
       "@keyment/icons": ["../../packages/icons/src/index.ts"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.vue", "vite.config.ts"]
+  "include": [
+    "env.d.ts",
+    ".vitepress/**/*.ts",
+    "examples/**/*.ts",
+    "examples/**/*.vue"
+  ]
 }

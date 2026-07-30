@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main class="legacy-all-components">
     <h1>Button 按钮</h1>
 
     <div class="button-row">

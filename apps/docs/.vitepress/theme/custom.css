@@ -1,0 +1,22 @@
+:root {
+  --vp-c-brand-1: #409eff;
+  --vp-c-brand-2: #66b1ff;
+  --vp-c-brand-3: #337ecc;
+  --vp-button-brand-bg: #409eff;
+  --vp-button-brand-hover-bg: #66b1ff;
+  --vp-button-brand-active-bg: #337ecc;
+}
+
+.vp-doc .component-preview {
+  padding: 24px;
+  margin: 16px 0;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+}
+
+.vp-doc .component-preview__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}

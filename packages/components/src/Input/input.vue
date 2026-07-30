@@ -127,7 +127,7 @@ const inputClass = computed(() => ([
   }
 ]));
 const emit = defineEmits<InputEmits>();
-const formItem = inject<FormItemContext>("formItem", undefined);
+const formItem = inject<FormItemContext>("formItem");
 
 const validateFormItem = (trigger: "blur" | "change") => {
   if (!props.validateEvent) {

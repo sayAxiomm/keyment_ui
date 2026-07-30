@@ -33,7 +33,7 @@ const props = withDefaults(defineProps<CheckboxGroupProps>(), {
 });
 
 const emit = defineEmits<CheckboxGroupEmits>();
-const formItem = inject<FormItemContext>("formItem", undefined);
+const formItem = inject<FormItemContext>("formItem");
   
 
 // checkbox变化通知group的函数

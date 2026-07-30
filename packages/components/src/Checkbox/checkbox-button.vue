@@ -46,7 +46,7 @@ const props = withDefaults(defineProps<CheckboxProps>(), {
 const emit = defineEmits<CheckboxEmits>();
 
 const checkboxGroup = inject<CheckboxGroupContext>("checkboxGroup");
-const formItem = inject<FormItemContext>("formItem", undefined);
+const formItem = inject<FormItemContext>("formItem");
 
 const isGroup = computed(() => !!checkboxGroup);
 

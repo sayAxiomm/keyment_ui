@@ -102,7 +102,7 @@ const props = withDefaults(defineProps<SwitchProps>(), {
 });
 
 const emit = defineEmits<SwitchEmits>();
-const formItem = inject<FormItemContext>("formItem", undefined);
+const formItem = inject<FormItemContext>("formItem");
 const switchClass = computed(() => ({
   "is-checked": isChecked.value,
   "is-disabled": props.disabled,

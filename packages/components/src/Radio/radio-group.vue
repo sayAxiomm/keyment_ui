@@ -34,7 +34,7 @@ const props = withDefaults(defineProps<RadioGroupProps>(), {
 });
 
 const emit = defineEmits<RadioGroupEmits>();
-const formItem = inject<FormItemContext>("formItem", undefined);
+const formItem = inject<FormItemContext>("formItem");
 
 function changeEvent(value: RadioValue) {
   emit("update:modelValue", value);

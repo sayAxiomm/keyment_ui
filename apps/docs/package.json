@@ -4,13 +4,17 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite --host 0.0.0.0",
-    "build": "vite build",
-    "typecheck": "vue-tsc -p tsconfig.json --noEmit"
+    "dev": "vitepress dev . --host 0.0.0.0",
+    "build": "vitepress build .",
+    "typecheck": "vue-tsc -p tsconfig.json --noEmit",
+    "preview": "vitepress preview ."
   },
   "dependencies": {
     "@keyment/components": "workspace:*",
     "@keyment/icons": "workspace:*",
     "vue": "^3.5.0"
+  },
+  "devDependencies": {
+    "vitepress": "1.6.4"
   }
 }

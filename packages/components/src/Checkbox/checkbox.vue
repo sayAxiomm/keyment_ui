@@ -51,7 +51,7 @@ const props = withDefaults(defineProps<CheckboxProps>(), {
 
 const emit = defineEmits<CheckboxEmits>();
 const checkboxGroup = inject<CheckboxGroupContext>("checkboxGroup");
-const formItem = inject<FormItemContext>("formItem", undefined);
+const formItem = inject<FormItemContext>("formItem");
  const isGroup = computed(() => !!checkboxGroup); // 判断checkbox是否在group里面,!! 转布尔
 // 判断是否选中
 const isChecked = computed(() => {
