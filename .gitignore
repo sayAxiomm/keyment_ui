@@ -14,3 +14,4 @@ pnpm-debug.log*
 # VitePress
 apps/docs/.vitepress/cache/
 apps/docs/.vitepress/dist/
+apps/docs/.vitepress/.temp/

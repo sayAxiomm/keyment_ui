@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Basic from "../examples/button/Basic.vue";
+import Group from "../examples/button/Group.vue";
 import States from "../examples/button/States.vue";
 </script>
 
@@ -37,6 +38,22 @@ import States from "../examples/button/States.vue";
 <KyButton size="large">大型按钮</KyButton>
 ```
 
+## 按钮组
+
+使用 `KyButtonGroup` 将多个按钮组合展示。
+
+<div class="component-preview">
+  <Group />
+</div>
+
+```vue
+<KyButtonGroup>
+  <KyButton>上一页</KyButton>
+  <KyButton type="primary">当前页</KyButton>
+  <KyButton>下一页</KyButton>
+</KyButtonGroup>
+```
+
 ## API
 
 ### Props
@@ -56,3 +73,9 @@ import States from "../examples/button/States.vue";
 | 插槽名 | 说明 |
 | --- | --- |
 | default | 按钮内容 |
+
+### ButtonGroup Props
+
+| 属性名 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| direction | 按钮排列方向 | `horizontal / vertical` | `horizontal` |

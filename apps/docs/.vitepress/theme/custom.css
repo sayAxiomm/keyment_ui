@@ -20,3 +20,8 @@
   align-items: center;
   gap: 12px;
 }
+
+.vp-doc .component-preview__column {
+  display: grid;
+  gap: 16px;
+}
