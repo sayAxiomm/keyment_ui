@@ -1,12 +1,7 @@
 <template>
   <div class="keyment-input" :class="inputClass">
-
-     <!-- 前置图标：放在 input/textarea 前面 -->
-    <component
-      v-if="props.prefixIcon"
-      :is="props.prefixIcon"
-      class="keyment-input__prefix-icon"
-    />
+    <!-- 前置图标：放在 input/textarea 前面 -->
+    <component v-if="props.prefixIcon" :is="props.prefixIcon" class="keyment-input__prefix-icon" />
     <!-- textarea：多行输入 -->
     <!-- 因为原生 HTML 里没有：<input type="textarea" /> -->
     <textarea
@@ -51,10 +46,7 @@
       @focus="handleFocus"
       @blur="handleBlur"
     />
-    <span
-      v-if="hasSuffixArea"
-      class="keyment-input__suffix"
-    >
+    <span v-if="hasSuffixArea" class="keyment-input__suffix">
       <!-- 后置图标：放在 input/textarea 后面 -->
       <component
         v-if="props.suffixIcon"
@@ -68,12 +60,7 @@
       </span>
 
       <!-- 清除按钮 -->
-      <button
-        v-if="showClear"
-        class="keyment-input__clear"
-        type="button"
-        @click="handleClear"
-      >
+      <button v-if="showClear" class="keyment-input__clear" type="button" @click="handleClear">
         x
       </button>
 
@@ -84,10 +71,7 @@
         type="button"
         @click="handlePasswordToggle"
       >
-        <component
-        :is="passwordVisible ? View : Hide"
-        class="keyment-input__password-icon"
-        />
+        <component :is="passwordVisible ? View : Hide" class="keyment-input__password-icon" />
       </button>
     </span>
   </div>
@@ -112,20 +96,19 @@ const props = withDefaults(defineProps<InputProps>(), {
   resize: "vertical"
 });
 
-
-// 动态添加样式 
-const inputClass = computed(() => ([
+// 动态添加样式
+const inputClass = computed(() => [
   `keyment-input--${props.size}`,
   //这个是控制清除和隐藏的按钮位置
   {
-  "has-clear": showClear.value,
-  "has-password": showPasswordToggle.value,
-  "has-prefix": !!props.prefixIcon,
-  "has-suffix": !!props.suffixIcon,
-  "has-word-limit": showWordLimit.value,
-  "has-suffix-area": hasSuffixArea.value
+    "has-clear": showClear.value,
+    "has-password": showPasswordToggle.value,
+    "has-prefix": !!props.prefixIcon,
+    "has-suffix": !!props.suffixIcon,
+    "has-word-limit": showWordLimit.value,
+    "has-suffix-area": hasSuffixArea.value
   }
-]));
+]);
 const emit = defineEmits<InputEmits>();
 const formItem = inject<FormItemContext>("formItem");
 
@@ -172,29 +155,24 @@ const handleClear = () => {
 
 // 是否显示清空按钮
 const showClear = computed(() => {
-  return (
-    props.clearable &&
-    !props.disabled &&
-    !props.readonly &&
-    !!props.modelValue
-  );
+  return props.clearable && !props.disabled && !props.readonly && !!props.modelValue;
 });
 
-        // 初始 passwordVisible = false
-        // -> actualType = "password"
-        // -> 输入内容不可见
+// 初始 passwordVisible = false
+// -> actualType = "password"
+// -> 输入内容不可见
 
-        // 点击显隐按钮
-        // -> handlePasswordToggle 执行
-        // -> passwordVisible = true
-        // -> actualType 重新计算成 "text"
-        // -> input type 变成 text
-        // -> 密码显示出来
+// 点击显隐按钮
+// -> handlePasswordToggle 执行
+// -> passwordVisible = true
+// -> actualType 重新计算成 "text"
+// -> input type 变成 text
+// -> 密码显示出来
 
-        // 再次点击
-        // -> passwordVisible = false
-        // -> actualType 变回 password
-        // -> 密码隐藏
+// 再次点击
+// -> passwordVisible = false
+// -> actualType 变回 password
+// -> 密码隐藏
 
 // 表示当前密码是否可见
 const passwordVisible = ref(false);
@@ -211,7 +189,7 @@ const showPasswordToggle = computed(() => {
     props.showPassword &&
     props.type === "password" &&
     !props.disabled &&
-    !props.readonly&&
+    !props.readonly &&
     !!props.modelValue
   );
 });
@@ -220,14 +198,9 @@ const handlePasswordToggle = () => {
   passwordVisible.value = !passwordVisible.value;
 };
 
-
 // 字数统计
 const showWordLimit = computed(() => {
-  return (
-    props.showWordLimit &&
-    props.maxlength !== undefined &&
-    props.type !== "password"
-  );
+  return props.showWordLimit && props.maxlength !== undefined && props.type !== "password";
 });
 // 当前字数
 const textLength = computed(() => {
@@ -237,12 +210,7 @@ const textLength = computed(() => {
 // 是否需要右侧功能区。
 // 只要有后置图标、字数统计、清空按钮、密码显隐按钮，就显示 suffix 容器。
 const hasSuffixArea = computed(() => {
-  return (
-    !!props.suffixIcon ||
-    showWordLimit.value ||
-    showClear.value ||
-    showPasswordToggle.value
-  );
+  return !!props.suffixIcon || showWordLimit.value || showClear.value || showPasswordToggle.value;
 });
 
 //  textarea 动态样式：
@@ -256,7 +224,6 @@ const textareaStyle = computed(() => {
   };
 });
 </script>
-
 
 <style scoped>
 .keyment-input {

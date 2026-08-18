@@ -1,7 +1,5 @@
 export type UploadMethod = "post" | "put" | "patch";
-export type UploadBeforeUpload = (
-  file: UploadFile
-) => boolean | Promise<boolean>;
+export type UploadBeforeUpload = (file: UploadFile) => boolean | Promise<boolean>;
 export type UploadStatus = "ready" | "uploading" | "success" | "error";
 
 export interface UploadProps {
@@ -12,7 +10,7 @@ export interface UploadProps {
   action?: string; // 上传接口地址
   method?: UploadMethod; // 上传请求方法
   data?: Record<string, string | number | boolean>; // 上传时额外携带的表单数据
-  headers?: Headers|Record<string, any>; // 上传请求头，例如 token
+  headers?: HeadersInit; // 上传请求头，例如 token
   autoUpload?: boolean; // 是否在选择文件后自动上传
   limit?: number; // 最大允许选择的文件数量
   showFileList?: boolean; // 是否显示文件列表
@@ -23,7 +21,7 @@ export interface UploadProps {
   beforeUpload?: UploadBeforeUpload; // 上传前触发，返回 false 时停止上传
 }
 
-// 描述的是选择的文件本身 
+// 描述的是选择的文件本身
 export interface UploadFile {
   raw: File; // 浏览器原生 File 对象，真正上传时会用到
   name: string; // 文件名，例如 avatar.png

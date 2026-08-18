@@ -11,7 +11,8 @@ const meta: Meta<typeof KyRow> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const cellStyle = "padding:14px 0;color:#fff;text-align:center;background:#409eff;border-radius:4px";
+const cellStyle =
+  "padding:14px 0;color:#fff;text-align:center;background:#409eff;border-radius:4px";
 const lightCellStyle = `${cellStyle};background:#79bbff`;
 
 export const Grid: Story = {

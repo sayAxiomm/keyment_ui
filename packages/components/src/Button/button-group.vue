@@ -1,8 +1,5 @@
 <template>
-  <div 
-  class="keyment-button-group"
-  :class="`keyment-button-group--${props.direction}`"
-  >
+  <div class="keyment-button-group" :class="`keyment-button-group--${props.direction}`">
     <slot />
   </div>
 </template>

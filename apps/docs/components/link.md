@@ -21,11 +21,11 @@ import Basic from "../examples/link/Basic.vue";
 
 ### Props
 
-| 属性名 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| type | 链接类型 | `default / primary / success / warning / danger / info` | `default` |
-| href | 原生链接地址 | `string` | — |
-| target | 原生 target 属性 | `string` | — |
-| disabled | 是否禁用 | `boolean` | `false` |
-| underline | 是否显示下划线 | `boolean` | `true` |
-| icon | 左侧图标组件 | `Component` | — |
+| 属性名    | 说明             | 类型                                                    | 默认值    |
+| --------- | ---------------- | ------------------------------------------------------- | --------- |
+| type      | 链接类型         | `default / primary / success / warning / danger / info` | `default` |
+| href      | 原生链接地址     | `string`                                                | —         |
+| target    | 原生 target 属性 | `string`                                                | —         |
+| disabled  | 是否禁用         | `boolean`                                               | `false`   |
+| underline | 是否显示下划线   | `boolean`                                               | `true`    |
+| icon      | 左侧图标组件     | `Component`                                             | —         |

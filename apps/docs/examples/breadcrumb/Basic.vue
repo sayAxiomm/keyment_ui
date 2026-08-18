@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import {
-  KyBreadcrumb,
-  KyBreadcrumbItem
-} from "@keyment/components";
+import { KyBreadcrumb, KyBreadcrumbItem } from "@keyment/components";
 </script>
 
 <template>

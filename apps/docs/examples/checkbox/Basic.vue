@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import {
-  KyCheckbox,
-  KyCheckboxButton,
-  KyCheckboxGroup
-} from "@keyment/components";
+import { KyCheckbox, KyCheckboxButton, KyCheckboxGroup } from "@keyment/components";
 
 const agreement = ref(false);
 const hobbies = ref(["music"]);

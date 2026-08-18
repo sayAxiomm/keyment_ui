@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="keyment-form-item"
-    :class="formItemClass"
-  >
+  <div class="keyment-form-item" :class="formItemClass">
     <label
       v-if="props.label"
       class="keyment-form-item__label"
@@ -15,10 +12,7 @@
     <div class="keyment-form-item__content">
       <slot />
 
-      <div
-        v-if="validateMessage"
-        class="keyment-form-item__error"
-      >
+      <div v-if="validateMessage" class="keyment-form-item__error">
         {{ validateMessage }}
       </div>
     </div>
@@ -112,17 +106,12 @@ const getValueLength = (value: unknown) => {
 };
 
 // 如果传了 trigger，只执行匹配这个 trigger 的规则。
-const shouldValidateByTrigger = (
-  rule: FormRule,
-  trigger?: FormValidateTrigger
-) => {
+const shouldValidateByTrigger = (rule: FormRule, trigger?: FormValidateTrigger) => {
   if (!trigger || !rule.trigger) {
     return true;
   }
 
-  return Array.isArray(rule.trigger)
-    ? rule.trigger.includes(trigger)
-    : rule.trigger === trigger;
+  return Array.isArray(rule.trigger) ? rule.trigger.includes(trigger) : rule.trigger === trigger;
 };
 
 // 设置当前表单项为校验失败，并显示错误信息。
@@ -175,9 +164,7 @@ const validate = async (trigger?: FormValidateTrigger) => {
       const result = await rule.validator(value);
 
       if (result !== true) {
-        setValidateError(
-          typeof result === "string" ? result : rule.message || "校验失败"
-        );
+        setValidateError(typeof result === "string" ? result : rule.message || "校验失败");
         return false;
       }
     }

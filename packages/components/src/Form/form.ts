@@ -1,8 +1,6 @@
 export type FormLabelPosition = "left" | "right" | "top";
 export type FormValidateTrigger = "blur" | "change";
-export type FormRuleValidator = (
-  value: unknown
-) => boolean | string | Promise<boolean | string>;
+export type FormRuleValidator = (value: unknown) => boolean | string | Promise<boolean | string>;
 
 export interface FormRule {
   required?: boolean; // 是否必填

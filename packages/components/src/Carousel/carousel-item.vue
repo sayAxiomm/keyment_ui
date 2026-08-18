@@ -1,15 +1,11 @@
 <template>
-  <div
-    class="keyment-carousel-item"
-    :style="itemStyle"
-  >
+  <div class="keyment-carousel-item" :style="itemStyle">
     <slot />
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, inject, onBeforeUnmount, ref } from "vue";
-import type { CSSProperties } from "vue";
+import { computed, inject, onBeforeUnmount, ref, type CSSProperties } from "vue";
 import type { CarouselContext } from "./carousel";
 
 defineOptions({
@@ -63,7 +59,6 @@ const itemStyle = computed<CSSProperties>(() => {
     visibility: shouldAnimate ? "visible" : "hidden"
   };
 });
-
 </script>
 
 <style scoped>

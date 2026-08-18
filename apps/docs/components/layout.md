@@ -22,19 +22,19 @@ import Basic from "../examples/layout/Basic.vue";
 
 ## Row API
 
-| 属性名 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| gutter | 栅格间隔 | `number` | `0` |
-| justify | 水平排列方式 | `start / end / center / space-around / space-between / space-evenly` | `start` |
-| align | 垂直对齐方式 | `top / middle / bottom` | `top` |
-| tag | 自定义元素标签 | `string` | `div` |
+| 属性名  | 说明           | 类型                                                                 | 默认值  |
+| ------- | -------------- | -------------------------------------------------------------------- | ------- |
+| gutter  | 栅格间隔       | `number`                                                             | `0`     |
+| justify | 水平排列方式   | `start / end / center / space-around / space-between / space-evenly` | `start` |
+| align   | 垂直对齐方式   | `top / middle / bottom`                                              | `top`   |
+| tag     | 自定义元素标签 | `string`                                                             | `div`   |
 
 ## Col API
 
-| 属性名 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| span | 占据的栅格数 | `number` | `24` |
-| offset | 左侧偏移栅格数 | `number` | `0` |
-| push | 向右移动栅格数 | `number` | `0` |
-| pull | 向左移动栅格数 | `number` | `0` |
-| tag | 自定义元素标签 | `string` | `div` |
+| 属性名 | 说明           | 类型     | 默认值 |
+| ------ | -------------- | -------- | ------ |
+| span   | 占据的栅格数   | `number` | `24`   |
+| offset | 左侧偏移栅格数 | `number` | `0`    |
+| push   | 向右移动栅格数 | `number` | `0`    |
+| pull   | 向左移动栅格数 | `number` | `0`    |
+| tag    | 自定义元素标签 | `string` | `div`  |

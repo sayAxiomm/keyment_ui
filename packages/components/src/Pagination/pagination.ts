@@ -1,6 +1,4 @@
-type PaginationLayout = "prev" | "pager" | "next";
 export type PaginationSize = "large" | "default" | "small";
-
 
 export interface PaginationProps {
   total?: number; // 总条目数

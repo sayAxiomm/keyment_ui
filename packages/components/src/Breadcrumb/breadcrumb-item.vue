@@ -1,9 +1,10 @@
 <template>
   <span class="keyment-breadcrumb-item">
-    <span 
+    <span
       class="keyment-breadcrumb-item__inner"
       :class="{ 'is-link': isLink }"
-      @click="handleClick">
+      @click="handleClick"
+    >
       <slot />
     </span>
 
@@ -14,8 +15,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed,inject } from "vue";
-import type { BreadcrumbContext,BreadcrumbItemProps } from "./breadcrumb";
+import { computed, inject } from "vue";
+import type { BreadcrumbContext, BreadcrumbItemProps } from "./breadcrumb";
 
 defineOptions({
   name: "KyBreadcrumbItem"

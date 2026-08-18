@@ -1,11 +1,5 @@
 <script setup lang="ts">
-import {
-  KyAside,
-  KyContainer,
-  KyFooter,
-  KyHeader,
-  KyMain
-} from "@keyment/components";
+import { KyAside, KyContainer, KyFooter, KyHeader, KyMain } from "@keyment/components";
 </script>
 
 <template>

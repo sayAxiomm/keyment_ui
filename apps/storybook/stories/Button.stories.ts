@@ -1,11 +1,5 @@
-import type {
-  Meta,
-  StoryObj
-} from "@storybook/vue3-vite";
-import {
-  KyButton,
-  KyButtonGroup
-} from "@keyment/components";
+import type { Meta, StoryObj } from "@storybook/vue3-vite";
+import { KyButton, KyButtonGroup } from "@keyment/components";
 
 const meta: Meta<typeof KyButton> = {
   title: "基础组件/Button",
@@ -15,14 +9,7 @@ const meta: Meta<typeof KyButton> = {
   argTypes: {
     type: {
       control: "select",
-      options: [
-        "default",
-        "primary",
-        "success",
-        "warning",
-        "danger",
-        "info"
-      ]
+      options: ["default", "primary", "success", "warning", "danger", "info"]
     },
     size: {
       control: "select",

@@ -13,11 +13,11 @@
 
     <div
       class="keyment-upload__trigger"
-      :class="{ 
+      :class="{
         'is-disabled': props.disabled,
         'is-drag': props.drag,
         'is-dragover': isDragover
-       }"
+      }"
       @click="handleClick"
       @dragover.prevent="handleDragover"
       @dragleave.prevent="handleDragleave"
@@ -26,29 +26,20 @@
       <slot>点击上传</slot>
     </div>
     <!-- 有多选的时候 -->
-    <ul
-      v-if="props.showFileList &&uploadFiles.length"
-      class="keyment-upload__list"
-      >
+    <ul v-if="props.showFileList && uploadFiles.length" class="keyment-upload__list">
       <li
         v-for="file in uploadFiles"
         :key="file.name"
         class="keyment-upload__item"
         :class="`is-${file.status}`"
-        >
-          <span class="keyment-upload__name">
-            {{ file.name }}
-          </span>
-          <span class="keyment-upload__status">
-            {{ getStatusText(file.status) }}
-          </span>
-          <button
-            class="keyment-upload__remove"
-            type="button"
-            @click="handleRemove(file)"
-            >
-            x
-          </button>
+      >
+        <span class="keyment-upload__name">
+          {{ file.name }}
+        </span>
+        <span class="keyment-upload__status">
+          {{ getStatusText(file.status) }}
+        </span>
+        <button class="keyment-upload__remove" type="button" @click="handleRemove(file)">x</button>
       </li>
     </ul>
   </div>
@@ -56,7 +47,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import type { UploadEmits, UploadFile, UploadProps,UploadStatus } from "./upload";
+import type { UploadEmits, UploadFile, UploadProps, UploadStatus } from "./upload";
 
 defineOptions({
   name: "KyUpload"
@@ -80,7 +71,6 @@ const uploadFiles = ref<UploadFile[]>([]);
 // 拖拽状态
 const isDragover = ref(false);
 
-
 // 这个方法绑定在我们自己画的上传按钮上，我们会把input的默认隐藏 因为不好控制，
 // 用户点击自己画的掉这个函数 ，然后这里面获取上传的dom 然后用函数进行点击
 const handleClick = () => {
@@ -88,7 +78,7 @@ const handleClick = () => {
     return;
   }
 
-  inputRef.value?.click();  // 用代码帮用户点了一下这个原生 input。
+  inputRef.value?.click(); // 用代码帮用户点了一下这个原生 input。
 };
 
 // 用户在系统文件窗口里选完文件后，
@@ -176,7 +166,7 @@ const clearFiles = () => {
   uploadFiles.value = [];
   emit("change", uploadFiles.value);
 };
-// submit方法暴露出,组件实例的方法 
+// submit方法暴露出,组件实例的方法
 defineExpose({
   submit,
   clearFiles
@@ -200,7 +190,7 @@ const uploadFile = async (file: UploadFile) => {
 
   formData.append(props.name, file.raw);
 
-// 文件信息进行组装
+  // 文件信息进行组装
   if (props.data) {
     Object.keys(props.data).forEach((key) => {
       formData.append(key, String(props.data![key]));
@@ -214,25 +204,25 @@ const uploadFile = async (file: UploadFile) => {
   if (props.headers) {
     requestOptions.headers = props.headers;
   }
-// 这里才是真正上传
+  // 这里才是真正上传
   try {
-  const response = await fetch(props.action, requestOptions);
+    const response = await fetch(props.action, requestOptions);
 
-  const result = await response.json().catch(() => {
-    return response.text();
-  });
+    const result = await response.json().catch(() => {
+      return response.text();
+    });
 
-  if (!response.ok) {
-    throw result;
+    if (!response.ok) {
+      throw result;
+    }
+    file.status = "success";
+    props.onSuccess?.(result, file);
+    emit("success", result, file);
+  } catch (error) {
+    file.status = "error";
+    props.onError?.(error, file);
+    emit("error", error, file);
   }
-  file.status = "success";
-  props.onSuccess?.(result, file);
-  emit("success", result, file);
-} catch (error) {
-  file.status = "error";
-  props.onError?.(error, file);
-  emit("error", error, file);
-}
 };
 
 // 从文件列表中移除某个文件。
@@ -284,7 +274,9 @@ const getStatusText = (status: UploadStatus) => {
   font-size: 14px;
   line-height: 1;
   cursor: pointer;
-  transition: border-color 0.2s, color 0.2s;
+  transition:
+    border-color 0.2s,
+    color 0.2s;
 }
 
 .keyment-upload__trigger:hover {
@@ -324,7 +316,7 @@ const getStatusText = (status: UploadStatus) => {
   font-size: 12px;
   line-height: 28px;
 }
-.keyment-upload__item:hover{
+.keyment-upload__item:hover {
   background: #f5f7fa;
   color: #409eff;
   cursor: pointer;

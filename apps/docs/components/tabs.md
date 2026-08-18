@@ -25,20 +25,20 @@ import Basic from "../examples/tabs/Basic.vue";
 
 ## Tabs API
 
-| 属性名 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| model-value | 当前激活标签名 | `string / number` | — |
+| 属性名      | 说明           | 类型              | 默认值 |
+| ----------- | -------------- | ----------------- | ------ |
+| model-value | 当前激活标签名 | `string / number` | —      |
 
 ## TabPane API
 
-| 属性名 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| label | 标签标题 | `string` | `""` |
-| name | 标签唯一标识 | `string / number` | label |
-| disabled | 是否禁用 | `boolean` | `false` |
+| 属性名   | 说明         | 类型              | 默认值  |
+| -------- | ------------ | ----------------- | ------- |
+| label    | 标签标题     | `string`          | `""`    |
+| name     | 标签唯一标识 | `string / number` | label   |
+| disabled | 是否禁用     | `boolean`         | `false` |
 
 ## Events
 
-| 事件名 | 说明 | 参数 |
-| --- | --- | --- |
+| 事件名    | 说明           | 参数                      |
+| --------- | -------------- | ------------------------- |
 | tab-click | 点击标签时触发 | `(name: string / number)` |

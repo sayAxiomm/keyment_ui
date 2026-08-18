@@ -13,11 +13,7 @@ import Basic from "../examples/upload/Basic.vue";
 </div>
 
 ```vue
-<KyUpload
-  :auto-upload="false"
-  multiple
-  :limit="3"
->
+<KyUpload :auto-upload="false" multiple :limit="3">
   选择文件
 </KyUpload>
 ```
@@ -26,21 +22,21 @@ import Basic from "../examples/upload/Basic.vue";
 
 ### Props
 
-| 属性名 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| action | 上传接口地址 | `string` | — |
-| method | 请求方法 | `post / put / patch` | `post` |
-| auto-upload | 选择后是否自动上传 | `boolean` | `true` |
-| multiple | 是否允许多选 | `boolean` | `false` |
-| drag | 是否启用拖拽上传 | `boolean` | `false` |
-| accept | 接受的文件类型 | `string` | — |
-| limit | 最大文件数量 | `number` | — |
-| show-file-list | 是否显示文件列表 | `boolean` | `true` |
-| disabled | 是否禁用 | `boolean` | `false` |
+| 属性名         | 说明               | 类型                 | 默认值  |
+| -------------- | ------------------ | -------------------- | ------- |
+| action         | 上传接口地址       | `string`             | —       |
+| method         | 请求方法           | `post / put / patch` | `post`  |
+| auto-upload    | 选择后是否自动上传 | `boolean`            | `true`  |
+| multiple       | 是否允许多选       | `boolean`            | `false` |
+| drag           | 是否启用拖拽上传   | `boolean`            | `false` |
+| accept         | 接受的文件类型     | `string`             | —       |
+| limit          | 最大文件数量       | `number`             | —       |
+| show-file-list | 是否显示文件列表   | `boolean`            | `true`  |
+| disabled       | 是否禁用           | `boolean`            | `false` |
 
 ### Expose
 
-| 方法名 | 说明 |
-| --- | --- |
-| submit | 手动上传待上传文件 |
-| clearFiles | 清空文件列表 |
+| 方法名     | 说明               |
+| ---------- | ------------------ |
+| submit     | 手动上传待上传文件 |
+| clearFiles | 清空文件列表       |

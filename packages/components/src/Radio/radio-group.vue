@@ -3,10 +3,7 @@
     role="radiogroup" 是无障碍语义。
     告诉浏览器和辅助工具：这一块是一组 radio。
   -->
-  <div
-    class="keyment-radio-group"
-    role="radiogroup"
-  >
+  <div class="keyment-radio-group" role="radiogroup">
     <!-- 
       默认插槽。
       外部写在 <ky-radio-group> 中间的 <ky-radio> 会渲染到这里。
@@ -17,7 +14,7 @@
 
 <script setup lang="ts">
 import { inject, nextTick, provide } from "vue";
-import type { RadioGroupEmits, RadioGroupProps, RadioValue,RadioGroupContext} from "./radio";
+import type { RadioGroupEmits, RadioGroupProps, RadioValue } from "./radio";
 import type { FormItemContext } from "../Form/form";
 
 defineOptions({
@@ -64,7 +61,7 @@ provide("radioGroup", {
     return props.name;
   },
   get validateEvent() {
-  return props.validateEvent;
+    return props.validateEvent;
   },
   get textColor() {
     return props.textColor;

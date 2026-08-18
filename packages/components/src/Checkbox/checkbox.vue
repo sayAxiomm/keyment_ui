@@ -32,7 +32,7 @@
 
 <script setup lang="ts">
 import { computed, inject, nextTick } from "vue";
-import type { CheckboxEmits, CheckboxProps ,CheckboxGroupContext } from "./checkbox";
+import type { CheckboxEmits, CheckboxProps, CheckboxGroupContext } from "./checkbox";
 import type { FormItemContext } from "../Form/form";
 
 defineOptions({
@@ -52,7 +52,7 @@ const props = withDefaults(defineProps<CheckboxProps>(), {
 const emit = defineEmits<CheckboxEmits>();
 const checkboxGroup = inject<CheckboxGroupContext>("checkboxGroup");
 const formItem = inject<FormItemContext>("formItem");
- const isGroup = computed(() => !!checkboxGroup); // 判断checkbox是否在group里面,!! 转布尔
+const isGroup = computed(() => !!checkboxGroup); // 判断checkbox是否在group里面,!! 转布尔
 // 判断是否选中
 const isChecked = computed(() => {
   if (isGroup.value) {
@@ -78,14 +78,13 @@ const isLimitDisabled = computed(() => {
   return checkboxGroup?.max !== undefined && modelValue.length >= checkboxGroup.max;
 });
 
-
 // 单独使用：用 props.xxx
 // 放在 group 里：优先用 checkboxGroup.xxx
 const actualDisabled = computed(() => {
-  return checkboxGroup?.disabled || props.disabled|| isLimitDisabled.value;
+  return checkboxGroup?.disabled || props.disabled || isLimitDisabled.value;
 });
 const actualName = computed(() => {
-   return checkboxGroup?.name || props.name;
+  return checkboxGroup?.name || props.name;
 });
 const actualBorder = computed(() => {
   return checkboxGroup?.border || props.border;
@@ -107,9 +106,9 @@ const handleChange = () => {
   if (actualDisabled.value) {
     return;
   }
-// 如果在 group 里：用 props.value 通知 group,group 负责更新数组
-// 如果不在 group 里：自己在 trueValue / falseValue 之间切换
-   if (isGroup.value) {
+  // 如果在 group 里：用 props.value 通知 group,group 负责更新数组
+  // 如果不在 group 里：自己在 trueValue / falseValue 之间切换
+  if (isGroup.value) {
     if (props.value === undefined) {
       return;
     }
@@ -117,10 +116,10 @@ const handleChange = () => {
     checkboxGroup?.changeEvent(props.value);
     return;
   }
-// 如果当前是选中
-//   点击后变成 falseValue
-// 如果当前没选中
-//   点击后变成 trueValue
+  // 如果当前是选中
+  //   点击后变成 falseValue
+  // 如果当前没选中
+  //   点击后变成 trueValue
   const nextValue = isChecked.value ? props.falseValue : props.trueValue;
 
   emit("update:modelValue", nextValue);
@@ -132,7 +131,6 @@ const handleChange = () => {
     });
   }
 };
-
 </script>
 <style scoped>
 .keyment-checkbox {
@@ -163,7 +161,9 @@ const handleChange = () => {
   border-radius: 2px;
   box-sizing: border-box;
   background: #ffffff;
-  transition: border-color 0.15s ease, background-color 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
 }
 
 .keyment-checkbox__inner {

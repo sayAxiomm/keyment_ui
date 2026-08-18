@@ -6,14 +6,14 @@
       'is-selected': isSelected
     }"
     @click="handleClick"
-    >
+  >
     {{ optionLabel }}
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, inject } from "vue";
-import type { OptionProps,SelectContext } from "./select";
+import type { OptionProps, SelectContext } from "./select";
 
 defineOptions({
   name: "KyOption"

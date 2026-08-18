@@ -8,20 +8,8 @@ const password = ref("");
 
 <template>
   <div class="input-examples">
-    <KyInput
-      v-model="value"
-      clearable
-      show-word-limit
-      :maxlength="20"
-      placeholder="请输入内容"
-    />
-    <KyInput
-      v-model="password"
-      type="password"
-      clearable
-      show-password
-      placeholder="请输入密码"
-    />
+    <KyInput v-model="value" clearable show-word-limit :maxlength="20" placeholder="请输入内容" />
+    <KyInput v-model="password" type="password" clearable show-password placeholder="请输入密码" />
     <p>当前输入：{{ value || "暂无内容" }}</p>
   </div>
 </template>

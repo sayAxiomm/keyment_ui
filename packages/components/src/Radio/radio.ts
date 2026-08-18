@@ -19,8 +19,8 @@ export interface RadioProps {
   // 原生 input 的 name。
   // 同一组 radio 通常应该有相同 name。
   name?: string;
-  border?:boolean; // 是否有边框
-  size?:RadioSize // 尺寸,只有有边框才生效
+  border?: boolean; // 是否有边框
+  size?: RadioSize; // 尺寸,只有有边框才生效
 }
 // radio-button的props
 export interface RadioButtonProps {
@@ -46,7 +46,7 @@ export interface RadioGroupProps {
 
   // 传给内部 radio 的 name。
   name?: string;
-   // 现在我们还没有 Form 组件，所以先保留这个 API，后面做 Form 时再接入。
+  // 现在我们还没有 Form 组件，所以先保留这个 API，后面做 Form 时再接入。
   validateEvent?: boolean;
 
   // 按钮形式 Radio 激活时的文本颜色。
@@ -74,7 +74,6 @@ export interface RadioGroupContext {
   // 子 radio 点击后调用它，让 group 更新选中值
   changeEvent: (value: RadioValue) => void;
 }
-
 
 // Radio 组件触发的事件类型。
 export interface RadioEmits {

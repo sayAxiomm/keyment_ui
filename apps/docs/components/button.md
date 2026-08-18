@@ -58,24 +58,24 @@ import States from "../examples/button/States.vue";
 
 ### Props
 
-| 属性名 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| type | 按钮类型 | `default / primary / success / warning / danger / info` | `default` |
-| size | 按钮尺寸 | `small / default / large` | `default` |
-| disabled | 是否禁用 | `boolean` | `false` |
-| loading | 是否处于加载状态 | `boolean` | `false` |
-| plain | 是否为朴素按钮 | `boolean` | `false` |
-| round | 是否为圆角按钮 | `boolean` | `false` |
-| native-type | 原生按钮类型 | `button / submit / reset` | `button` |
+| 属性名      | 说明             | 类型                                                    | 默认值    |
+| ----------- | ---------------- | ------------------------------------------------------- | --------- |
+| type        | 按钮类型         | `default / primary / success / warning / danger / info` | `default` |
+| size        | 按钮尺寸         | `small / default / large`                               | `default` |
+| disabled    | 是否禁用         | `boolean`                                               | `false`   |
+| loading     | 是否处于加载状态 | `boolean`                                               | `false`   |
+| plain       | 是否为朴素按钮   | `boolean`                                               | `false`   |
+| round       | 是否为圆角按钮   | `boolean`                                               | `false`   |
+| native-type | 原生按钮类型     | `button / submit / reset`                               | `button`  |
 
 ### Slots
 
-| 插槽名 | 说明 |
-| --- | --- |
+| 插槽名  | 说明     |
+| ------- | -------- |
 | default | 按钮内容 |
 
 ### ButtonGroup Props
 
-| 属性名 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
+| 属性名    | 说明         | 类型                    | 默认值       |
+| --------- | ------------ | ----------------------- | ------------ |
 | direction | 按钮排列方向 | `horizontal / vertical` | `horizontal` |

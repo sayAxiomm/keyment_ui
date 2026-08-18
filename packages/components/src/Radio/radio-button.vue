@@ -27,11 +27,7 @@
 
 <script setup lang="ts">
 import { computed, inject } from "vue";
-import type {
-  RadioButtonProps,
-  RadioEmits,
-  RadioGroupContext
-} from "./radio";
+import type { RadioButtonProps, RadioEmits, RadioGroupContext } from "./radio";
 
 defineOptions({
   name: "KyRadioButton"

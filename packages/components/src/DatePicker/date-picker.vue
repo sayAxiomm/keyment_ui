@@ -1,8 +1,10 @@
 <template>
-  <div class="keyment-date-picker" ref="datePickerRef"
-  @mouseenter="isHovering = true"
-  @mouseleave="isHovering = false"
-  :class="datePickerClass"
+  <div
+    class="keyment-date-picker"
+    ref="datePickerRef"
+    @mouseenter="isHovering = true"
+    @mouseleave="isHovering = false"
+    :class="datePickerClass"
   >
     <!-- 输入框区域：点击后打开日期面板 -->
     <div class="keyment-date-picker__wrapper">
@@ -18,11 +20,7 @@
         @blur="handleBlur"
         @click="handleOpen"
       />
-      <div
-        v-else
-        class="keyment-date-picker__range"
-        @click="handleOpen"
-      >
+      <div v-else class="keyment-date-picker__range" @click="handleOpen">
         <input
           class="keyment-date-picker__range-input"
           type="text"
@@ -49,9 +47,7 @@
           @blur="handleBlur"
         />
       </div>
-      <span
-        class="keyment-date-picker__icon"
-      >
+      <span class="keyment-date-picker__icon">
         <Calendar />
       </span>
       <!-- 清空按钮：有值、可清空、非禁用时显示 -->
@@ -63,8 +59,6 @@
       >
         x
       </button>
-
-      
     </div>
 
     <!-- 日期面板：第一版先只做外壳 -->
@@ -72,7 +66,7 @@
       v-if="panelVisible"
       class="keyment-date-picker__panel"
       :class="{ 'is-range-panel': isRange }"
-       @click.stop
+      @click.stop
     >
       <div
         v-if="props.type === 'daterange' && panelMode === 'date'"
@@ -80,11 +74,7 @@
       >
         <div class="keyment-date-picker__range-panel">
           <div class="keyment-date-picker__header">
-            <button
-              class="keyment-date-picker__header-btn"
-              type="button"
-              @click="handlePrevYear()"
-            >
+            <button class="keyment-date-picker__header-btn" type="button" @click="handlePrevYear()">
               &lt;&lt;
             </button>
             <button
@@ -193,11 +183,7 @@
       >
         <div class="keyment-date-picker__range-panel">
           <div class="keyment-date-picker__header">
-            <button
-              class="keyment-date-picker__header-btn"
-              type="button"
-              @click="handlePrevYear()"
-            >
+            <button class="keyment-date-picker__header-btn" type="button" @click="handlePrevYear()">
               &lt;&lt;
             </button>
 
@@ -295,7 +281,8 @@
         <div class="keyment-date-picker__range-panel">
           <div class="keyment-date-picker__header">
             <span class="keyment-date-picker__range-panel-label">
-              {{ rightRangeYearCells[0] }} - {{ rightRangeYearCells[rightRangeYearCells.length - 1] }}
+              {{ rightRangeYearCells[0] }} -
+              {{ rightRangeYearCells[rightRangeYearCells.length - 1] }}
             </span>
 
             <button
@@ -327,59 +314,50 @@
 
       <template v-else>
         <div class="keyment-date-picker__header">
-          <button
-            class="keyment-date-picker__header-btn"
-            type="button"
-            @click="handlePrevYear()"
-          >
-            <<
+          <button class="keyment-date-picker__header-btn" type="button" @click="handlePrevYear()">
+            &lt;&lt;
           </button>
           <button
-          v-if="props.type == 'date'"
+            v-if="props.type == 'date'"
             class="keyment-date-picker__header-btn"
             type="button"
             @click="handlePrevMonth()"
           >
-              <
+            &lt;
           </button>
 
-         <div class="keyment-date-picker__header-labels">
-          <button
-            class="keyment-date-picker__header-label"
-            type="button"
-            @click="panelMode = 'year'"
-          >
-            {{ panelYear }} 年
-           </button>
+          <div class="keyment-date-picker__header-labels">
+            <button
+              class="keyment-date-picker__header-label"
+              type="button"
+              @click="panelMode = 'year'"
+            >
+              {{ panelYear }} 年
+            </button>
+
+            <button
+              v-if="props.type == 'date'"
+              class="keyment-date-picker__header-label"
+              type="button"
+              @click="panelMode = 'month'"
+            >
+              {{ panelMonth }} 月
+            </button>
+          </div>
 
           <button
             v-if="props.type == 'date'"
-            class="keyment-date-picker__header-label"
+            class="keyment-date-picker__header-btn"
             type="button"
-            @click="panelMode = 'month'"
+            @click="handleNextMonth()"
           >
-            {{ panelMonth }} 月
+            >
+          </button>
+          <button class="keyment-date-picker__header-btn" type="button" @click="handleNextYear()">
+            >>
           </button>
         </div>
 
-        <button
-        v-if="props.type == 'date'"
-          class="keyment-date-picker__header-btn"
-          type="button"
-          @click="handleNextMonth()"
-        >
-          >
-        </button>
-        <button
-          class="keyment-date-picker__header-btn"
-          type="button"
-          @click="handleNextYear()"
-        >
-          >>
-        </button>
-
-        </div>
-        
         <template v-if="panelMode === 'date'">
           <div class="keyment-date-picker__week">
             <span>日</span>
@@ -392,30 +370,27 @@
           </div>
 
           <div class="keyment-date-picker__dates">
-          <button
-            v-for="cell in dateCells"
-            :key="cell.date.getTime()"
-            class="keyment-date-picker__cell"
-            :class="{
-              'is-prev': cell.type === 'prev',
-              'is-next': cell.type === 'next',
-              'is-selected': isSelectedDate(cell.date),
-              'is-today': isToday(cell.date),
-              'is-disabled': isDisabledDate(cell.date)
-            }"
-            type="button"
-            :disabled="isDisabledDate(cell.date)"
-            @click="handleSelectDate(cell.date)"
-          >
-            {{ cell.text }}
-          </button>
+            <button
+              v-for="cell in dateCells"
+              :key="cell.date.getTime()"
+              class="keyment-date-picker__cell"
+              :class="{
+                'is-prev': cell.type === 'prev',
+                'is-next': cell.type === 'next',
+                'is-selected': isSelectedDate(cell.date),
+                'is-today': isToday(cell.date),
+                'is-disabled': isDisabledDate(cell.date)
+              }"
+              type="button"
+              :disabled="isDisabledDate(cell.date)"
+              @click="handleSelectDate(cell.date)"
+            >
+              {{ cell.text }}
+            </button>
           </div>
         </template>
         <!-- 切换月份面板 -->
-        <div
-          v-else-if="panelMode === 'month'"
-          class="keyment-date-picker__months"
-        >
+        <div v-else-if="panelMode === 'month'" class="keyment-date-picker__months">
           <button
             v-for="(month, index) in months"
             :key="month"
@@ -428,10 +403,7 @@
           </button>
         </div>
 
-        <div
-          v-else-if="panelMode === 'year'"
-          class="keyment-date-picker__years"
-        >
+        <div v-else-if="panelMode === 'year'" class="keyment-date-picker__years">
           <button
             v-for="year in yearCells"
             :key="year"
@@ -450,7 +422,13 @@
 
 <script setup lang="ts">
 import { computed, ref, onBeforeUnmount, onMounted } from "vue";
-import type { DatePickerEmits, DatePickerProps,DatePanelMode,DatePickerSingleValue, DatePickerRangeValue } from "./date-picker";
+import type {
+  DatePickerEmits,
+  DatePickerProps,
+  DatePanelMode,
+  DatePickerSingleValue,
+  DatePickerRangeValue
+} from "./date-picker";
 import { Calendar } from "@keyment/icons";
 
 defineOptions({
@@ -478,7 +456,7 @@ const props = withDefaults(defineProps<DatePickerProps>(), {
 
 const emit = defineEmits<DatePickerEmits>();
 
-  // 日期选择器 class。
+// 日期选择器 class。
 const datePickerClass = computed(() => {
   return {
     [`keyment-date-picker--${props.size}`]: props.size,
@@ -540,12 +518,8 @@ const months = [
 ];
 // 筛选月份
 const handleSelectMonth = (monthIndex: number) => {
-  panelDate.value = new Date(
-    panelDate.value.getFullYear(),
-    monthIndex,
-    1
-  );
-  if(props.type === "month"){
+  panelDate.value = new Date(panelDate.value.getFullYear(), monthIndex, 1);
+  if (props.type === "month") {
     const value = `${panelDate.value.getFullYear()}-${padZero(panelDate.value.getMonth() + 1)}`;
 
     emit("update:modelValue", value);
@@ -595,11 +569,7 @@ const rightRangeYearCells = computed(() => {
 });
 // 筛选年份
 const handleSelectYear = (year: number) => {
-  panelDate.value = new Date(
-    year,
-    panelDate.value.getMonth(),
-    1
-  );
+  panelDate.value = new Date(year, panelDate.value.getMonth(), 1);
   if (props.type === "year") {
     const value = String(year);
 
@@ -619,7 +589,7 @@ const isSelectedMonth = (monthIndex: number) => {
 const isSelectedYear = (year: number) => {
   return panelDate.value.getFullYear() === year;
 };
-  // 输入框中显示的值。
+// 输入框中显示的值。
 // 第一版先直接把 modelValue 转成字符串显示，后面再做真正的日期格式化。
 const displayValue = computed(() => {
   if (!props.modelValue) {
@@ -644,11 +614,7 @@ const displayValue = computed(() => {
 
 // 判断是不是范围选择
 const isRange = computed(() => {
-  return (
-    props.type === "daterange" ||
-    props.type === "monthrange" ||
-    props.type === "yearrange"
-  );
+  return props.type === "daterange" || props.type === "monthrange" || props.type === "yearrange";
 });
 // 当前组件是不是“选月份”的类型
 const isMonthType = computed(() => {
@@ -659,7 +625,6 @@ const isMonthType = computed(() => {
 const isYearType = computed(() => {
   return props.type === "year" || props.type === "yearrange";
 });
-
 
 // 打开面板时根据 type 决定默认显示哪个面板。
 const getDefaultPanelMode = (): DatePanelMode => {
@@ -695,7 +660,7 @@ const rangeEndText = computed(() => {
 });
 // 是否显示清空按钮。
 const showClear = computed(() => {
-  return props.clearable && !props.disabled && !!props.modelValue&& isHovering.value;;
+  return props.clearable && !props.disabled && !!props.modelValue && isHovering.value;
 });
 
 // 获取打开面板时用来定位月份的值。
@@ -725,10 +690,7 @@ const handleOpen = () => {
 
   // 如果本来有值，就用已有值定位面板月份；范围选择时优先用开始日期。
   if (baseValue) {
-    const value =
-      baseValue instanceof Date
-        ? baseValue
-        : new Date(baseValue);
+    const value = baseValue instanceof Date ? baseValue : new Date(baseValue);
 
     panelDate.value = new Date(value.getFullYear(), value.getMonth(), 1);
   } else {
@@ -745,15 +707,13 @@ const handleOpen = () => {
       if (props.type === "yearrange") {
         rightRangePanelDate.value = new Date(endDate.getFullYear(), 0, 1);
       } else {
-        rightRangePanelDate.value = new Date(
-          endDate.getFullYear(),
-          endDate.getMonth(),
-          1
-        );
+        rightRangePanelDate.value = new Date(endDate.getFullYear(), endDate.getMonth(), 1);
       }
     } else {
       rightRangePanelDate.value = new Date(
-        props.type === "monthrange" ? panelDate.value.getFullYear() + 1 : panelDate.value.getFullYear(),
+        props.type === "monthrange"
+          ? panelDate.value.getFullYear() + 1
+          : panelDate.value.getFullYear(),
         props.type === "daterange" ? panelDate.value.getMonth() + 1 : panelDate.value.getMonth(),
         1
       );
@@ -783,33 +743,9 @@ const handleClear = () => {
   panelVisible.value = false;
 };
 
-
 // 日期面板,面板当前在看的月份
 const panelDate = ref(new Date());
-const rightRangePanelDate = ref(
-  new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1)
-); // unlink-panels 时，右侧范围面板单独维护自己的月份
-
-// 当前月份第一天
-// 这个值拿来算日历面板第一天是星期几，从而决定从哪个格子开始画
-const firstDay = computed(() => {
-  // getFullYear() 获得年 getMonth（）获得月 	0~11
-  return new Date(panelDate.value.getFullYear(), panelDate.value.getMonth(), 1);
-});
-
-const startWeekDay = computed(() => {
-  return firstDay.value.getDay();
-});
-
-// 当前月份总共有多少天
-const daysInMonth = computed(() => {
-  // 下个月的第 0 天，js自动转换成上个月最后一天。getDate()得到几号 就得到当前月份有几天
-  return new Date(
-    panelDate.value.getFullYear(),
-    panelDate.value.getMonth() + 1,
-    0
-  ).getDate();
-});
+const rightRangePanelDate = ref(new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1)); // unlink-panels 时，右侧范围面板单独维护自己的月份
 
 const createDateCells = (baseDate: Date) => {
   const cells: DateCell[] = [];
@@ -872,18 +808,10 @@ const rightRangeDate = computed(() => {
   }
 
   if (props.type === "monthrange") {
-    return new Date(
-      panelDate.value.getFullYear() + 1,
-      panelDate.value.getMonth(),
-      1
-    );
+    return new Date(panelDate.value.getFullYear() + 1, panelDate.value.getMonth(), 1);
   }
 
-  return new Date(
-    panelDate.value.getFullYear(),
-    panelDate.value.getMonth() + 1,
-    1
-  );
+  return new Date(panelDate.value.getFullYear(), panelDate.value.getMonth() + 1, 1);
 });
 
 const leftRangeDateCells = computed(() => {
@@ -913,9 +841,7 @@ const handleRangeValue = (
   }
 
   const rangeValue: DatePickerRangeValue =
-    getComparableValue(start) <= getComparableValue(value)
-      ? [start, value]
-      : [value, start];
+    getComparableValue(start) <= getComparableValue(value) ? [start, value] : [value, start];
 
   emit("update:modelValue", rangeValue);
   emit("change", rangeValue);
@@ -1189,7 +1115,6 @@ const handleNextYearRange = (panel: "left" | "right" = "left") => {
   panelDate.value = new Date(panelDate.value.getFullYear() + 10, panelDate.value.getMonth(), 1);
 };
 
-
 // 获得今天的日期,然后和日期选择器的日期进行对比找到今天，进行高亮
 const isToday = (date: Date) => {
   const today = new Date();
@@ -1203,7 +1128,7 @@ const isToday = (date: Date) => {
 
 // 点击页面其他地方时，关闭日期面板。
 const handleClickOutside = (event: MouseEvent) => {
-  const target = event.target as Node;  // 点击的具体元素
+  const target = event.target as Node; // 点击的具体元素
 
   if (!datePickerRef.value) {
     return;
@@ -1212,7 +1137,7 @@ const handleClickOutside = (event: MouseEvent) => {
   // 面板里找不到点击的元素
   // 返回 true  → 点在面板里面 → 什么都不做
   // 返回 false → 点在面板外面 → 关闭面板
-  if (!datePickerRef.value.contains(target)) {  
+  if (!datePickerRef.value.contains(target)) {
     panelVisible.value = false;
   }
 };
@@ -1374,7 +1299,7 @@ onBeforeUnmount(() => {
   color: #409eff;
 }
 
-.keyment-date-picker__cell.is-disabled  {
+.keyment-date-picker__cell.is-disabled {
   background: #f5f7fa;
   border-radius: 4px;
   color: #c0c4cc;

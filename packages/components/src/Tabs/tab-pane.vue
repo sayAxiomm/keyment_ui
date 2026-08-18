@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-show="isActive"
-    class="keyment-tab-pane"
-  >
+  <div v-show="isActive" class="keyment-tab-pane">
     <slot />
   </div>
 </template>

@@ -5,7 +5,7 @@
     color: "red"
   }
   Vue 会把这个对象转换成真实 DOM 的 style： -->
-<i style="font-size: 20px; color: red;"></i>
+  <i style="font-size: 20px; color: red"></i>
 
   <i class="keyment-icon" :style="iconStyle" v-bind="$attrs">
     <slot />
@@ -20,7 +20,7 @@ defineOptions({
   // 组件名使用 PascalCase，模板里可以写 <ky-icon>
   name: "KyIcon"
 });
-  // 没有默认值 会继承环境父级的颜色
+// 没有默认值 会继承环境父级的颜色
 const props = defineProps<IconProps>();
 
 const iconStyle = computed(() => {

@@ -23,16 +23,9 @@
   </div>
 </template>
 
-
 <script setup lang="ts">
 import { computed, provide, ref, watch } from "vue";
-import type {
-  TabName,
-  TabPaneContext,
-  TabsContext,
-  TabsEmits,
-  TabsProps
-} from "./tabs";
+import type { TabName, TabPaneContext, TabsContext, TabsEmits, TabsProps } from "./tabs";
 
 defineOptions({
   name: "KyTabs"

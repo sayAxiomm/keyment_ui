@@ -4,13 +4,7 @@
 // Vue 官方给了一个类型 Component
 import type { Component } from "vue";
 // 按钮视觉类型：控制按钮颜色风格。
-export type ButtonType =
-  | "default"
-  | "primary"
-  | "success"
-  | "warning"
-  | "danger"
-  | "info";
+export type ButtonType = "default" | "primary" | "success" | "warning" | "danger" | "info";
 
 // 按钮尺寸：控制按钮高度、字号、内边距。
 export type ButtonSize = "small" | "default" | "large";

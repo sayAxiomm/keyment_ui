@@ -1,11 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
-import {
-  KyAside,
-  KyContainer,
-  KyFooter,
-  KyHeader,
-  KyMain
-} from "@keyment/components";
+import { KyAside, KyContainer, KyFooter, KyHeader, KyMain } from "@keyment/components";
 
 const meta: Meta<typeof KyContainer> = {
   title: "布局组件/Container",

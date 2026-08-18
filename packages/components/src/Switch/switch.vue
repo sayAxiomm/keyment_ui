@@ -4,24 +4,24 @@
     外层用 label，这样点击整个开关区域都能触发内部 input。
   -->
   <label class="keyment-switch" :class="switchClass">
-     <!-- 关闭状态文字 -->
+    <!-- 关闭状态文字 -->
     <span
-      v-if="(props.inactiveIcon ||props.inactiveText )&& !props.inlinePrompt"
+      v-if="(props.inactiveIcon || props.inactiveText) && !props.inlinePrompt"
       class="keyment-switch__label"
       :class="{ 'is-active': !isChecked }"
     >
-       <component
+      <component
         v-if="props.inactiveIcon"
         :is="props.inactiveIcon"
         class="keyment-switch__label-icon"
       />
-    <!-- 当 !isChecked 为 true 时，给这个元素加 is-active class
+      <!-- 当 !isChecked 为 true 时，给这个元素加 is-active class
     当 !isChecked 为 false 时，不加 is-active class -->
       <template v-else>
         {{ props.inactiveText }}
       </template>
     </span>
-     
+
     <!-- 
       原生 checkbox 负责真实的选中/取消行为。
       视觉上会隐藏它，自己用 span 画开关。
@@ -69,7 +69,7 @@
       class="keyment-switch__label"
       :class="{ 'is-active': isChecked }"
     >
-       <component
+      <component
         v-if="props.activeIcon"
         :is="props.activeIcon"
         class="keyment-switch__label-icon"
@@ -78,7 +78,6 @@
         {{ props.activeText }}
       </template>
     </span>
-
   </label>
 </template>
 
@@ -152,7 +151,6 @@ const coreStyle = computed(() => {
   return style;
 });
 
-
 // 根据按钮的长度动态计算圆点位移距离
 // 圆圈大小和滑轨也要根据size变化
 const actionSizeMap = {
@@ -171,7 +169,7 @@ const actionStyle = computed(() => {
     return {};
   }
   const currentSize = props.size ?? "default";
-  const switchWidth = props.width ?? defaultWidthMap[currentSize];// ??和||区别是 ??的时候可以取0
+  const switchWidth = props.width ?? defaultWidthMap[currentSize]; // ??和||区别是 ??的时候可以取0
   const actionSize = actionSizeMap[currentSize];
   const offset = 2;
 

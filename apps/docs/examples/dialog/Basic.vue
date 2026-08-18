@@ -7,15 +7,9 @@ const visible = ref(false);
 
 <template>
   <div>
-    <KyButton type="primary" @click="visible = true">
-      打开对话框
-    </KyButton>
+    <KyButton type="primary" @click="visible = true"> 打开对话框 </KyButton>
 
-    <KyDialog
-      v-model="visible"
-      title="编辑资料"
-      width="min(520px, 90vw)"
-    >
+    <KyDialog v-model="visible" title="编辑资料" width="min(520px, 90vw)">
       这里可以放置表单或其他内容。
 
       <template #footer>

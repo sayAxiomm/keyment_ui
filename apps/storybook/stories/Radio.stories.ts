@@ -1,9 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
-import {
-  KyRadio,
-  KyRadioButton,
-  KyRadioGroup
-} from "@keyment/components";
+import { KyRadio, KyRadioButton, KyRadioGroup } from "@keyment/components";
 import { ref } from "vue";
 
 const meta: Meta<typeof KyRadioGroup> = {

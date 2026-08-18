@@ -1,17 +1,11 @@
 <template>
   <!-- 分页最外层容器 -->
-  <div 
+  <div
     class="keyment-pagination"
-    :class="[
-      `keyment-pagination--${props.size}`,
-      { 'is-background': props.background }
-    ]"
+    :class="[`keyment-pagination--${props.size}`, { 'is-background': props.background }]"
   >
     <!-- 根据 layoutList 的顺序，决定渲染哪些部分 -->
-    <template
-      v-for="item in layoutList"
-      :key="item"
-    >
+    <template v-for="item in layoutList" :key="item">
       <!-- 上一页按钮 -->
       <button
         v-if="item === 'prev'"
@@ -19,26 +13,15 @@
         type="button"
         :disabled="props.disabled || innerCurrentPage <= 1"
         @click="prev"
-        >
+      >
         &lt;
       </button>
 
       <!-- 页码按钮区域 -->
-      <ul
-        v-else-if="item === 'pager'"
-        class="keyment-pagination__pager"
-        >
+      <ul v-else-if="item === 'pager'" class="keyment-pagination__pager">
         <!-- page 是当前渲染出来的页码数字 -->
-        <li
-          v-for="page in pagers"
-          :key="page"
-          >
-          <span
-            v-if="page === '...'"
-            class="keyment-pagination__ellipsis"
-          >
-            ...
-          </span>
+        <li v-for="page in pagers" :key="page">
+          <span v-if="page === '...'" class="keyment-pagination__ellipsis"> ... </span>
 
           <button
             v-else
@@ -47,7 +30,7 @@
             type="button"
             :disabled="props.disabled"
             @click="setCurrentPage(page)"
-            >
+          >
             {{ page }}
           </button>
         </li>
@@ -60,14 +43,12 @@
         type="button"
         :disabled="props.disabled || innerCurrentPage >= pageCount"
         @click="next"
-        >
+      >
         &gt;
       </button>
     </template>
   </div>
 </template>
-
-
 
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
@@ -102,9 +83,7 @@ const pageCount = computed(() => {
 
 // 把 "prev, pager, next" 拆成 ["prev", "pager", "next"]。
 const layoutList = computed(() => {
-  return props.layout
-    .split(",")
-    .map((item) => item.trim());
+  return props.layout.split(",").map((item) => item.trim());
 });
 
 // 修改当前页。

@@ -1,8 +1,5 @@
 <template>
-  <form
-    class="keyment-form"
-    :class="formClass"
-  >
+  <form class="keyment-form" :class="formClass">
     <slot />
   </form>
 </template>
@@ -78,7 +75,6 @@ const clearValidate = (prop?: string) => {
 // 后面 form-item 可以通过 inject 拿到 model、rules、labelWidth、labelPosition。
 const formContext = reactive<FormContext>({
   get model() {
-  
     return props.model;
   },
   get rules() {

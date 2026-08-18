@@ -1,17 +1,9 @@
 ﻿<template>
   <transition name="keyment-dialog-fade">
     <!-- modelValue 为 true 时显示遮罩和弹窗 -->
-    <div
-      v-show="props.modelValue"
-      class="keyment-dialog__overlay"
-      @click="handleModalClick"
-    >
+    <div v-show="props.modelValue" class="keyment-dialog__overlay" @click="handleModalClick">
       <!-- @click.stop 阻止点击弹窗内容时冒泡到遮罩层 -->
-      <div
-        class="keyment-dialog"
-        :style="dialogStyle"
-        @click.stop
-      >
+      <div class="keyment-dialog" :style="dialogStyle" @click.stop>
         <!-- 头部：标题 + 关闭按钮 -->
         <div class="keyment-dialog__header">
           <span class="keyment-dialog__title">

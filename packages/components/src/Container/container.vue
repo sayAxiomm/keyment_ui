@@ -8,15 +8,15 @@
   </section>
 </template>
 
- <script setup lang="ts">
+<script setup lang="ts">
 //  useSlots拿到当前组件接收到的插槽内容。
-import { computed ,useSlots} from 'vue';
+import { computed, useSlots } from "vue";
 import type { ContainerProps } from "./container";
 
 // 组件名。以后全局注册后，可以在模板里写 <ky-container>。
 defineOptions({
-  name:"KyContainer"
-})
+  name: "KyContainer"
+});
 
 const slots = useSlots();
 
@@ -26,9 +26,9 @@ const slots = useSlots();
 const props = defineProps<ContainerProps>();
 
 // 判断默认插槽里是否存在 Header 或 Footer
-const hasHeaderOrFooter =computed(()=>{
+const hasHeaderOrFooter = computed(() => {
   const children = slots.default?.() || [];
-// some只要数组里有一个元素满足条件，就返回 true
+  // some只要数组里有一个元素满足条件，就返回 true
   return children.some((child) => {
     // child.type 表示这个虚拟节点的组件类型。
     // 如果它是 KyHeader，那么 child.type.name 通常就是 "KyHeader"。
@@ -36,7 +36,7 @@ const hasHeaderOrFooter =computed(()=>{
 
     return type.name === "KyHeader" || type.name === "KyFooter";
   });
-})
+});
 
 // 真正使用的方向。
 // 优先级：用户传入的 props.direction 自动推断的方向。
@@ -55,7 +55,7 @@ const containerClass = computed(() => {
 </script>
 
 <style scoped>
-  .keyment-container {
+.keyment-container {
   display: flex;
   flex: 1;
   box-sizing: border-box;

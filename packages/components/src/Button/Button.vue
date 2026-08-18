@@ -3,10 +3,10 @@
    : 是 Vue 的动态绑定。
     原生 button 的 type 由外部传入的 nativeType 决定。 
   -->
-    <button
+  <button
     class="keyment-button"
     :class="buttonClass"
-    :type="props.nativeType" 
+    :type="props.nativeType"
     :disabled="props.disabled || props.loading"
   >
     <KyIcon v-if="props.icon" class="keyment-button__icon">
@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed } from "vue";
 import type { ButtonProps } from "./button";
 import { KyIcon } from "../icon";
 
@@ -50,10 +50,10 @@ const buttonClass = computed(() => [
   `keyment-button--${props.type}`,
   `keyment-button--${props.size}`,
   {
-    "is-disabled": props.disabled,// 禁用状态类
+    "is-disabled": props.disabled, // 禁用状态类
     "is-loading": props.loading, // 加载状态类
-    "is-round": props.round,// 圆角状态类
-    "is-plain": props.plain 
+    "is-round": props.round, // 圆角状态类
+    "is-plain": props.plain
   }
 ]);
 </script>
@@ -87,7 +87,7 @@ const buttonClass = computed(() => [
 
   /* 去掉浏览器默认按钮样式差异 */
   outline: none;
-  }
+}
 
 .keyment-button__icon {
   font-size: 1em;
@@ -107,7 +107,7 @@ const buttonClass = computed(() => [
   align-items: center;
 }
 
-  /* 默认按钮 hover 状态 */
+/* 默认按钮 hover 状态 */
 .keyment-button:not(.is-disabled):not(.is-loading):hover {
   color: #409eff;
   border-color: #c6e2ff;
@@ -122,7 +122,7 @@ const buttonClass = computed(() => [
 }
 
 .keyment-button--primary:not(.is-disabled):not(.is-loading):hover {
-  color:#ffffff;
+  color: #ffffff;
   border-color: #66b1ff;
   background: #66b1ff;
 }
@@ -134,7 +134,7 @@ const buttonClass = computed(() => [
 }
 
 .keyment-button--success:not(.is-disabled):not(.is-loading):hover {
-  color:#ffffff;
+  color: #ffffff;
   border-color: #85ce61;
   background: #85ce61;
 }
@@ -147,7 +147,7 @@ const buttonClass = computed(() => [
 }
 
 .keyment-button--warning:not(.is-disabled):not(.is-loading):hover {
-  color:#ffffff;
+  color: #ffffff;
   border-color: #ebb563;
   background: #ebb563;
 }
@@ -160,7 +160,7 @@ const buttonClass = computed(() => [
 }
 
 .keyment-button--danger:not(.is-disabled):not(.is-loading):hover {
-  color:#ffffff;
+  color: #ffffff;
   border-color: #f78989;
   background: #f78989;
 }
@@ -210,9 +210,9 @@ const buttonClass = computed(() => [
   background: #ffffff;
   color: #303133;
 }
-.keyment-button.is-plain:not(.is-disabled):not(.is-loading):hover{
+.keyment-button.is-plain:not(.is-disabled):not(.is-loading):hover {
   color: #409eff;
-   border-color: #a0cfff
+  border-color: #a0cfff;
 }
 /* primary 朴素按钮 */
 .keyment-button--primary.is-plain {

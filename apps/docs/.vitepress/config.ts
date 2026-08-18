@@ -93,16 +93,10 @@ export default defineConfig({
     resolve: {
       alias: {
         "@keyment/components": fileURLToPath(
-          new URL(
-            "../../../packages/components/src/index.ts",
-            import.meta.url
-          )
+          new URL("../../../packages/components/src/index.ts", import.meta.url)
         ),
         "@keyment/icons": fileURLToPath(
-          new URL(
-            "../../../packages/icons/src/index.ts",
-            import.meta.url
-          )
+          new URL("../../../packages/icons/src/index.ts", import.meta.url)
         )
       }
     }

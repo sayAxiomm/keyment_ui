@@ -8,11 +8,7 @@ const range = ref<[string, string]>(["", ""]);
 
 <template>
   <div class="component-preview__column date-picker-demo">
-    <KyDatePicker
-      v-model="date"
-      clearable
-      placeholder="请选择日期"
-    />
+    <KyDatePicker v-model="date" clearable placeholder="请选择日期" />
     <KyDatePicker
       v-model="range"
       type="daterange"

@@ -1,14 +1,7 @@
 <template>
   <!-- 外层容器 -->
-  <div
-    class="keyment-carousel"
-    @mouseenter="handleMouseEnter"
-    @mouseleave="handleMouseLeave"
-  >
-    <div
-      class="keyment-carousel__viewport"
-      :style="carouselStyle"
-    >
+  <div class="keyment-carousel" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
+    <div class="keyment-carousel__viewport" :style="carouselStyle">
       <div class="keyment-carousel__container">
         <slot />
       </div>
@@ -50,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, provide, ref , onBeforeUnmount, onMounted} from "vue";
+import { computed, provide, ref, onBeforeUnmount, onMounted } from "vue";
 import type { CarouselContext, CarouselEmits, CarouselProps } from "./carousel";
 
 defineOptions({
@@ -68,16 +61,15 @@ const props = withDefaults(defineProps<CarouselProps>(), {
 });
 
 const emit = defineEmits<CarouselEmits>();
-   
+
 let timer: ReturnType<typeof setInterval> | undefined;
-const isHovering = ref(false);  // 是否hover
+const isHovering = ref(false); // 是否hover
 const activeIndex = ref(props.initialIndex); // 当前正在显示第几张
 const previousIndex = ref(props.initialIndex); // 上一次显示的是第几张
 
 // 当前 carousel 里面一共有多少个 carousel-item。
 // 每个 carousel-item 挂载时都会调用 addItem，让这里数量 +1。
 const itemCount = ref(0);
-
 
 // 外层轮播容器的动态样式。
 const carouselStyle = computed(() => {
@@ -114,7 +106,7 @@ const setActiveItem = (index: number) => {
   if (itemCount.value === 0) {
     return;
   }
-// 这一段决定 点击之后跳到哪一页
+  // 这一段决定 点击之后跳到哪一页
   // 先假设你传进来的 index 就是最终要切换到的索引。
   let nextIndex = index;
 
@@ -125,7 +117,7 @@ const setActiveItem = (index: number) => {
   if (index >= itemCount.value) {
     nextIndex = props.loop ? 0 : itemCount.value - 1;
   }
-// 决定跳不跳
+  // 决定跳不跳
   // 记录切换前是哪一张。
   const prevIndex = activeIndex.value;
 
@@ -282,10 +274,10 @@ const showArrows = computed(() => {
   margin-top: 8px;
 }
 .keyment-carousel__indicators.is-outside .keyment-carousel__indicator {
-  background: #f2f3f5;;
+  background: #f2f3f5;
 }
 
 .keyment-carousel__indicators.is-outside .keyment-carousel__indicator.is-active {
-  background: #c0c4cc;;
+  background: #c0c4cc;
 }
 </style>

@@ -1,6 +1,12 @@
 ﻿import { createApp } from "vue";
 import Message from "./message.vue";
-import type { MessageFn, MessageInstance, MessageOptions, MessageParams, MessageType } from "./message";
+import type {
+  MessageFn,
+  MessageInstance,
+  MessageOptions,
+  MessageParams,
+  MessageType
+} from "./message";
 
 const MESSAGE_START_OFFSET = 20;
 const MESSAGE_GAP = 52;
@@ -29,7 +35,6 @@ const createMessage = (options: MessageOptions): MessageInstance => {
   document.body.appendChild(container);
 
   let timer: number | undefined;
-  let instance: MessageInstance;
   let messageComponent: MessageComponentInstance | null = null;
   const offset = MESSAGE_START_OFFSET + instances.length * MESSAGE_GAP;
 
@@ -68,7 +73,7 @@ const createMessage = (options: MessageOptions): MessageInstance => {
     }
   };
 
-  instance = {
+  const instance: MessageInstance = {
     close,
     updateOffset: (nextOffset: number) => {
       messageComponent?.updateOffset(nextOffset);

@@ -22,13 +22,13 @@ import Basic from "../examples/breadcrumb/Basic.vue";
 
 ## Breadcrumb API
 
-| 属性名 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| separator | 分隔符 | `string` | `/` |
+| 属性名    | 说明   | 类型     | 默认值 |
+| --------- | ------ | -------- | ------ |
+| separator | 分隔符 | `string` | `/`    |
 
 ## BreadcrumbItem API
 
-| 属性名 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| to | 跳转地址 | `string` | — |
+| 属性名  | 说明                  | 类型      | 默认值  |
+| ------- | --------------------- | --------- | ------- |
+| to      | 跳转地址              | `string`  | —       |
 | replace | 是否使用 replace 跳转 | `boolean` | `false` |

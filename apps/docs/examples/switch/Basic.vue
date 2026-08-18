@@ -7,11 +7,7 @@ const enabled = ref(false);
 
 <template>
   <div class="component-preview__row">
-    <KySwitch
-      v-model="enabled"
-      active-text="开"
-      inactive-text="关"
-    />
+    <KySwitch v-model="enabled" active-text="开" inactive-text="关" />
     <span>当前状态：{{ enabled ? "开启" : "关闭" }}</span>
   </div>
 </template>

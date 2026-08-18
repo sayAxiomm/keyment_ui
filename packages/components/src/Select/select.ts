@@ -10,7 +10,6 @@ export interface SelectProps {
   clearable?: boolean; // 是否可以清空
   size?: SelectSize; // 选择器尺寸
   multiple?: boolean; // 是否支持多选
-  
 }
 
 // option 的 props 类型

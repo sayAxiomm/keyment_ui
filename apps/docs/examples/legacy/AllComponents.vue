@@ -18,7 +18,7 @@
       <ky-button type="danger" plain>危险按钮</ky-button>
       <ky-button type="info" plain>信息按钮</ky-button>
     </div>
- <div class="button-row">
+    <div class="button-row">
       <ky-button round>默认按钮</ky-button>
       <ky-button type="primary" round>主要按钮</ky-button>
       <ky-button type="success" round>成功按钮</ky-button>
@@ -51,249 +51,222 @@
         <ky-button>右</ky-button>
       </ky-button-group>
     </div>
- <ky-icon :size="24" color="black">
-  <Plus></Plus>
-  <Minus></Minus>
-</ky-icon>
+    <ky-icon :size="24" color="black">
+      <Plus></Plus>
+      <Minus></Minus>
+    </ky-icon>
 
-<!-- 
+    <!--
   最外层 ky-container 里面有 ky-header 和 ky-footer，
   所以 container.vue 会自动推断 direction 为 vertical。
 -->
-<ky-container class="demo-container">
-  <ky-header class="demo-header">Header</ky-header>
+    <ky-container class="demo-container">
+      <ky-header class="demo-header">Header</ky-header>
 
-  <!-- 
+      <!--
     里面这一层 ky-container 没有 header/footer，
     只有 aside 和 main，所以会自动推断 direction 为 horizontal。
   -->
-  <ky-container>
-    <ky-aside class="demo-aside" width="200px">Aside</ky-aside>
-    <ky-main class="demo-main">Main</ky-main>
-  </ky-container>
+      <ky-container>
+        <ky-aside class="demo-aside" width="200px">Aside</ky-aside>
+        <ky-main class="demo-main">Main</ky-main>
+      </ky-container>
 
-  <ky-footer class="demo-footer">Footer</ky-footer>
-</ky-container>
+      <ky-footer class="demo-footer">Footer</ky-footer>
+    </ky-container>
 
-<ky-link type="primary">常规链接</ky-link>
-<ky-link type="success">成功链接</ky-link>
+    <ky-link type="primary">常规链接</ky-link>
+    <ky-link type="success">成功链接</ky-link>
 
-<ky-row :gutter="5" justify="end">
-  <ky-col :span="1">
-    <div class="grid-demo">8</div>
-  </ky-col>
-  <ky-col :span="8">
-    <div class="grid-demo">8</div>
-  </ky-col>
-  <ky-col :span="8">
-    <div class="grid-demo">8</div>
-  </ky-col>
-</ky-row>
- <!-- <ky-radio v-model="gender" value="mel" border>男</ky-radio> -->
-  <p>当前值：{{ gender }}</p>
-<ky-radio-group v-model="gender">
-  <ky-radio value="mel" >男</ky-radio>
-  <ky-radio value="fmel" >女</ky-radio>
-</ky-radio-group>
- <ky-radio-group
-  v-model="radioValue"
-  fill="#67c23a"
-  text-color="red"
->
-  <ky-radio-button value="a">A</ky-radio-button>
-  <ky-radio-button value="b" disabled>B</ky-radio-button>
-  <ky-radio-button value="c">C</ky-radio-button>
-</ky-radio-group>
-  <p>status：{{ status }}</p>
-<ky-checkbox
-  v-model="status"
-  true-value="yes"
-  false-value="no"
->
-  启用
-</ky-checkbox>
-<p>hobbies：{{ hobbies }}</p>
-<ky-checkbox :indeterminate="true">
-  半选状态
-</ky-checkbox>
-<ky-checkbox-group v-model="hobbies" :min="1" :max="2">
-  <ky-checkbox value="music">音乐</ky-checkbox>
-  <ky-checkbox value="sport">运动</ky-checkbox>
-  <ky-checkbox value="read">阅读</ky-checkbox>
-</ky-checkbox-group>
-<p>button hobbies：{{ hobbies2 }}</p>
+    <ky-row :gutter="5" justify="end">
+      <ky-col :span="1">
+        <div class="grid-demo">8</div>
+      </ky-col>
+      <ky-col :span="8">
+        <div class="grid-demo">8</div>
+      </ky-col>
+      <ky-col :span="8">
+        <div class="grid-demo">8</div>
+      </ky-col>
+    </ky-row>
+    <!-- <ky-radio v-model="gender" value="mel" border>男</ky-radio> -->
+    <p>当前值：{{ gender }}</p>
+    <ky-radio-group v-model="gender">
+      <ky-radio value="mel">男</ky-radio>
+      <ky-radio value="fmel">女</ky-radio>
+    </ky-radio-group>
+    <ky-radio-group v-model="radioValue" fill="#67c23a" text-color="red">
+      <ky-radio-button value="a">A</ky-radio-button>
+      <ky-radio-button value="b" disabled>B</ky-radio-button>
+      <ky-radio-button value="c">C</ky-radio-button>
+    </ky-radio-group>
+    <p>status：{{ status }}</p>
+    <ky-checkbox v-model="status" true-value="yes" false-value="no"> 启用 </ky-checkbox>
+    <p>hobbies：{{ hobbies }}</p>
+    <ky-checkbox :indeterminate="true"> 半选状态 </ky-checkbox>
+    <ky-checkbox-group v-model="hobbies" :min="1" :max="2">
+      <ky-checkbox value="music">音乐</ky-checkbox>
+      <ky-checkbox value="sport">运动</ky-checkbox>
+      <ky-checkbox value="read">阅读</ky-checkbox>
+    </ky-checkbox-group>
+    <p>button hobbies：{{ hobbies2 }}</p>
 
-<ky-checkbox-group
-  v-model="hobbies2"
-  fill="#67c23a"
-  text-color="#ffffff"
->
-  <ky-checkbox-button value="music">音乐</ky-checkbox-button>
-  <ky-checkbox-button value="sport">运动</ky-checkbox-button>
-  <ky-checkbox-button value="read">阅读</ky-checkbox-button>
-</ky-checkbox-group>
-<ky-switch v-model="switchValue" size="large"
-  active-text="开"
-  inactive-text="关"
-  inline-prompt
-  :inactive-action-icon="Plus"
-  :active-action-icon="Minus"
-/>
-<ky-switch
-  v-model="switchValue"
-  :active-icon="Minus"
-  :inactive-icon="Plus"
-/>
-<p>当前输入：{{ inputValue }}</p>
-<ky-input v-model="inputValue" placeholder="请输入内容" style="width: 240px" clearable size="large" :prefix-icon="Plus" :suffix-icon="Minus" :maxlength="10" show-word-limit/>
-<ky-input v-model="passwordValue" type="password" placeholder="请输入密码" style="width: 240px" clearable show-password size="small"/>
-<ky-input v-model="textareaValue" type="textarea" placeholder="请输入多行内容" style="width: 240px" />
-<ky-input
-  v-model="inputValue"
-  :maxlength="10000"
-  show-word-limit
-  clearable 
-  placeholder="最多输入 20 个字符"
-  :prefix-icon="Plus" :suffix-icon="Minus"
-/>
-<p>date：{{ dateValue }}</p>
+    <ky-checkbox-group v-model="hobbies2" fill="#67c23a" text-color="#ffffff">
+      <ky-checkbox-button value="music">音乐</ky-checkbox-button>
+      <ky-checkbox-button value="sport">运动</ky-checkbox-button>
+      <ky-checkbox-button value="read">阅读</ky-checkbox-button>
+    </ky-checkbox-group>
+    <ky-switch
+      v-model="switchValue"
+      size="large"
+      active-text="开"
+      inactive-text="关"
+      inline-prompt
+      :inactive-action-icon="Plus"
+      :active-action-icon="Minus"
+    />
+    <ky-switch v-model="switchValue" :active-icon="Minus" :inactive-icon="Plus" />
+    <p>当前输入：{{ inputValue }}</p>
+    <ky-input
+      v-model="inputValue"
+      placeholder="请输入内容"
+      style="width: 240px"
+      clearable
+      size="large"
+      :prefix-icon="Plus"
+      :suffix-icon="Minus"
+      :maxlength="10"
+      show-word-limit
+    />
+    <ky-input
+      v-model="passwordValue"
+      type="password"
+      placeholder="请输入密码"
+      style="width: 240px"
+      clearable
+      show-password
+      size="small"
+    />
+    <ky-input
+      v-model="textareaValue"
+      type="textarea"
+      placeholder="请输入多行内容"
+      style="width: 240px"
+    />
+    <ky-input
+      v-model="inputValue"
+      :maxlength="10000"
+      show-word-limit
+      clearable
+      placeholder="最多输入 20 个字符"
+      :prefix-icon="Plus"
+      :suffix-icon="Minus"
+    />
+    <p>date：{{ dateValue }}</p>
 
-<ky-date-picker
-  v-model="dateValue"
-  placeholder="请选择日期"
-  clearable
-  readonly
-  size="small"
-/>
-<ky-date-picker
-  v-model="dateValue1"
-  placeholder="请选择日期"
-  clearable
-  :disabled-date="disabledBeforeToday"
-/>
-<ky-date-picker
-  v-model="dateRangeValue"
-  type="daterange"
-  range-separator="To"
-  start-placeholder="开始日期"
-  end-placeholder="结束日期"
-  clearable
-  readonly
-  size="large"
-/>
-<ky-date-picker
-  v-model="monthRangeValue"
-  type="monthrange"
-  range-separator="To"
-  start-placeholder="开始月份"
-  end-placeholder="结束月份"
-  clearable
-  size="small"
-/>
-<ky-date-picker
-  v-model="yearRangeValue"
-  type="yearrange"
-  range-separator="To"
-  start-placeholder="开始年份"
-  end-placeholder="结束年份"
-  clearable
-  size="small"
-/>
-<p>select：{{ selectValue }}</p>
-<ky-select v-model="selectValue" placeholder="请选择城市" clearable>
-  <ky-option label="北京" value="beijing" />
-  <ky-option label="上海" value="shanghai" />
-  <ky-option label="广州" value="guangzhou" />
-</ky-select>
-<p>multiple select：{{ multipleSelectValue }}</p>
-<ky-select v-model="multipleSelectValue" placeholder="请选择城市" multiple clearable>
-  <ky-option label="北京" value="beijing" />
-  <ky-option label="上海" value="shanghai" />
-  <ky-option label="广州" value="guangzhou" />
-</ky-select>
-<p></p>
-<ky-upload @change="handleUploadChange" :multiple="true">
-  点击上传
-</ky-upload>
-<ky-upload drag multiple>
-  拖拽文件到这里，或点击上传
-</ky-upload>
-<ky-form
-  :model="form"
-  label-width="80px"
-  label-position="top"
->
-  <ky-form-item label="用户名" prop="username" required>
-    <ky-input v-model="form.username" placeholder="请输入用户名" />
-  </ky-form-item>
+    <ky-date-picker v-model="dateValue" placeholder="请选择日期" clearable readonly size="small" />
+    <ky-date-picker
+      v-model="dateValue1"
+      placeholder="请选择日期"
+      clearable
+      :disabled-date="disabledBeforeToday"
+    />
+    <ky-date-picker
+      v-model="dateRangeValue"
+      type="daterange"
+      range-separator="To"
+      start-placeholder="开始日期"
+      end-placeholder="结束日期"
+      clearable
+      readonly
+      size="large"
+    />
+    <ky-date-picker
+      v-model="monthRangeValue"
+      type="monthrange"
+      range-separator="To"
+      start-placeholder="开始月份"
+      end-placeholder="结束月份"
+      clearable
+      size="small"
+    />
+    <ky-date-picker
+      v-model="yearRangeValue"
+      type="yearrange"
+      range-separator="To"
+      start-placeholder="开始年份"
+      end-placeholder="结束年份"
+      clearable
+      size="small"
+    />
+    <p>select：{{ selectValue }}</p>
+    <ky-select v-model="selectValue" placeholder="请选择城市" clearable>
+      <ky-option label="北京" value="beijing" />
+      <ky-option label="上海" value="shanghai" />
+      <ky-option label="广州" value="guangzhou" />
+    </ky-select>
+    <p>multiple select：{{ multipleSelectValue }}</p>
+    <ky-select v-model="multipleSelectValue" placeholder="请选择城市" multiple clearable>
+      <ky-option label="北京" value="beijing" />
+      <ky-option label="上海" value="shanghai" />
+      <ky-option label="广州" value="guangzhou" />
+    </ky-select>
+    <p></p>
+    <ky-upload @change="handleUploadChange" :multiple="true"> 点击上传 </ky-upload>
+    <ky-upload drag multiple> 拖拽文件到这里，或点击上传 </ky-upload>
+    <ky-form :model="form" label-width="80px" label-position="top">
+      <ky-form-item label="用户名" prop="username" required>
+        <ky-input v-model="form.username" placeholder="请输入用户名" />
+      </ky-form-item>
 
-  <ky-form-item label="密码" prop="password" >
-    <ky-input v-model="form.password" placeholder="请输入密码" />
-  </ky-form-item>
-</ky-form>
-<ky-carousel height="200px" autoplay indicatorPosition="outside">
-  <ky-carousel-item>
-    <div class="carousel-demo carousel-demo-1">1</div>
-  </ky-carousel-item>
+      <ky-form-item label="密码" prop="password">
+        <ky-input v-model="form.password" placeholder="请输入密码" />
+      </ky-form-item>
+    </ky-form>
+    <ky-carousel height="200px" autoplay indicatorPosition="outside">
+      <ky-carousel-item>
+        <div class="carousel-demo carousel-demo-1">1</div>
+      </ky-carousel-item>
 
-  <ky-carousel-item>
-    <div class="carousel-demo carousel-demo-2">2</div>
-  </ky-carousel-item>
+      <ky-carousel-item>
+        <div class="carousel-demo carousel-demo-2">2</div>
+      </ky-carousel-item>
 
-  <ky-carousel-item>
-    <div class="carousel-demo carousel-demo-3">3</div>
-  </ky-carousel-item>
-</ky-carousel>
+      <ky-carousel-item>
+        <div class="carousel-demo carousel-demo-3">3</div>
+      </ky-carousel-item>
+    </ky-carousel>
 
-<ky-pagination
-  :total="50"
-  :page-size="5"
-/>
-<ky-pagination background :total="50" />
-<ky-backtop :visibility-height="200" />
-<ky-breadcrumb separator="/">
-  <ky-breadcrumb-item to="/components">首页</ky-breadcrumb-item>
-  <ky-breadcrumb-item>组件</ky-breadcrumb-item>
-  <ky-breadcrumb-item>Breadcrumb</ky-breadcrumb-item>
-</ky-breadcrumb>
+    <ky-pagination :total="50" :page-size="5" />
+    <ky-pagination background :total="50" />
+    <ky-backtop :visibility-height="200" />
+    <ky-breadcrumb separator="/">
+      <ky-breadcrumb-item to="/components">首页</ky-breadcrumb-item>
+      <ky-breadcrumb-item>组件</ky-breadcrumb-item>
+      <ky-breadcrumb-item>Breadcrumb</ky-breadcrumb-item>
+    </ky-breadcrumb>
 
-<ky-tabs v-model="activeTab">
-  <ky-tab-pane label="用户管理" name="user">
-    用户管理内容
-  </ky-tab-pane>
+    <ky-tabs v-model="activeTab">
+      <ky-tab-pane label="用户管理" name="user"> 用户管理内容 </ky-tab-pane>
 
-  <ky-tab-pane label="配置管理" name="config">
-    配置管理内容
-  </ky-tab-pane>
+      <ky-tab-pane label="配置管理" name="config"> 配置管理内容 </ky-tab-pane>
 
-  <ky-tab-pane label="角色管理" name="role" disabled>
-    角色管理内容
-  </ky-tab-pane>
-</ky-tabs>
+      <ky-tab-pane label="角色管理" name="role" disabled> 角色管理内容 </ky-tab-pane>
+    </ky-tabs>
 
-<ky-button type="success" @click="showMessage">
-  打开 Message
-</ky-button>
+    <ky-button type="success" @click="showMessage"> 打开 Message </ky-button>
 
-<ky-button @click="dialogVisible = true">
-  打开 Dialog
-</ky-button>
+    <ky-button @click="dialogVisible = true"> 打开 Dialog </ky-button>
 
-<ky-dialog
-  v-model="dialogVisible"
-  title="提示"
-  width="500px"
->
-  这里是 Dialog 内容
+    <ky-dialog v-model="dialogVisible" title="提示" width="500px">
+      这里是 Dialog 内容
 
-  <template #footer>
-    <ky-button @click="dialogVisible = false">取消</ky-button>
-    <ky-button type="primary" @click="dialogVisible = false">确定</ky-button>
-  </template>
-</ky-dialog>
-<ky-button type="success" @click="showSuccessMessage">
-  成功消息
-</ky-button>
+      <template #footer>
+        <ky-button @click="dialogVisible = false">取消</ky-button>
+        <ky-button type="primary" @click="dialogVisible = false">确定</ky-button>
+      </template>
+    </ky-dialog>
+    <ky-button type="success" @click="showSuccessMessage"> 成功消息 </ky-button>
   </main>
 </template>
 
@@ -309,7 +282,7 @@ import {
   KyMain,
   KyFooter,
   KyLink,
-  KyRow, 
+  KyRow,
   KyCol,
   KyRadio,
   KyRadioGroup,
@@ -336,13 +309,13 @@ import {
   KyDialog,
   KyMessage
 } from "@keyment/components";
-import { Plus,Minus } from "@keyment/icons";
+import { Plus, Minus } from "@keyment/icons";
 import { ref } from "vue";
-const radioValue=ref('c')
+const radioValue = ref("c");
 const gender = ref("mel");
 const status = ref("no");
 const hobbies = ref(["music"]);
-const hobbies2=ref(["music"])
+const hobbies2 = ref(["music"]);
 const switchValue = ref(false);
 const inputValue = ref("");
 const passwordValue = ref("");
@@ -367,7 +340,7 @@ const handleUploadChange = (files: any[]) => {
 };
 
 const disabledBeforeToday = (time: Date) => {
- return time.getTime() > Date.now()
+  return time.getTime() > Date.now();
 };
 const form = ref({
   username: "",
@@ -427,7 +400,7 @@ h1 {
   color: #fff;
   background: #409eff;
   box-sizing: border-box;
-   border-radius: 4px;
+  border-radius: 4px;
 }
 .carousel-demo {
   display: flex;

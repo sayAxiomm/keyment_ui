@@ -30,10 +30,7 @@ const props = withDefaults(defineProps<RowProps>(), {
 // 这样用户只需要在 Row 上写 :gutter="20"，不用每个 Col 都传。
 provide("keymentRowGutter", props.gutter);
 
-const rowClass = computed(() => [
-  `is-justify-${props.justify}`,
-  `is-align-${props.align}`
-]);
+const rowClass = computed(() => [`is-justify-${props.justify}`, `is-align-${props.align}`]);
 
 const rowStyle = computed(() => {
   const style: Record<string, string> = {};

@@ -13,12 +13,7 @@
 </template>
 <script setup lang="ts">
 import { inject, nextTick, provide } from "vue";
-import type {
-  CheckboxGroupContext,
-  CheckboxGroupEmits,
-  CheckboxGroupProps,
-  CheckboxValue
-} from "./checkbox";
+import type { CheckboxGroupEmits, CheckboxGroupProps, CheckboxValue } from "./checkbox";
 import type { FormItemContext } from "../Form/form";
 
 defineOptions({
@@ -34,7 +29,6 @@ const props = withDefaults(defineProps<CheckboxGroupProps>(), {
 
 const emit = defineEmits<CheckboxGroupEmits>();
 const formItem = inject<FormItemContext>("formItem");
-  
 
 // checkbox变化通知group的函数
 // RadioGroup：点击后直接把 modelValue 改成某一个值

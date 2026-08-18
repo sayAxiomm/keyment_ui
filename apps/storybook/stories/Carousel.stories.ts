@@ -35,12 +35,14 @@ export const Basic: Story = {
         <KyCarouselItem><div class="slide slide-three">3</div></KyCarouselItem>
       </KyCarousel>
     `,
-    styles: [`
+    styles: [
+      `
       .slide { display:grid; height:100%; place-items:center; color:#fff; font-size:40px; font-weight:700; }
       .slide-one { background:#409eff; }
       .slide-two { background:#67c23a; }
       .slide-three { background:#e6a23c; }
-    `]
+    `
+    ]
   })
 };
 

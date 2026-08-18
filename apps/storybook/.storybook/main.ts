@@ -4,14 +4,9 @@ import vue from "@vitejs/plugin-vue";
 import { mergeConfig } from "vite";
 
 const config: StorybookConfig = {
-  stories: [
-    "../stories/**/*.stories.@(js|ts)"
-  ],
+  stories: ["../stories/**/*.stories.@(js|ts)"],
 
-  addons: [
-    "@storybook/addon-a11y",
-    "@storybook/addon-docs"
-  ],
+  addons: ["@storybook/addon-a11y", "@storybook/addon-docs"],
 
   framework: {
     name: "@storybook/vue3-vite",
@@ -26,16 +21,10 @@ const config: StorybookConfig = {
       resolve: {
         alias: {
           "@keyment/components": fileURLToPath(
-            new URL(
-              "../../../packages/components/src/index.ts",
-              import.meta.url
-            )
+            new URL("../../../packages/components/src/index.ts", import.meta.url)
           ),
           "@keyment/icons": fileURLToPath(
-            new URL(
-              "../../../packages/icons/src/index.ts",
-              import.meta.url
-            )
+            new URL("../../../packages/icons/src/index.ts", import.meta.url)
           )
         }
       }

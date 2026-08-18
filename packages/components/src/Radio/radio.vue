@@ -34,8 +34,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed ,inject} from "vue";
-import type { RadioEmits, RadioProps,RadioGroupContext } from "./radio";
+import { computed, inject } from "vue";
+import type { RadioEmits, RadioProps, RadioGroupContext } from "./radio";
 
 defineOptions({
   name: "KyRadio"
@@ -48,7 +48,7 @@ const props = withDefaults(defineProps<RadioProps>(), {
 });
 
 // 这里接受radio-group给的数据
-const radioGroup = inject<RadioGroupContext>("radioGroup")||undefined
+const radioGroup = inject<RadioGroupContext>("radioGroup") || undefined;
 
 // 判断当前 KyRadio 是否处在 KyRadioGroup 里面
 const isGroup = computed(() => !!radioGroup);
@@ -70,8 +70,6 @@ const actualSize = computed(() => {
 const actualName = computed(() => {
   return radioGroup?.name || props.name;
 });
-
-
 
 // defineEmits 是 Vue <script setup> 里的宏，用来声明组件会触发的事件。
 // 1. App.vue 有 gender = "male"
@@ -112,7 +110,6 @@ const radioClass = computed(() => [
 // 也就是:如果 KyRadio 这个组件内部发出了一个叫 change 的事件，
 //  那就执行 handleRadioChange。
 // 执行父组件传进来的函数：
-
 
 // 用户点击
 // -> 原生 input 自己真的发生 change

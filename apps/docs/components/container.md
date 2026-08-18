@@ -25,9 +25,9 @@ import Basic from "../examples/container/Basic.vue";
 
 ## API
 
-| 组件 | 属性 | 说明 | 默认值 |
-| --- | --- | --- | --- |
+| 组件        | 属性      | 说明                            | 默认值         |
+| ----------- | --------- | ------------------------------- | -------------- |
 | KyContainer | direction | 布局方向：horizontal / vertical | 根据子组件推断 |
-| KyHeader | height | 顶栏高度 | `60px` |
-| KyAside | width | 侧栏宽度 | `300px` |
-| KyFooter | height | 底栏高度 | `60px` |
+| KyHeader    | height    | 顶栏高度                        | `60px`         |
+| KyAside     | width     | 侧栏宽度                        | `300px`        |
+| KyFooter    | height    | 底栏高度                        | `60px`         |

@@ -1,4 +1,3 @@
-
 export interface ContainerProps {
   // direction 是可选的，所以后面有 ?。
   // 如果用户不传，我们后面会在 container.vue 里给默认值。

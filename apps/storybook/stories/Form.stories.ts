@@ -1,11 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
-import {
-  KyButton,
-  KyForm,
-  KyFormItem,
-  KyInput,
-  KySwitch
-} from "@keyment/components";
+import { KyButton, KyForm, KyFormItem, KyInput, KySwitch } from "@keyment/components";
 import { reactive } from "vue";
 
 const meta: Meta<typeof KyForm> = {

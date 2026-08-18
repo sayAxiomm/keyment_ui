@@ -25,11 +25,7 @@
 </template>
 <script setup lang="ts">
 import { computed, inject, nextTick } from "vue";
-import type {
-  CheckboxEmits,
-  CheckboxGroupContext,
-  CheckboxProps
-} from "./checkbox";
+import type { CheckboxEmits, CheckboxGroupContext, CheckboxProps } from "./checkbox";
 import type { FormItemContext } from "../Form/form";
 
 defineOptions({
@@ -158,7 +154,10 @@ const handleChange = () => {
   border: 1px solid #dcdfe6;
   background: #ffffff;
   box-sizing: border-box;
-  transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease,
+    background-color 0.15s ease;
 }
 
 .keyment-checkbox-button + .keyment-checkbox-button .keyment-checkbox-button__inner {

@@ -1,9 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
-import {
-  KyCheckbox,
-  KyCheckboxButton,
-  KyCheckboxGroup
-} from "@keyment/components";
+import { KyCheckbox, KyCheckboxButton, KyCheckboxGroup } from "@keyment/components";
 import { ref } from "vue";
 
 const meta: Meta<typeof KyCheckboxGroup> = {

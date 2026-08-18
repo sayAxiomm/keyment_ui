@@ -6,16 +6,9 @@
     "jsx": "preserve",
     "types": ["node"],
     "paths": {
-      "@keyment/components": [
-        "../../packages/components/src/index.ts"
-      ],
-      "@keyment/icons": [
-        "../../packages/icons/src/index.ts"
-      ]
+      "@keyment/components": ["../../packages/components/src/index.ts"],
+      "@keyment/icons": ["../../packages/icons/src/index.ts"]
     }
   },
-  "include": [
-    ".storybook/**/*.ts",
-    "stories/**/*.ts"
-  ]
+  "include": [".storybook/**/*.ts", "stories/**/*.ts"]
 }

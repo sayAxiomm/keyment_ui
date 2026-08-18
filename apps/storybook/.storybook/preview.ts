@@ -1,5 +1,4 @@
-import type { Preview } from "@storybook/vue3-vite";
-import { setup } from "@storybook/vue3-vite";
+import { setup, type Preview } from "@storybook/vue3-vite";
 import KeymentUI from "@keyment/components";
 
 setup((app) => {

@@ -5,8 +5,6 @@
 // 写入 src/vue 目录
 // 最后生成 index.ts 统一导出
 
-
-
 // Node 内置的文件系统 API，用来读目录、读文件、写文件、创建目录
 import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 
@@ -77,21 +75,23 @@ const indexFile = resolve(packageRoot, "src/index.ts");
  * circle-close.svg -> CircleClose
  */
 function toPascalCase(fileName) {
-  return fileName
-    // 去掉 .svg 后缀
-    .replace(/\.svg$/i, "")
+  return (
+    fileName
+      // 去掉 .svg 后缀
+      .replace(/\.svg$/i, "")
 
-    // 按 - 分割，比如 arrow-down -> ["arrow", "down"]
-    .split("-")
+      // 按 - 分割，比如 arrow-down -> ["arrow", "down"]
+      .split("-")
 
-    // 过滤空字符串，避免异常文件名导致问题
-    .filter(Boolean)
+      // 过滤空字符串，避免异常文件名导致问题
+      .filter(Boolean)
 
-    // 每一段首字母大写
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      // 每一段首字母大写
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
 
-    // 拼成 PascalCase
-    .join("");
+      // 拼成 PascalCase
+      .join("")
+  );
 }
 
 /**
@@ -103,24 +103,26 @@ function toPascalCase(fileName) {
  * 3. 给 svg 加 aria-hidden="true"，默认作为装饰图标，不让读屏器重复朗读
  */
 function normalizeSvg(svg) {
-  return svg
-    // 去掉 XML 声明，例如：<?xml version="1.0" encoding="UTF-8"?>
-    .replace(/<\?xml.*?\?>\s*/g, "")
+  return (
+    svg
+      // 去掉 XML 声明，例如：<?xml version="1.0" encoding="UTF-8"?>
+      .replace(/<\?xml.*?\?>\s*/g, "")
 
-    // 去掉 DOCTYPE 声明
-    .replace(/<!DOCTYPE.*?>\s*/g, "")
+      // 去掉 DOCTYPE 声明
+      .replace(/<!DOCTYPE.*?>\s*/g, "")
 
-    // 去掉 svg 上的 width="xxx"
-    .replace(/\swidth="[^"]*"/g, "")
+      // 去掉 svg 上的 width="xxx"
+      .replace(/\swidth="[^"]*"/g, "")
 
-    // 去掉 svg 上的 height="xxx"
-    .replace(/\sheight="[^"]*"/g, "")
+      // 去掉 svg 上的 height="xxx"
+      .replace(/\sheight="[^"]*"/g, "")
 
-    // 给 <svg ...> 加 aria-hidden="true"
-    .replace(/<svg([^>]*)>/, '<svg$1 aria-hidden="true">')
+      // 给 <svg ...> 加 aria-hidden="true"
+      .replace(/<svg([^>]*)>/, '<svg$1 aria-hidden="true">')
 
-    // 去掉首尾空白
-    .trim();
+      // 去掉首尾空白
+      .trim()
+  );
 }
 
 /**

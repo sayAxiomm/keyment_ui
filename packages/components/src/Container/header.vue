@@ -1,5 +1,5 @@
 <template>
-<!-- 
+  <!--
     Header 是 Container 里的顶部区域。
     里面具体放什么内容，交给默认插槽。
   -->
@@ -9,12 +9,12 @@
 </template>
 
 <script setup lang="ts">
-import type { HeaderProps } from './container';
+import type { HeaderProps } from "./container";
 import { computed } from "vue";
 
 defineOptions({
-  name:"KyHeader"
-})
+  name: "KyHeader"
+});
 
 // Header 的 height 是可选 props。
 // 如果用户不传 height，就默认使用 60px。

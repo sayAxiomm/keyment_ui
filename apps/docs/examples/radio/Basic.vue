@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import {
-  KyRadio,
-  KyRadioButton,
-  KyRadioGroup
-} from "@keyment/components";
+import { KyRadio, KyRadioButton, KyRadioGroup } from "@keyment/components";
 
 const city = ref("shanghai");
 const size = ref("medium");

@@ -1,9 +1,5 @@
 <template>
-  <div
-    class="keyment-message"
-    :class="`keyment-message--${props.type}`"
-    :style="messageStyle"
-  >
+  <div class="keyment-message" :class="`keyment-message--${props.type}`" :style="messageStyle">
     <span class="keyment-message__content">
       {{ props.message }}
     </span>
@@ -13,7 +9,7 @@
       class="keyment-message__close"
       type="button"
       @click="handleClose"
-     > 
+    >
       ×
     </button>
   </div>

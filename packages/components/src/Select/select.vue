@@ -7,10 +7,7 @@
     @mouseleave="isHovering = false"
   >
     <!-- 选择器输入区域：点击后打开或关闭下拉面板 -->
-    <div
-      class="keyment-select__wrapper"
-      @click="handleToggle"
-    >
+    <div class="keyment-select__wrapper" @click="handleToggle">
       <input
         v-if="!props.multiple"
         class="keyment-select__inner"
@@ -21,14 +18,8 @@
         :value="displayLabel"
       />
 
-      <div
-        v-else
-        class="keyment-select__tags"
-      >
-        <span
-          v-if="!selectedOptions.length"
-          class="keyment-select__placeholder"
-        >
+      <div v-else class="keyment-select__tags">
+        <span v-if="!selectedOptions.length" class="keyment-select__placeholder">
           {{ props.placeholder }}
         </span>
 
@@ -58,35 +49,26 @@
         x
       </button>
 
-      <span
-        v-else
-        class="keyment-select__arrow"
-        :class="{ 'is-open': dropdownVisible }"
-      >
+      <span v-else class="keyment-select__arrow" :class="{ 'is-open': dropdownVisible }">
         <ArrowDown />
       </span>
     </div>
 
     <!-- 下拉面板：后面 option 会渲染到这里 -->
-    <div
-      v-if="dropdownVisible"
-      class="keyment-select__dropdown"
-    >
+    <div v-if="dropdownVisible" class="keyment-select__dropdown">
       <slot />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, provide,ref } from "vue";
-import type { SelectEmits, SelectProps,SelectContext , SelectOption} from "./select";
+import { computed, onBeforeUnmount, onMounted, provide, ref } from "vue";
+import type { SelectEmits, SelectProps, SelectContext, SelectOption } from "./select";
 import { ArrowDown } from "@keyment/icons";
 
 defineOptions({
   name: "KySelect"
 });
-
-
 
 const props = withDefaults(defineProps<SelectProps>(), {
   placeholder: "请选择",
@@ -239,7 +221,6 @@ onMounted(() => {
 onBeforeUnmount(() => {
   document.removeEventListener("click", handleClickOutside);
 });
-
 </script>
 
 <style scoped>

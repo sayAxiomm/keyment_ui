@@ -1,19 +1,11 @@
 <template>
   <transition name="keyment-backtop-fade">
     <!-- 滚动高度超过 visibilityHeight 时才显示 -->
-    <div
-      v-show="isVisible"
-      class="keyment-backtop"
-      :style="backtopStyle"
-      @click="handleClick"
-    >
-      <slot>
-        ↑
-      </slot>
+    <div v-show="isVisible" class="keyment-backtop" :style="backtopStyle" @click="handleClick">
+      <slot> ↑ </slot>
     </div>
   </transition>
 </template>
-
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from "vue";

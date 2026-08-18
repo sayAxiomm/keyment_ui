@@ -1,16 +1,9 @@
 <script setup lang="ts">
-import {
-  KyCarousel,
-  KyCarouselItem
-} from "@keyment/components";
+import { KyCarousel, KyCarouselItem } from "@keyment/components";
 </script>
 
 <template>
-  <KyCarousel
-    height="220px"
-    :autoplay="false"
-    indicator-position="outside"
-  >
+  <KyCarousel height="220px" :autoplay="false" indicator-position="outside">
     <KyCarouselItem>
       <div class="carousel-slide carousel-slide--one">1</div>
     </KyCarouselItem>
